@@ -1,0 +1,37 @@
+[alias]
+	co = checkout
+	ci = commit -S
+	st = status -s
+	br = branch
+	sui = submodule update --init
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''    %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	branch-name = rev-parse --abbrev-ref HEAD
+	upstream-name = !git remote | egrep -o '(upstream|origin)' | tail -1
+	head-branch = !git remote show $(git upstream-name) | awk '/HEAD branch/ {print $NF}'
+	pub = !git push -u origin $(git branch-name)
+	unstage = reset HEAD
+	rollback = reset --soft HEAD^
+	upstream-org = !git remote get-url $(git upstream-name) | cut -d: -f2 | cut -d/ -f1
+	create-pr = "!f() { hub pull-request -b $(git upstream-org):$1; }; f"
+	create-release = "!f() { hub sync && hub release create -e -m \"$(git since-last-tag)\" $1; }; f"
+	delete-merged = !git co $(git head-branch) && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
+	mkpatch = "!f() { git diff $1..$(git branch-name) > diff.patch && echo diff.patch; }; f"
+	tags = tag -l --sort=v:refname
+	last-tag = !git tags | tail -1
+	since-last-tag = "!f() { if [ -z \"$(git last-tag)\" ]; then git log --oneline --all; else git log --oneline $(git last-tag)..$(git branch-name); fi; }; f"
+[user]
+	signingkey = BA210DB793D37A6157177FDDB9CEB1D5CFA7BE10
+	name = Joey Espinosa
+	email = jlouis.espinosa@gmail.com
+[gpg]
+	program = gpg2
+[url "git@github.com:"]
+	insteadof = https://github.com/
+[push]
+	default = simple
+[core]
+	editor = nvim
+	pager = diff-so-fancy | less -FXRi
+[color]
+	ui = auto
