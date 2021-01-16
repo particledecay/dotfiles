@@ -19,6 +19,8 @@ set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
 set -Ux EDITOR nvim
 
 # aliases
+alias d='docker'
+alias dc='/usr/bin/docker-compose'
 alias g='git'
 alias ga='git add'
 alias gb='git branch'
