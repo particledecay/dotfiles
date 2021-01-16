@@ -1,0 +1,4 @@
+.ssh/id_rsa*
+.gnupg/pubring*
+.gnupg/trustdb.gpg
+.password-store
