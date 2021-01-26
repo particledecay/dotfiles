@@ -19,8 +19,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 " fuzzy file search
 Plug 'junegunn/fzf', {'do': {-> fzf#install()}}
 Plug 'junegunn/fzf.vim', {'do': function('InstallRipGrep')}
-" fzf floating preview pane
-Plug 'yuki-ycino/fzf-preview.vim', {'rev': 'release/rpc'}
 " enhanced netrw file explorer
 Plug 'tpope/vim-vinegar'
 " show git diff in the gutter
