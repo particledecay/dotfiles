@@ -98,7 +98,15 @@ font:
     #   - (Windows) Consolas
     # family: Cartograph Mono CF
     # family: Cascadia Code PL
-    family: FuraCode Nerd Font Mono
+    # family: FuraCode Nerd Font Mono
+    # family: Dank Mono
+    # family: Operation Mono
+    # family: Fantasque Sans Mono
+    # family: SF Mono
+    # family: Syne Mono
+    family: DM Mono
+    # family: Nova Mono
+    # family: Oxygen Mono
 
     # The `style` can be specified to pick a specific face.
     style: Retina
@@ -126,7 +134,7 @@ font:
     #style: Italic
 
   # Point size
-  size: 11.0
+  size: 12.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
