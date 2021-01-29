@@ -47,7 +47,7 @@ Plug 'kristijanhusak/vim-carbon-now-sh'
 " Go support
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 " asynchronous linting
-Plug 'w0rp/ale'
+" Plug 'dense-analysis/ale'
 " Delve for Go testing
 Plug 'sebdah/vim-delve'
 " File-line enables opening a file to a given line
@@ -225,9 +225,9 @@ au FileType go nmap <F12> :DlvDebug
 " [pearofducks/ansible-vim] highlight extra keywords
 let g:ansible_extra_keywords_highlight = 1
 
-" [w0rp/ale] display status information in airline
+" [dense-analysis/ale] display status information in airline
 let g:airline#extensions#ale#enabled = 1
-" [w0rp/ale] error/warning signs
+" [dense-analysis/ale] error/warning signs
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 
