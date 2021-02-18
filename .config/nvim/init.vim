@@ -27,13 +27,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " surround functions
 Plug 'machakann/vim-sandwich'
-" syntax checking
-Plug 'scrooloose/syntastic'
 " better statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " commenting functions
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 " Emmet
 Plug 'mattn/emmet-vim', {'for': ['html', 'jsx', 'css']}
 " autocompletion
@@ -58,6 +56,10 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'pearofducks/ansible-vim', {'do': './UltiSnips/generate.sh'}
 " vim wrapper for running tests
 Plug 'janko/vim-test'
+" Terraform
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
 call plug#end()
 
 " detect type of file being edited and set filetype (w/ plugins and indents)
@@ -111,19 +113,19 @@ let $FZF_DEFAULT_OPTS="--reverse"
 let g:fzf_preview_command = 'bat --color=always -p {-1}'
 let g:fzf_preview_floating_window_rate = 0.9
 
-" [scrooloose/nerdcommenter] spaces after comment delimiters
+" [preservim/nerdcommenter] spaces after comment delimiters
 let g:NERDSpaceDelims = 1
-" [scrooloose/nerdcommenter] compact syntax for multiline comments
+" [preservim/nerdcommenter] compact syntax for multiline comments
 let g:NERDCompactSexyComs = 1
-" [scrooloose/nerdcommenter] comment/invert empty lines
+" [preservim/nerdcommenter] comment/invert empty lines
 let g:NERDCommentEmptyLines = 1
-" [scrooloose/nerdcommenter] trim trailing whitespace when uncommenting
+" [preservim/nerdcommenter] trim trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
-" [scrooloose/nerdcommenter] check whether all selected lines are commented already
+" [preservim/nerdcommenter] check whether all selected lines are commented already
 let g:NERDToggleCheckAllLines = 1
-" [scrooloose/nerdcommenter] default to left-align
+" [preservim/nerdcommenter] default to left-align
 let g:NERDDefaultAlign = 'left'
-" [scrooloose/nerdcommenter] remap align-left comments to ctrl+/
+" [preservim/nerdcommenter] remap align-left comments to ctrl+/
 nmap <C-_> <Plug>NERDCommenterToggle
 vmap <C-_> <Plug>NERDCommenterToggle
 
@@ -236,6 +238,27 @@ let g:palenight_terminal_italics=1
 
 " [tpope/vim-fugitive] set keyboard shortcut for git blame
 nnoremap <silent> gb :Gblame<CR>
+
+" [vim-syntastic/syntastic]
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" [vim-syntastic/syntastic] remove preview window
+" set completeopt-=preview
+
+" [vim-syntastic/syntastic] enable(1) tf plan to be included in filter
+let g:syntastic_terraform_tffilter_plan = 1
+
+" [juliosuerias/vim-terraform-completion] enable(1) plugin keymapping
+let g:terraform_completion_keys = 0
+
+" [juliosuerias/vim-terraform-completion] enable(1) tf module registry completion
+let g:terraform_registry_module_completion = 1
 
 " easier split window navigations
 nnoremap <C-J> <C-W><C-J>
