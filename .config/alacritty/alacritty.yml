@@ -18,8 +18,8 @@ window:
   # Specified in number of columns/lines, not pixels.
   # If both are `0`, this setting is ignored.
   dimensions:
-    columns: 188
-    lines: 55
+    columns: 200
+    lines: 50
 
   # Window position (changes require restart)
   #
@@ -97,16 +97,7 @@ font:
     #   - (Linux) monospace
     #   - (Windows) Consolas
     # family: Cartograph Mono CF
-    # family: Cascadia Code PL
-    # family: FuraCode Nerd Font Mono
-    # family: Dank Mono
-    # family: Operation Mono
-    # family: Fantasque Sans Mono
-    # family: SF Mono
-    # family: Syne Mono
-    family: DM Mono
-    # family: Nova Mono
-    # family: Oxygen Mono
+    family: IBM Plex Mono
 
     # The `style` can be specified to pick a specific face.
     style: Retina
@@ -134,7 +125,7 @@ font:
     #style: Italic
 
   # Point size
-  size: 12.0
+  size: 11.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -321,17 +312,14 @@ mouse:
     #   - (Linux) xdg-open
     #   - (Windows) explorer
     launcher:
-     program: fish
-     args:
-       - -l
-       - -c
-       - "tmux attach || tmux"
+     program: xdg-open
+     args: []
 
     # URL modifiers
     #
     # These are the modifiers that need to be held down for opening URLs when clicking
     # on them. The available modifiers are documented in the key binding section.
-    modifiers: Command
+    modifiers: Control
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
