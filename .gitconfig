@@ -25,7 +25,7 @@
 	name = Joey Espinosa
 	email = jlouis.espinosa@gmail.com
 [gpg]
-	program = gpg2
+	program = gpg
 [url "git@github.com:"]
 	insteadof = https://github.com/
 [push]
