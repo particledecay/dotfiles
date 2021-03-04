@@ -25,6 +25,8 @@ Plug 'tpope/vim-vinegar'
 Plug 'airblade/vim-gitgutter'
 " git wrapper
 Plug 'tpope/vim-fugitive'
+" GitHub wrapper
+Plug 'tpope/vim-rhubarb'
 " surround functions
 Plug 'machakann/vim-sandwich'
 " better statusline
@@ -60,6 +62,8 @@ Plug 'janko/vim-test'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
+" Helm
+Plug 'towolf/vim-helm'
 call plug#end()
 
 " detect type of file being edited and set filetype (w/ plugins and indents)
@@ -172,6 +176,24 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+" [neoclide/coc.nvim] extensions
+let g:coc_global_extensions = [
+  \ 'coc-css',
+  \ 'coc-docker',
+  \ 'coc-emmet',
+  \ 'coc-flutter',
+  \ 'coc-flutter-tools',
+  \ 'coc-fzf-preview',
+  \ 'coc-git',
+  \ 'coc-go',
+  \ 'coc-html',
+  \ 'coc-json',
+  \ 'coc-python',
+  \ 'coc-scssmodules',
+  \ 'coc-snippets',
+  \ 'coc-webpack',
+  \ 'coc-yaml'
+\ ]
 
 " [kristijanhusak/vim-carbon-now-sh] use F5 for instant screenshots
 vnoremap <F5> :CarbonNowSh<CR>
@@ -238,18 +260,20 @@ let g:palenight_terminal_italics=1
 
 " [tpope/vim-fugitive] set keyboard shortcut for git blame
 nnoremap <silent> gb :Gblame<CR>
+" [tpope/vim-fugitive] set keyboard shortcut for opening browser
+nnoremap <silent> gB :Gbrowse<CR>
 
 " [vim-syntastic/syntastic]
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " [vim-syntastic/syntastic] remove preview window
-" set completeopt-=preview
+set completeopt-=preview
 
 " [vim-syntastic/syntastic] enable(1) tf plan to be included in filter
 let g:syntastic_terraform_tffilter_plan = 1
