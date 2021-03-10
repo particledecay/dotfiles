@@ -10,6 +10,30 @@ function! InstallRipGrep(info)
   endif
 endfunction
 
+" return either the top-level git root or the current dir
+function! FindProjectDir() abort
+  if len(argv()) > 0
+    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+  endif
+  return getcwd()
+endfunction
+
+" return either the arg (if it's a dir) or the current dir
+function! FindSessionDir() abort
+  if len(argv()) > 0
+    return expand("#2:p")
+  endif
+  return getcwd()
+endfunction
+
+" ripgrep override for FindProjectDir()
+command! -bang -nargs=* ProjectRg
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'dir': FindProjectDir()}, <bang>0)
+
+" ripgrep override for FindSessionDir()
+command! -bang -nargs=* SessionRg
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'dir': FindSessionDir()}, <bang>0)
+
 " true colors
 if (has("termguicolors"))
   set termguicolors
@@ -64,6 +88,8 @@ Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 " Helm
 Plug 'towolf/vim-helm'
+" Rainbow CSV
+Plug 'mechatroner/rainbow_csv'
 call plug#end()
 
 " detect type of file being edited and set filetype (w/ plugins and indents)
@@ -106,9 +132,11 @@ let $SHELL = "/usr/bin/fish"
 let g:python3_host_prog = "/home/joelinux/.pyenv/versions/3.7.3/bin/python"
 
 " [junegunn/fzf] use ctrl+p for fuzzy search
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :call fzf#vim#files(FindSessionDir())<CR>
+nnoremap <leader><C-p> :call fzf#vim#files(FindProjectDir())<CR>
 " [junegunn/fzf] use ctrl+g for ripgrep
-nnoremap <C-g> :Rg<CR>
+nnoremap <C-g> :SessionRg<CR>
+nnoremap <leader><C-g> :ProjectRg<CR>
 " [junegunn/fzf] top-to-bottom flow
 let $FZF_DEFAULT_OPTS="--reverse"
 " [yuki-ycino/fzf-preview] open floating window when using fzf
