@@ -373,6 +373,13 @@ unbind C-b
 # # /!\ do not remove the previous line
 tmux_conf_theme_24b_colour=true
 set-option -g history-limit 100000
+
+# change prefix
 unbind C-]
 set -g prefix C-]
 bind C-] send-prefix
+
+# automatically name panes
+set-option -g status-interval 1
+set-option -g automatic-rename on
+set-option -g automatic-rename-format '#{b:pane_current_path}'
