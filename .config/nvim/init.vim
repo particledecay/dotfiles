@@ -62,8 +62,6 @@ Plug 'preservim/nerdcommenter'
 Plug 'mattn/emmet-vim', {'for': ['html', 'jsx', 'css']}
 " autocompletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" PaleNight color scheme
-Plug 'drewtempelmeyer/palenight.vim'
 " Markdown preview
 Plug 'euclio/vim-markdown-composer', {'do': function('BuildComposer')}
 " Carbon screenshots
@@ -90,6 +88,18 @@ Plug 'juliosueiras/vim-terraform-completion'
 Plug 'towolf/vim-helm'
 " Rainbow CSV
 Plug 'mechatroner/rainbow_csv'
+" color scheme - PaleNight
+Plug 'drewtempelmeyer/palenight.vim'
+" color scheme - Sonokai 
+Plug 'sainnhe/sonokai'
+" color scheme - Candid
+Plug 'flrnd/candid.vim'
+" color scheme - Espresso
+Plug 'gmoe/vim-espresso'
+" color scheme - Edge
+Plug 'sainnhe/edge'
+" color scheme - Dracula
+Plug 'dracula/vim'
 call plug#end()
 
 " detect type of file being edited and set filetype (w/ plugins and indents)
@@ -227,8 +237,8 @@ let g:coc_global_extensions = [
 vnoremap <F5> :CarbonNowSh<CR>
 " [kristijanhusak/vim-carbon-now-sh] set custom theme options
 let g:carbon_now_sh_options =
-      \ {'bg': 'rgba(123%2C182%2C221%2C0)',
-      \  't': 'one-dark',
+      \ {'bg': 'rgba(123%252C182%252C221%252C0)',
+      \  't': 'dracula-pro',
       \  'wt': 'none',
       \  'l': 'auto',
       \  'ds': 'true',
@@ -239,9 +249,9 @@ let g:carbon_now_sh_options =
       \  'pv': '44px',
       \  'ph': '44px',
       \  'ln': 'true',
-      \  'fm': 'dm',
-      \  'fs': '16px',
-      \  'lh': '142%2525',
+      \  'fm': 'MonoLisa',
+      \  'fs': '14.5px',
+      \  'lh': '142%252525',
       \  'si': 'false',
       \  'es': '2x',
       \  'wm': 'false'}
@@ -338,5 +348,5 @@ let g:netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 
 " color scheme
 set background=dark
-colorscheme palenight
+colorscheme edge
 
