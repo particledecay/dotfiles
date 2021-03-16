@@ -9,11 +9,11 @@ module.exports = {
     updateChannel: 'stable',
 
     // default font size in pixels for all tabs
-    fontSize: 13,
+    fontSize: 14,
 
     // font family with optional fallbacks
     fontFamily: 'MonoLisa',
-    uiFontFamily: 'Raleway',
+    uiFontFamily: 'Fira Sans Black',
 
     // default font weight: 'normal' or 'bold'
     fontWeight: 'normal',
