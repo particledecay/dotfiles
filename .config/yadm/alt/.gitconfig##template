@@ -33,6 +33,8 @@
 	pager = diff-so-fancy | less -FXRi
 [color]
 	ui = auto
+[pull]
+	ff = only
 [gpg]
 {% if yadm.os == "Darwin" %}
 	program = gpg2
