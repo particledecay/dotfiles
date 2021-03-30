@@ -33,5 +33,9 @@
 	pager = diff-so-fancy | less -FXRi
 [color]
 	ui = auto
-[include]
-  path = .gitconfig.local
+[gpg]
+{% if yadm.os == "Darwin" %}
+  program = gpg2
+{% else %}
+  program = gpg
+{% endif %}
