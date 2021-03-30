@@ -35,7 +35,7 @@
 	ui = auto
 [gpg]
 {% if yadm.os == "Darwin" %}
-  program = gpg2
+	program = gpg2
 {% else %}
-  program = gpg
+	program = gpg
 {% endif %}
