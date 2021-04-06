@@ -88,6 +88,8 @@ Plug 'juliosueiras/vim-terraform-completion'
 Plug 'towolf/vim-helm'
 " Rainbow CSV
 Plug 'mechatroner/rainbow_csv'
+" Better syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " color scheme - PaleNight
 Plug 'drewtempelmeyer/palenight.vim'
 " color scheme - Sonokai 
@@ -100,6 +102,12 @@ Plug 'gmoe/vim-espresso'
 Plug 'sainnhe/edge'
 " color scheme - Dracula
 Plug 'dracula/vim'
+" color scheme - Melange
+Plug 'savq/melange'
+" color scheme - One Nvim
+Plug 'Th3Whit3Wolf/one-nvim'
+" color scheme - Oceanic Next
+Plug 'mhartington/oceanic-next'
 call plug#end()
 
 " detect type of file being edited and set filetype (w/ plugins and indents)
@@ -348,5 +356,5 @@ let g:netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 
 " color scheme
 set background=dark
-colorscheme edge
+colorscheme candid
 
