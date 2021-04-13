@@ -177,7 +177,7 @@ let g:NERDToggleCheckAllLines = 1
 let g:NERDDefaultAlign = 'left'
 " [preservim/nerdcommenter] remap align-left comments to ctrl+/
 nmap <C-_> <Plug>NERDCommenterToggle
-vmap <C-_> <Plug>NERDCommenterToggle
+vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 
 " [vim-airline/vim-airline] set theme
 let g:airline_theme='palenight'

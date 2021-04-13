@@ -3,7 +3,7 @@ local wezterm = require 'wezterm';
 return {
   color_scheme = "OneHalfDark",
   font = wezterm.font("MonoLisa"),
-  font_size = 10.0,
+  font_size = 11.0,
   font_rules = {
 	  {
 		  italic = true,
