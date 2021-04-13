@@ -56,6 +56,9 @@ if test -d $HOME/.poetry
   set -gx PATH $HOME/.poetry/bin $PATH
 end
 
+# system-wide binaries
+contains /usr/local/bin $fish_user_paths; or set -a fish_user_paths /usr/local/bin
+
 # ghostscript (for gimp)
 if test -f /usr/bin/gs
   set -Ux GS_PROG /usr/bin/gs
