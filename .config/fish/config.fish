@@ -99,7 +99,7 @@ if type -q direnv
 end
 
 # starship
-starship init fish | source
+status --is-interactive; and starship init fish | source
 set -Ux PYENV_ROOT "$HOME/.pyenv"
 contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT/bin
 # nodenv
