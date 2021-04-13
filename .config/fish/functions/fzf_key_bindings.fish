@@ -1,1 +1,1 @@
-/Users/joelinux/.fzf/shell/key-bindings.fish
+/home/joelinux/.fzf/shell/key-bindings.fish
