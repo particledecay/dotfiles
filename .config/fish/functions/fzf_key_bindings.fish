@@ -1,1 +1,0 @@
-/home/joelinux/.fzf/shell/key-bindings.fish
