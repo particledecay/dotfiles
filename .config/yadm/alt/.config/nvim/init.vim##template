@@ -123,7 +123,11 @@ set relativenumber number   " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
 set encoding=utf-8          " UTF-8 encoding
 set fileformat=unix         " unix-style line formatting
+{% if yadm.os == "Darwin" %}
+set shell=/usr/local/bin/fish
+{% else %}
 set shell=/usr/bin/fish
+{% endif %}
 
 " change leader key
 let mapleader = ","
@@ -140,10 +144,18 @@ au FileType py set softtabstop=4
 au FileType py set tabstop=4
 
 " Shell env var
+{% if yadm.os == "Darwin" %}
+let $SHELL = "/usr/local/bin/fish"
+{% else %}
 let $SHELL = "/usr/bin/fish"
+{% endif %}
 
 " Python for neovim
+{% if yadm.os == "Darwin" %}
+let g:python3_host_prog = "/Users/joelinux/.pyenv/versions/3.7.3/bin/python"
+{% else %}
 let g:python3_host_prog = "/home/joelinux/.pyenv/versions/3.7.3/bin/python"
+{% endif %}
 
 " [junegunn/fzf] use ctrl+p for fuzzy search
 nnoremap <C-p> :call fzf#vim#files(FindSessionDir())<CR>
@@ -286,8 +298,10 @@ let g:go_addtags_transform = "camelcase"
 
 " [sebdah/vim-delve] set shortcut for setting breakpoint
 au FileType go nmap <leader>bp :DlvToggleBreakpoint
-" [sebdah/vim-delve] use F11 for running delve
-au FileType go nmap <F11> :DlvDebug
+" [sebdah/vim-delve] use ',dd' for running delve
+au FileType go nmap <leader>dd :DlvDebug
+" [sebdah/vim-delve] use ',dt' for running delve test
+au FileType go nmap <leader>dt :DlvTest
 
 " [pearofducks/ansible-vim] highlight extra keywords
 let g:ansible_extra_keywords_highlight = 1
@@ -333,4 +347,3 @@ let g:netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 " color scheme
 set background=dark
 colorscheme candid
-
