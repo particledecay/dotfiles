@@ -1,0 +1,46 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "go",
+    "json",
+    "js",
+    "terraform"
+  ],
+  "python.jediEnabled": false,
+  "python.formatting.provider": "yapf",
+  "python.linting.banditEnabled": true,
+  "python.linting.prospectorEnabled": true,
+  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pylintEnabled": true,
+{% if yadm.os == "Darwin" %}
+  "python.poetryPath": "/Users/joelinux/.poetry/bin/poetry",
+  "python.venvPath": "/Users/joelinux/.pyenv",
+{% else %}
+  "python.poetryPath": "/home/joelinux/.poetry/bin/poetry",
+  "python.venvPath": "/home/joelinux/.pyenv",
+{% end %}
+  "languageserver": {
+    "go": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod"
+      ],
+      "trace.server": "verbose",
+      "filetypes": [
+        "go"
+      ]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
+}
