@@ -296,14 +296,12 @@ au FileType go nmap <silent> gc :GoCoverageToggle -short<CR>
 " [fatih/vim-go] automatic JSON tags format
 let g:go_addtags_transform = "camelcase"
 
-" [sebdah/vim-delve] set shortcut for setting breakpoint
-au FileType go nmap <leader>bp :DlvToggleBreakpoint
 " [sebdah/vim-delve] use ',dd' for running delve
-au FileType go nmap <leader>dd :DlvDebug
+au FileType go nmap <leader>dd :DlvDebug<CR>
 " [sebdah/vim-delve] use ',dt' for running delve test
-au FileType go nmap <leader>dt :DlvTest
+au FileType go nmap <leader>dt :DlvTest<CR>
 " [sebdah/vim-delve] use ',db' for toggling delve breakpoints
-au FileType go nmap <leader>db :DlvToggleBreakpoint
+au FileType go nmap <leader>db :DlvToggleBreakpoint<CR>
 
 " [pearofducks/ansible-vim] highlight extra keywords
 let g:ansible_extra_keywords_highlight = 1
