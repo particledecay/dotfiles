@@ -80,10 +80,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'pearofducks/ansible-vim', {'do': './UltiSnips/generate.sh'}
 " vim wrapper for running tests
 Plug 'janko/vim-test'
-" Terraform
-Plug 'hashivim/vim-terraform'
-Plug 'vim-syntastic/syntastic'
-Plug 'juliosueiras/vim-terraform-completion'
 " Helm
 Plug 'towolf/vim-helm'
 " Rainbow CSV
@@ -301,27 +297,6 @@ let g:palenight_terminal_italics=1
 nnoremap <silent> gb :Gblame<CR>
 " [tpope/vim-fugitive] set keyboard shortcut for opening browser
 nnoremap <silent> gB :Gbrowse<CR>
-
-" [vim-syntastic/syntastic]
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" [vim-syntastic/syntastic] remove preview window
-set completeopt-=preview
-
-" [vim-syntastic/syntastic] enable(1) tf plan to be included in filter
-let g:syntastic_terraform_tffilter_plan = 1
-
-" [juliosuerias/vim-terraform-completion] enable(1) plugin keymapping
-let g:terraform_completion_keys = 0
-
-" [juliosuerias/vim-terraform-completion] enable(1) tf module registry completion
-let g:terraform_registry_module_completion = 1
 
 " easier split window navigations
 nnoremap <C-J> <C-W><C-J>
