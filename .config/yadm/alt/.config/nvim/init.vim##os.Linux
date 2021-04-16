@@ -209,10 +209,10 @@ function! s:check_back_space() abort
 endfunction
 let g:coc_snippet_next = '<tab>'
 " [neoclide/coc.nvim] remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <F12> <Plug>(coc-definition)
+nmap <silent> <S-F12> <Plug>(coc-references)
+nmap <silent> <C-F12> <Plug>(coc-implementation)
+nmap <silent> <C-S-F12> <Plug>(coc-type-definition)
 " [neoclide/coc.nvim] use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
@@ -279,8 +279,8 @@ let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 " [fatih/vim-go] use F10 for running tests
 au FileType go nmap <F10> :GoTest -short<CR>
-" [fatih/vim-go] use F9 for code coverage
-au FileType go nmap <F9> :GoCoverageToggle -short<CR>
+" [fatih/vim-go] use 'gc' for code coverage
+au FileType go nmap <silent> gc :GoCoverageToggle -short<CR>
 " [fatih/vim-go] type information in status line
 " let g:go_auto_type_info = 1
 " [fatih/vim-go] use <leader>gd for go to definition
@@ -290,8 +290,8 @@ let g:go_addtags_transform = "camelcase"
 
 " [sebdah/vim-delve] set shortcut for setting breakpoint
 au FileType go nmap <leader>bp :DlvToggleBreakpoint
-" [sebdah/vim-delve] use F12 for running delve
-au FileType go nmap <F12> :DlvDebug
+" [sebdah/vim-delve] use F11 for running delve
+au FileType go nmap <F11> :DlvDebug
 
 " [pearofducks/ansible-vim] highlight extra keywords
 let g:ansible_extra_keywords_highlight = 1
