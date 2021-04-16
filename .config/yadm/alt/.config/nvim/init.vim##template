@@ -302,6 +302,8 @@ au FileType go nmap <leader>bp :DlvToggleBreakpoint
 au FileType go nmap <leader>dd :DlvDebug
 " [sebdah/vim-delve] use ',dt' for running delve test
 au FileType go nmap <leader>dt :DlvTest
+" [sebdah/vim-delve] use ',db' for toggling delve breakpoints
+au FileType go nmap <leader>db :DlvToggleBreakpoint
 
 " [pearofducks/ansible-vim] highlight extra keywords
 let g:ansible_extra_keywords_highlight = 1
