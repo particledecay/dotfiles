@@ -18,7 +18,7 @@
 {% else %}
   "python.poetryPath": "/home/joelinux/.poetry/bin/poetry",
   "python.venvPath": "/home/joelinux/.pyenv",
-{% end %}
+{% endif %}
   "languageserver": {
     "go": {
       "command": "gopls",
