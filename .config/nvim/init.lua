@@ -17,55 +17,47 @@ vim.api.nvim_exec([[
 -- Packer plugins
 local use = require('packer').use
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim'		      -- Package manager
-  use 'tpope/vim-fugitive'		          -- Git commands
-  use 'tpope/vim-rhubarb'		            -- GitHub integration
-  use 'tpope/vim-vinegar'		            -- netrw improvements
-  use 'neovim/nvim-lspconfig'		        -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/nvim-compe'	    	      -- Autocompletion
-  use 'airblade/vim-rooter'             -- Identify root directories and chdir to them
-  use 'nvim-treesitter/nvim-treesitter' -- Advanced semantic code analysis
-  use 'kyazdani42/nvim-web-devicons'    -- Icons
+  use 'wbthomason/packer.nvim'              -- Package manager
+  use 'tpope/vim-fugitive'                  -- Git commands
+  use 'tpope/vim-rhubarb'                   -- GitHub integration
+  use 'tpope/vim-vinegar'                   -- netrw improvements
+  use 'tpope/vim-commentary'                -- Code commenting
+  use 'neovim/nvim-lspconfig'               -- Collection of configurations for built-in LSP client
+  use 'hrsh7th/nvim-compe'                  -- Autocompletion
+  use 'airblade/vim-rooter'                 -- Identify root directories and chdir to them
+  use 'nvim-treesitter/nvim-treesitter'     -- Advanced semantic code analysis
+  use 'kyazdani42/nvim-web-devicons'        -- Icons
+  use 'famiu/feline.nvim'                   -- Statusline
   use {
-    'famiu/feline.nvim',                -- Statusline
-    config = require('feline').setup()
-  }
-  use {
-    'nvim-telescope/telescope.nvim',    -- Fuzzy finder
+    'nvim-telescope/telescope.nvim',        -- Fuzzy finder
     requires = {
       {'nvim-lua/popup.nvim'},
       {'nvim-lua/plenary.nvim'},
     }
   }
   use {
-    'lewis6991/gitsigns.nvim',          -- Git signs
+    'lewis6991/gitsigns.nvim',              -- Git signs
     requires = {
       {'nvim-lua/plenary.nvim'},
     }
   }
-  use 'marko-cerovac/material.nvim'	    -- Material color scheme
+  use {
+    'euclio/vim-markdown-composer',         -- Markdown live preview
+    run = 'cargo build --release'
+  }
+  use 'kristijanhusak/vim-carbon-now-sh'    -- Carbon Now code screenshots
+  use 'chrisbra/csv.vim'                    -- CSV support
+  use 'marko-cerovac/material.nvim'	        -- Material color scheme
 end)
 
--- Global options
-vim.o.mouse = 'v'                       -- Allow middle-click paste with mouse
-vim.o.wildmode = 'longest,list'         -- Get bash-like tab completions
-vim.o.encoding = 'utf-8'                -- UTF-8 encoding
-vim.o.fileformat = 'unix'               -- unix-style line formatting
-vim.o.inccommand = 'nosplit'            -- Incremental live completion
-vim.o.hidden = true                     -- Do not save when switching buffers
-vim.o.termguicolors = true              -- Terminal colors
-vim.o.completeopt = 'menuone,noselect'  -- Allow for autocompletion
+-- Global settings
+require('settings/global')
 
--- Buffer options
-vim.bo.tabstop = 2              -- Number of columns occupied by tab character
-vim.bo.softtabstop = 2          -- See multiple spaces as tabstops so <BS> does the right thing
-vim.bo.expandtab = true         -- Convert tabs to white space
-vim.bo.shiftwidth = 2           -- Width for autoindents
-vim.bo.autoindent = true        -- Indent a new line the same amount as the line just typed
+-- Buffer settings
+require('settings/buffer')
 
--- Window options
-vim.wo.number = true		-- Enable numbers
-vim.wo.relativenumber = true    -- Use relative numbering
+-- Window settings
+require('settings/window')
 
 -- Remap comma as leader key
 vim.api.nvim_set_keymap('', ',', '<Nop>', { noremap = true, silent = true })
@@ -78,62 +70,25 @@ vim.api.nvim_set_keymap('n', '<C-K>', '<C-W><C-K>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-L>', '<C-W><C-L>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-H>', '<C-W><C-H>', { noremap = true })
 
--- LSP settings
-local nvim_lsp = require('lspconfig')
-local on_attach = function(_client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- Copy to clipboard
+vim.api.nvim_set_keymap('n', '<leader>Y', '"+yg_', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>y', '"+y', { noremap = true })
+vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true })
 
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<F12>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-F12>', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<S-F12>', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-S-F12>', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<F8>', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-end
+-- Paste from clipboard
+vim.api.nvim_set_keymap('n', '<leader>p', '"+p', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>P', '"+P', { noremap = true })
+vim.api.nvim_set_keymap('v', '<leader>p', '"+p', { noremap = true })
+vim.api.nvim_set_keymap('v', '<leader>P', '"+P', { noremap = true })
 
--- LSP: Go
-require('lspconfig').gopls.setup {
-  cmd = { 'gopls' },
-  filetypes = { 'go', 'gomod' },
-  on_attach = on_attach,
-  capabilities = {
-    textDocument = {
-      completion = {
-        completionItem = {
-          snippetSupport = true
-        }
-      }
-    }
-  },
-  init_options = {
-    usePlaceholders = true,
-    completeUnimported = true,
-  },
-  settings = {
-    gopls = {
-      analyses = {
-        unusedparams = true,
-      },
-      staticcheck = true,
-    },
-  },
-}
+-- Include line numbers in netrw (why isn't this the default?)
+vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 
--- LSP: Python
-require('lspconfig').pyls.setup {
-  cmd = { 'pyls' },
-  filetypes = { 'python' },
-  on_attach = on_attach,
-}
+-- LSP configuration
+require('lang/lspconfig')
 
--- LSP: Terraform
-require('lspconfig').terraformls.setup {
-  cmd = { 'terraform-ls', 'serve' },
-  filetypes = { 'terraform', 'hcl' },
-  on_attach = on_attach,
-}
+-- Python virtualenv for Neovim
+vim.g.python3_host_prog = '/home/joelinux/.pyenv/versions/3.7.3/bin/python'
 
 -- [airblade/vim-rooter] patterns for finding root directory
 vim.g.rooter_patterns = {
@@ -214,6 +169,37 @@ vim.api.nvim_set_keymap('i', '<S-TAB>', '<cmd>lua smart_s_tab()<CR>', { noremap 
 require('gitsigns').setup {
   current_line_blame = true,
 }
+
+-- [famiu/feline.nvim]
+require('feline').setup()
+
+-- [tpope/vim-fugitive]
+vim.api.nvim_set_keymap('n', 'gb', ':Git blame<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gB', ':GBrowse<CR>', { noremap = true, silent = true })
+
+-- [kristijanhusak/vim-carbon-now-sh]
+vim.g.carbon_now_sh_options = {
+  bg = 'rgba(123%252C182%252C221%252C0)',
+  t = 'dracula-pro',
+  wt = 'none',
+  l = 'auto',
+  ds = 'true',
+  dsyoff = '14px',
+  dsblur = '15px',
+  wc = 'true',
+  wa = 'true',
+  pv = '44px',
+  ph = '44px',
+  ln = 'true',
+  fm = 'MonoLisa',
+  fs = '14.5px',
+  lh = '142%252525',
+  si = 'false',
+  es = '2x',
+  wm = 'false',
+}
+-- [kristijanhusak/vim-carbon-now-sh] use F12 for taking screenshots
+vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [marko-cerovac/material.vim]
 vim.g.material_style = 'palenight'
