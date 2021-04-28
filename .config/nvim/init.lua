@@ -87,8 +87,8 @@ vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 -- LSP configuration
 require('lang/lspconfig')
 
--- Python virtualenv for Neovim
-vim.g.python3_host_prog = '/home/joelinux/.pyenv/versions/3.7.3/bin/python'
+-- Python-specific config
+require('lang/python')
 
 -- [airblade/vim-rooter] patterns for finding root directory
 vim.g.rooter_patterns = {
