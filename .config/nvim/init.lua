@@ -47,6 +47,8 @@ require('packer').startup(function()
   }
   use 'kristijanhusak/vim-carbon-now-sh'    -- Carbon Now code screenshots
   use 'chrisbra/csv.vim'                    -- CSV support
+  use 'sebdah/vim-delve'                    -- Delve debugging
+  use 'machakann/vim-sandwich'              -- Surround plugin
   use 'marko-cerovac/material.nvim'	        -- Material color scheme
 end)
 
@@ -86,6 +88,9 @@ vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 
 -- LSP configuration
 require('lang/lspconfig')
+
+-- Go-specific config
+require('lang/go')
 
 -- Python-specific config
 require('lang/python')
