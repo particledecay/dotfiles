@@ -49,6 +49,7 @@ require('packer').startup(function()
   use 'chrisbra/csv.vim'                    -- CSV support
   use 'sebdah/vim-delve'                    -- Delve debugging
   use 'machakann/vim-sandwich'              -- Surround plugin
+  use 'fatih/vim-go'                        -- Additional Go functions
   use 'marko-cerovac/material.nvim'	        -- Material color scheme
 end)
 
@@ -207,7 +208,7 @@ vim.g.carbon_now_sh_options = {
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [marko-cerovac/material.vim]
-vim.g.material_style = 'palenight'
+vim.g.material_style = 'palenight' -- palenight, deep ocean, darker
 vim.g.material_italic_comments = true
 vim.g.material_italic_keywords = true
 vim.g.material_italic_functions = true
