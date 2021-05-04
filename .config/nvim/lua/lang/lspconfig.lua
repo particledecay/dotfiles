@@ -49,14 +49,30 @@ local on_attach = function(client, bufnr)
 end
 
 -- Define specific languages
+local default_lspconfig = { on_attach = on_attach }
 local servers = {
-  'gopls',
-  'pyls',
-  'terraformls',
-  'bashls',
+  gopls = {
+    cmd = { 'gopls', '--remote=auto' },
+    capabilities = {
+      textDocument = {
+        completion = {
+          completionItem = {
+            snippetSupport = true
+          }
+        }
+      }
+    },
+    init_options = {
+      usePlaceholders = true,
+      completeUnimported = true
+    }
+  },
+  pyls = {},
+  terraformls = {},
+  bashls = {},
 }
 
 -- Map all the defined servers
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+for server, config in pairs(servers) do
+  nvim_lsp[server].setup { vim.tbl_deep_extend('force', default_lspconfig, config) }
 end
