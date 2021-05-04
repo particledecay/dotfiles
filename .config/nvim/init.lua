@@ -27,7 +27,15 @@ require('packer').startup(function()
   use 'airblade/vim-rooter'                 -- Identify root directories and chdir to them
   use 'nvim-treesitter/nvim-treesitter'     -- Advanced semantic code analysis
   use 'kyazdani42/nvim-web-devicons'        -- Icons
-  use 'famiu/feline.nvim'                   -- Statusline
+  use {
+    'hoob3rt/lualine.nvim',                 -- Statusline
+    requires = {
+      {
+        'kyazdani42/nvim-web-devicons',
+        opt = true,
+      }
+    }
+  }
   use {
     'nvim-telescope/telescope.nvim',        -- Fuzzy finder
     requires = {
@@ -175,8 +183,12 @@ require('gitsigns').setup {
   current_line_blame = true,
 }
 
--- [famiu/feline.nvim]
-require('feline').setup()
+-- [hoob3rt/lualine.nvim]
+require('lualine').setup {
+  options = {
+    theme = 'dracula'
+  }
+}
 
 -- [tpope/vim-fugitive]
 vim.api.nvim_set_keymap('n', 'gb', ':Git blame<CR>', { noremap = true, silent = true })
