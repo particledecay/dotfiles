@@ -5,6 +5,8 @@ vim.o.fileformat = 'unix'                       -- unix-style line formatting
 vim.o.hidden = true                             -- Do not save when switching buffers
 vim.o.termguicolors = true                      -- Terminal colors
 vim.o.completeopt = 'menuone,noinsert,noselect' -- Allow for autocompletion
+vim.o.splitbelow = true                         -- Split below (and focus)
+vim.o.splitright = true                         -- Split to the right (and focus)
 
 -- Global tab settings (overrides go in ftplugin files)
 vim.cmd [[

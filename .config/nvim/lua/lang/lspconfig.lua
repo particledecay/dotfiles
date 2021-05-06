@@ -51,22 +51,6 @@ end
 -- Define specific languages
 local default_lspconfig = { on_attach = on_attach }
 local servers = {
-  gopls = {
-    cmd = { 'gopls', '--remote=auto' },
-    capabilities = {
-      textDocument = {
-        completion = {
-          completionItem = {
-            snippetSupport = true
-          }
-        }
-      }
-    },
-    init_options = {
-      usePlaceholders = true,
-      completeUnimported = true
-    }
-  },
   pyls = {},
   terraformls = {},
   bashls = {},
