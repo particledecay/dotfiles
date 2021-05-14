@@ -59,6 +59,7 @@ require('packer').startup(function()
   use 'machakann/vim-sandwich'              -- Surround plugin
   use 'fatih/vim-go'                        -- Go support (better than LSP for now)
   use 'marko-cerovac/material.nvim'	        -- Material color scheme
+  use 'dracula/vim'                         -- Dracula
 end)
 
 -- Global settings
@@ -220,11 +221,12 @@ vim.g.carbon_now_sh_options = {
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [marko-cerovac/material.vim]
-vim.g.material_style = 'palenight' -- palenight, deep ocean, darker
-vim.g.material_italic_comments = true
-vim.g.material_italic_keywords = true
-vim.g.material_italic_functions = true
-vim.g.material_italic_variables = false
-vim.g.material_contrast = true
-vim.g.material_borders = false
-require('material').set()
+-- vim.g.material_style = 'palenight' -- palenight, deep ocean, darker
+-- vim.g.material_italic_comments = true
+-- vim.g.material_italic_keywords = true
+-- vim.g.material_italic_functions = true
+-- vim.g.material_italic_variables = false
+-- vim.g.material_contrast = true
+-- vim.g.material_borders = false
+-- require('material').set()
+vim.api.nvim_exec([[ colorscheme dracula ]], false)
