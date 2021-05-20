@@ -1,3 +1,6 @@
 [submodule ".local/share/omf"]
-	path = .local/share/omf
-	url = https://github.com/oh-my-fish/oh-my-fish.git
+  path = .local/share/omf
+  url = https://github.com/oh-my-fish/oh-my-fish.git
+[submodule ".tmux/plugins/tpm"]
+  path = .tmux/plugins/tpm
+  url = https://github.com/tmux-plugins/tpm
