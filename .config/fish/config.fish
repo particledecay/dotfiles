@@ -96,8 +96,8 @@ if test -d $HOME/Android/Sdk
 end
 
 # pyenv
-status --is-interactive; and pyenv init - | source
-status --is-interactive; and pyenv virtualenv-init - | source
+status --is-interactive; and type -q pyenv; and pyenv init - | source
+status --is-interactive; and type -q pyenv; and pyenv virtualenv-init - | source
 
 # direnv
 if type -q direnv
@@ -105,7 +105,7 @@ if type -q direnv
 end
 
 # starship
-status --is-interactive; and starship init fish | source
+status --is-interactive; and type -q starship; and starship init fish | source
 set -Ux PYENV_ROOT "$HOME/.pyenv"
 contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT/bin
 # nodenv
