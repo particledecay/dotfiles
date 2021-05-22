@@ -54,6 +54,9 @@ local servers = {
   pyls = {},
   terraformls = {},
   bashls = {},
+  gopls = {
+    cmd = { 'gopls', '-remote=auto' },
+  },
 }
 
 -- Map all the defined servers
