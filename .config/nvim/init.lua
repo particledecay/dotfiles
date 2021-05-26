@@ -96,6 +96,9 @@ vim.api.nvim_set_keymap('v', '<leader>P', '"+P', { noremap = true })
 -- Include line numbers in netrw (why isn't this the default?)
 vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 
+-- Don't save hidden buffers
+vim.cmd('autocmd FileType netrw setl bufhidden=delete')
+
 -- LSP configuration
 require('lang/lspconfig')
 
@@ -220,13 +223,5 @@ vim.g.carbon_now_sh_options = {
 -- [kristijanhusak/vim-carbon-now-sh] use F12 for taking screenshots
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
--- [marko-cerovac/material.vim]
--- vim.g.material_style = 'palenight' -- palenight, deep ocean, darker
--- vim.g.material_italic_comments = true
--- vim.g.material_italic_keywords = true
--- vim.g.material_italic_functions = true
--- vim.g.material_italic_variables = false
--- vim.g.material_contrast = true
--- vim.g.material_borders = false
--- require('material').set()
+-- [dracula/vim]
 vim.api.nvim_exec([[ colorscheme dracula ]], false)
