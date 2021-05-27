@@ -53,7 +53,11 @@ module.exports = {
     borderColor: '#303030',
 
     // custom CSS to embed in the main window
-    css: '',
+    css: `
+  .xterm canvas {
+    height: auto !important;
+  }
+`,
 
     // custom CSS to embed in the terminal window
     termCSS: '',
