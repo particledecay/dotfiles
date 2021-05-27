@@ -158,7 +158,9 @@ module.exports = {
     'hyperborder',
     'hypergoogle',
     'hyperlinks',
-    'hyperterm-paste'
+    'hyperterm-paste',
+    'hyper-dracula',
+    'hyper-native-window-decoration'
   ],
 
   // in development, you can create a directory under
