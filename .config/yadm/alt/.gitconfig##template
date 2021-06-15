@@ -42,3 +42,5 @@
 {% else %}
 	program = gpg
 {% endif %}
+[commit]
+  gpgsign = true
