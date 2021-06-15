@@ -43,4 +43,4 @@
 	program = gpg
 {% endif %}
 [commit]
-  gpgsign = true
+	gpgsign = true
