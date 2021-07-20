@@ -131,9 +131,9 @@ vim.api.nvim_set_keymap('n', '<C-g>', '<cmd>Telescope live_grep<CR>', { noremap 
 -- [nvim-telescope/telescope.nvim] options
 require('telescope').setup {
   defaults = {
-    prompt_position = 'top',
     file_ignore_patterns = {'.git'},
     sorting_strategy = 'ascending',
+    layout_strategy = 'horizontal',
   }
 }
 
