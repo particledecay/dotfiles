@@ -58,7 +58,7 @@ require('packer').startup(function()
   use 'sebdah/vim-delve'                    -- Delve debugging
   use 'machakann/vim-sandwich'              -- Surround plugin
   use 'fatih/vim-go'                        -- Go support (better than LSP for now)
-  use 'marko-cerovac/material.nvim'	        -- Material color scheme
+  use 'folke/tokyonight.nvim'               -- TokyoNight theme
   use 'dracula/vim'                         -- Dracula
 end)
 
@@ -191,7 +191,7 @@ require('gitsigns').setup {
 -- [hoob3rt/lualine.nvim]
 require('lualine').setup {
   options = {
-    theme = 'dracula'
+    theme = 'tokyonight'
   }
 }
 
@@ -224,4 +224,7 @@ vim.g.carbon_now_sh_options = {
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [dracula/vim]
-vim.api.nvim_exec([[ colorscheme dracula ]], false)
+-- vim.api.nvim_exec([[ colorscheme dracula ]], false)
+
+-- [folke/tokyonight]
+vim.cmd[[ colorscheme tokyonight ]]
