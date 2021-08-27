@@ -1,0 +1,97 @@
+---
+- hosts: localhost
+  connection: localhost
+  gather_facts: yes
+  
+  tasks:
+    # https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      become: yes
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        filename: docker
+        state: present
+      become: yes
+
+    - name: Install command line packages
+      package:
+        name:
+          - docker
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - autoconf
+          - automake
+          - build-essential
+          - cabextract
+          - cargo
+          - cmake
+          - direnv
+          - docker-compose
+          - fish
+          - git
+          - golang-go
+          - jq
+          - libbz2-dev
+          - libffi-dev
+          - libpq-dev
+          - libreadline-dev
+          - libsqlite3-dev
+          - libssl-dev
+          - libtool
+          - libvirt-clients
+          - libvirt-daemon-system
+          - libxslt-dev
+          - libyaml-dev
+          - llvm
+          - lm-sensors
+          - nfs-common
+          - nmap
+          - openssh-server
+          - pass
+          - qemu-kvm
+          - sqlite3
+          - sshpass
+          - sshuttle
+          - tk-dev
+          - tmate
+          - tmux
+          - traceroute
+          - tree
+          - unrar
+          - unzip
+          - vim
+          - wget
+          - whois
+          - xz-utils
+          - zlib1g-dev
+        state: present
+      become: yes
+
+    - name: Install command line packages
+      package:
+        name:
+          - alacritty
+          - fonts-lato
+          - fonts-powerline
+          - gimp
+          - gnome-tweaks
+          - gnome-screensaver
+          - gparted
+          - imagemagick
+          - inkscape
+          - inotify-tools
+          - libappindicator-dev
+          - peek
+          - slack-desktop
+          - spotify-client
+          - texlive-fonts-extra
+          - ttf-anonymous-pro
+          - vlc
+        state: present
+      become: yes
