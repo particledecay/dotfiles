@@ -2,96 +2,387 @@
 - hosts: localhost
   connection: localhost
   gather_facts: yes
+  vars:
+    python_version: 3.7.6
+    node_version: 15.14.0
   
   tasks:
-    # https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-      become: yes
+    - name: PACKAGE INSTALLATION
+      block:
+        - name: Add Docker GPG key
+          apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            state: present
+          become: yes
+    
+        - name: Add repositories
+          apt_repository:
+            repo: "{{ item.repo }}"
+            state: present
+          become: yes
+          loop:
+            - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
+            - repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    
+        - name: Install command line packages
+          package:
+            name:
+              - autoconf
+              - automake
+              - build-essential
+              - ca-certificates
+              - cabextract
+              - cargo
+              - cmake
+              - curl
+              - direnv
+              - docker
+              - docker-compose
+              - fish
+              - fzf
+              - git
+              - golang-go
+              - jq
+              - libbz2-dev
+              - libffi-dev
+              - libfontconfig1-dev
+              - libfreetype6-dev
+              - libpq-dev
+              - libreadline-dev
+              - libsqlite3-dev
+              - libssl-dev
+              - libtool
+              - libvirt-clients
+              - libvirt-daemon-system
+              - libxcb-xfixes0-dev
+              - libxkbcommon-dev
+              - libxslt-dev
+              - libyaml-dev
+              - llvm
+              - lm-sensors
+              - nfs-common
+              - nmap
+              - openssh-server
+              - pass
+              - pkg-config
+              - qemu-kvm
+              - ripgrep
+              - software-properties-common
+              - sqlite3
+              - sshpass
+              - sshuttle
+              - tk-dev
+              - tmate
+              - tmux
+              - traceroute
+              - tree
+              - unrar
+              - unzip
+              - vim
+              - wget
+              - whois
+              - xz-utils
+              - zlib1g-dev
+            state: present
+          become: yes
+    
+        - name: Install graphical packages
+          package:
+            name:
+              - fonts-lato
+              - fonts-powerline
+              - gimp
+              - gnome-screensaver
+              - gnome-tweaks
+              - gparted
+              - imagemagick
+              - inkscape
+              - inotify-tools
+              - libappindicator-dev
+              - peek
+              - texlive-fonts-extra
+              - ttf-anonymous-pro
+              - vlc
+            state: present
+          become: yes
+    
+        - name: Install Snap packages
+          snap:
+            name: "{{ item.name }}"
+            classic: "{{ item.classic }}"
+          become: yes
+          loop:
+            - name: slack
+              classic: yes
+            - name: spotify
+              classic: no
+            - name: nvim
+              classic: yes
+    
+        - name: Install Rust packages
+          shell: cargo install {{ item }}
+          args:
+            executable: /bin/bash
+            creates: "{{ ansible_env.HOME }}/.cargo/bin/{{ item }}"
+          become: yes
+          loop:
+            - alacritty
+            - hyperfine
+            - procs
+            - exa
+              
+        - name: Set pyenv installation path
+          set_fact:
+            pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
+            pyenv_bin: "{{ ansible_env.HOME }}/.pyenv/bin/pyenv"
 
-    - name: Add Docker repository
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
-        filename: docker
-        state: present
-      become: yes
+        - name: Install pyenv for managing Python
+          git:
+            repo: https://github.com/pyenv/pyenv
+            dest: "{{ pyenv_root }}"
+            update: no
 
-    - name: Install command line packages
-      package:
-        name:
-          - docker
-          - ca-certificates
-          - curl
-          - software-properties-common
-          - autoconf
-          - automake
-          - build-essential
-          - cabextract
-          - cargo
-          - cmake
-          - direnv
-          - docker-compose
-          - fish
-          - git
-          - golang-go
-          - jq
-          - libbz2-dev
-          - libffi-dev
-          - libpq-dev
-          - libreadline-dev
-          - libsqlite3-dev
-          - libssl-dev
-          - libtool
-          - libvirt-clients
-          - libvirt-daemon-system
-          - libxslt-dev
-          - libyaml-dev
-          - llvm
-          - lm-sensors
-          - nfs-common
-          - nmap
-          - openssh-server
-          - pass
-          - qemu-kvm
-          - sqlite3
-          - sshpass
-          - sshuttle
-          - tk-dev
-          - tmate
-          - tmux
-          - traceroute
-          - tree
-          - unrar
-          - unzip
-          - vim
-          - wget
-          - whois
-          - xz-utils
-          - zlib1g-dev
-        state: present
-      become: yes
+        - name: Create pyenv plugin directory
+          file:
+            path: "{{ pyenv_root }}/plugins"
+            state: directory
 
-    - name: Install command line packages
-      package:
-        name:
-          - alacritty
-          - fonts-lato
-          - fonts-powerline
-          - gimp
-          - gnome-tweaks
-          - gnome-screensaver
-          - gparted
-          - imagemagick
-          - inkscape
-          - inotify-tools
-          - libappindicator-dev
-          - peek
-          - slack-desktop
-          - spotify-client
-          - texlive-fonts-extra
-          - ttf-anonymous-pro
-          - vlc
-        state: present
-      become: yes
+        - name: Install pyenv virtualenv plugin
+          git:
+            repo: https://github.com/pyenv/pyenv-virtualenv
+            dest: "{{ pyenv_root }}/plugins/pyenv-virtualenv"
+            update: no
+
+        - name: Install Python {{ python_version }}
+          shell: 'eval "$(pyenv init -)" && pyenv install {{ python_version }}'
+          args:
+            executable: /bin/bash
+            creates: "{{ pyenv_root }}/versions/{{ python_version }}"
+          environment:
+            PYENV_ROOT: "{{ pyenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
+
+        - name: Set nodenv installation path
+          set_fact:
+            nodenv_root: "{{ ansible_env.HOME }}/.nodenv"
+            nodenv_bin: "{{ ansible_env.HOME }}/.nodenv/bin/nodenv"
+
+        - name: Install nodenv for managing Node
+          git:
+            repo: https://github.com/nodenv/nodenv 
+            dest: "{{ nodenv_root }}"
+            update: no
+
+        - name: Compile nodenv extension for performance
+          shell: "{{ nodenv_root }}/src/configure && make -C {{ nodenv_root }}/src"
+          args:
+            executable: /bin/bash
+            creates: "{{ nodenv_root }}/src/realpath.o"
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+
+        - name: Create nodenv plugin directory
+          file:
+            path: "{{ nodenv_root }}/plugins"
+            state: directory
+
+        - name: Install Node Build plugin
+          git:
+            repo: https://github.com/nodenv/node-build
+            dest: "{{ nodenv_root }}/plugins/node-build"
+            update: no
+
+        - name: Install nodenv package rehash plugin
+          git:
+            repo: https://github.com/nodenv/nodenv-package-rehash
+            dest: "{{ nodenv_root }}/plugins/nodenv-package-rehash"
+            update: no
+          register: nodenv_package_rehash
+
+        - name: Install nodenv package hooks
+          shell: 'eval "$(nodenv init -)" && nodenv package-hooks install --all'
+          args:
+            executable: /bin/bash
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+          when: nodenv_package_rehash.changed
+
+        - name: Install Node {{ node_version }}
+          shell: 'eval "$(nodenv init -)" && nodenv install {{ node_version }}'
+          args:
+            executable: /bin/bash
+            creates: "{{ nodenv_root }}/versions/{{ node_version }}/bin/node"
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+
+        - name: Set local Node version to {{ node_version }}
+          shell: nodenv local {{ node_version }}
+          args:
+            executable: /bin/bash
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+          changed_when: false
+
+        - name: Install diff-so-fancy
+          npm:
+            name: diff-so-fancy
+            global: yes
+            executable: "{{ ansible_env.NODENV_ROOT }}/versions/{{ node_version }}/bin/npm"
+          environment:
+            NODENV_ROOT: "{{ ansible_env.HOME }}/.nodenv"
+            PATH: "{{ ansible_env.PATH }}:$NODENV_ROOT/bin"
+
+        - name: Set asdf installation path
+          set_fact:
+            asdf_root: "{{ ansible_env.HOME }}/.asdf"
+            asdf_bin: "{{ ansible_env.HOME }}/.asdf/bin/asdf"
+
+        - name: Install asdf
+          git:
+            repo: https://github.com/asdf-vm/asdf
+            dest: "{{ asdf_root }}"
+            update: no
+
+        - name: Install asdf plugins
+          include_tasks: "{{ ansible_env.HOME }}/.config/yadm/asdf.yml"
+          loop:
+            - 1password-cli
+            - helm
+            - kconf
+            - kind
+            - kubectl
+            - packer
+            - poetry
+            - starship
+            - talos
+            - task
+            - terraform
+            - vault
+
+    - name: CUSTOMIZATION
+      block:
+        - name: Enable modular sudo files
+          lineinfile:
+            path: /etc/sudoers
+            regexp: '^#includedir /etc/sudoers.d'
+            line: '#includedir /etc/sudoers.d'
+            state: present
+            validate: 'visudo -cf %s'
+          become: yes
+    
+        - name: Create sudoers dir
+          file:
+            path: /etc/sudoers.d
+            state: directory
+          become: yes
+    
+        - name: Enable passwordless sudo
+          lineinfile:
+            path: /etc/sudoers.d/10-installer
+            regexp: '^%wheel.*(NOPASSWD)?'
+            line: '%wheel ALL=(ALL:ALL) NOPASSWD: ALL'
+            state: present
+            validate: 'visudo -cf %s'
+            create: yes
+          become: yes
+
+        - name: Install Neovim plugins
+          shell: nvim +PackerInstall +qall
+          args:
+            executable: /bin/bash
+            creates: "{{ ansible_env.HOME }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    
+        - name: Set 24-hour clock format
+          dconf:
+            key: /org/gnome/desktop/interface/clock-format
+            value: 24
+    
+        - name: Set flat mouse acceleration profile
+          dconf:
+            key: /org/gnome/desktop/peripherals/mouse/accel-profile
+            value: "'flat'"
+    
+        - name: Hide the desktop trash icon
+          dconf:
+            key: /org/gnome/nautilus/desktop/trash-icon-visible
+            value: "false"
+    
+        - name: Enable night light
+          dconf:
+            key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+            value: "true"
+    
+        - name: Enable desktop overview hot corners
+          dconf:
+            key: /org/gnome/shell/enable-hot-corners
+            value: "true"
+    
+        - name: Add user to docker group
+          user:
+            name: "{{ ansible_user_id }}"
+            groups: docker
+            append: yes
+          become: yes
+    
+        - name: Set Caps Lock to Escape
+          lineinfile:
+            path: /etc/default/keyboard
+            regexp: '^XKBOPTIONS='
+            line: 'XKBOPTIONS="caps:escape"'
+            state: present
+            create: yes
+          become: yes
+
+        - name: Set regular font
+          dconf:
+            key: /org/gnome/desktop/interface/font-name
+            value: "'Fira Sans Regular 11'"
+
+        - name: Set document font
+          dconf:
+            key: /org/gnome/desktop/interface/document-font-name
+            value: "'Fira Sans Regular 11'"
+
+        - name: Set monospace font
+          dconf:
+            key: /org/gnome/desktop/interface/monospace-font-name
+            value: "'MonoLisa 10'"
+
+        - name: Set window title font
+          dconf:
+            key: /org/gnome/desktop/wm/preferences/titlebar-font
+            value: "'Raleway Black 12'"
+
+        - name: Sort directories first in file-chooser
+          dconf:
+            key: /org/gtk/settings/file-chooser/sort-directories-first
+            value: "true"
+
+        - name: Sort by descending order in file-chooser
+          dconf:
+            key: /org/gtk/settings/file-chooser/sort-order
+            value: "'descending'"
+
+        - name: Set last modified sort in file-chooser
+          dconf:
+            key: /org/gtk/settings/file-chooser/sort-column
+            value: "'modified'"
+
+        - name: Set single-click folder navigation
+          dconf:
+            key: /org/gnome/nautilus/preferences/click-policy
+            value: "'single'"
+
+        - name: Set last modified sort in Nautilus
+          dconf:
+            key: /org/gnome/nautilus/preferences/search-filter-time-type
+            value: "'last_modified'"
+
+        - name: Create Projects directory
+          file:
+            path: "{{ ansible_env.HOME }}/Projects"
+            state: directory

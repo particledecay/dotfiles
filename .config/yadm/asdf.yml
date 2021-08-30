@@ -1,0 +1,33 @@
+---
+- name: Enable {{ item }} asdf plugin
+  shell: source {{ asdf_root }}/asdf.sh && asdf plugin-add {{ item }}
+  args:
+    executable: /bin/bash
+    creates: "{{ asdf_root }}/plugins/{{ item }}"
+  environment:
+    ASDF_ROOT: "{{ asdf_root }}"
+    PATH: "{{ ansible_env.PATH }}:$ASDF_ROOT/bin"
+
+- name: Detect latest version of {{ item }} asdf plugin
+  shell: source {{ asdf_root }}/asdf.sh && asdf latest {{ item }}
+  args:
+    executable: /bin/bash
+  environment:
+    ASDF_ROOT: "{{ asdf_root }}"
+    PATH: "{{ ansible_env.PATH }}:$ASDF_ROOT/bin"
+  register: plugin_version
+  changed_when: false
+
+- name: Set latest version of {{ item }} asdf plugin
+  set_fact:
+    plugin_version: "{{ plugin_version.stdout | default('latest') }}"
+  
+- name: Install latest version of {{ item }} asdf plugin
+  shell: source {{ asdf_root }}/asdf.sh && asdf install {{ item }} latest
+  args:
+    executable: /bin/bash
+    creates: "{{ asdf_root }}/installs/{{ item }}/{{ plugin_version }}"
+  environment:
+    ASDF_ROOT: "{{ asdf_root }}"
+    PATH: "{{ ansible_env.PATH }}:$ASDF_ROOT/bin"
+
