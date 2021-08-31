@@ -11,6 +11,7 @@ end
 # pyenv settings
 set -Ux PYENV_ROOT $HOME/.pyenv
 set -gx PATH $PYENV_ROOT/bin $PATH
+set -gx PATH $PYENV_ROOT/shims $PATH
 
 # user-local binaries
 set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
