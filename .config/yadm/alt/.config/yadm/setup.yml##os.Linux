@@ -23,6 +23,7 @@
           loop:
             - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
             - repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+            - repo: ppa:neovim-ppa/unstable
     
         - name: Install command line packages
           package:
@@ -62,6 +63,7 @@
               - llvm
               - lm-sensors
               - nfs-common
+              - neovim
               - nmap
               - openssh-server
               - pass
@@ -118,8 +120,6 @@
               classic: yes
             - name: spotify
               classic: no
-            - name: nvim
-              classic: yes
     
         - name: Install Rust packages
           shell: cargo install {{ item }}
