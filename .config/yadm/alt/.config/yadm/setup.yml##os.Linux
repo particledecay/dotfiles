@@ -164,6 +164,16 @@
             PYENV_ROOT: "{{ pyenv_root }}"
             PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
 
+        - name: Install Python packages
+          pip:
+            name: "{{ item }}"
+            executable: "{{ pyenv_root }}/versions/{{ python_version }}/bin/pip"
+          environment:
+            PYENV_ROOT: "{{ pyenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
+          loop:
+            - "python-lsp-server[all]"
+
         - name: Set nodenv installation path
           set_fact:
             nodenv_root: "{{ ansible_env.HOME }}/.nodenv"
@@ -229,14 +239,17 @@
             PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
           changed_when: false
 
-        - name: Install diff-so-fancy
+        - name: Install Node packages
           npm:
-            name: diff-so-fancy
+            name: "{{ item }}"
             global: yes
             executable: "{{ ansible_env.NODENV_ROOT }}/versions/{{ node_version }}/bin/npm"
           environment:
             NODENV_ROOT: "{{ ansible_env.HOME }}/.nodenv"
             PATH: "{{ ansible_env.PATH }}:$NODENV_ROOT/bin"
+          loop:
+            - diff-so-fancy
+            - bash-language-server
 
         - name: Set asdf installation path
           set_fact:
@@ -301,7 +314,7 @@
         - name: Set 24-hour clock format
           dconf:
             key: /org/gnome/desktop/interface/clock-format
-            value: 24
+            value: "'24'"
     
         - name: Set flat mouse acceleration profile
           dconf:
