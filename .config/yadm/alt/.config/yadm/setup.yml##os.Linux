@@ -250,6 +250,7 @@
           loop:
             - diff-so-fancy
             - bash-language-server
+            - vscode-langservers-extracted
 
         - name: Set asdf installation path
           set_fact:
@@ -276,6 +277,7 @@
             - talos
             - task
             - terraform
+            - terraform-ls
             - vault
 
     - name: CUSTOMIZATION
