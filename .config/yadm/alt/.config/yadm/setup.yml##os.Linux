@@ -29,6 +29,7 @@
             name:
               - autoconf
               - automake
+              - bat
               - build-essential
               - ca-certificates
               - cabextract
@@ -65,6 +66,7 @@
               - openssh-server
               - pass
               - pkg-config
+              - prettyping
               - qemu-kvm
               - ripgrep
               - software-properties-common
@@ -127,9 +129,9 @@
           become: yes
           loop:
             - alacritty
+            - exa
             - hyperfine
             - procs
-            - exa
               
         - name: Set pyenv installation path
           set_fact:

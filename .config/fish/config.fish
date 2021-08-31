@@ -45,9 +45,6 @@ end
 if test -x $HOME/.cargo/bin/btm
   alias top='btm'
 end
-if test -x $HOME/.cargo/bin/procs
-  alias ps='procs'
-end
 if type -q nvim
   alias vim='nvim'
 end
