@@ -52,7 +52,7 @@ end
 
 # virtualenv settings
 set -Ux WORKON_HOME $HOME/.virtualenvs
-set -Ux PROJECT_HOME $HOME/Projects
+set -Ux PROJECT_HOME $HOME/projects
 if test -d $HOME/.poetry
   set -gx PATH $HOME/.poetry/bin $PATH
 end

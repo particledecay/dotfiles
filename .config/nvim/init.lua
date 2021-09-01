@@ -110,7 +110,7 @@ require('lang/python')
 
 -- [airblade/vim-rooter] patterns for finding root directory
 vim.g.rooter_patterns = {
-  '>Projects',
+  '>projects',
   '.git',
   '.github',
   'setup.py',
