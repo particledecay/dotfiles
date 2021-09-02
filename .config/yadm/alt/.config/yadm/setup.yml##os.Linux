@@ -267,6 +267,7 @@
           include_tasks: "{{ ansible_env.HOME }}/.config/yadm/asdf.yml"
           loop:
             - 1password-cli
+            - github-cli
             - helm
             - kconf
             - kind
