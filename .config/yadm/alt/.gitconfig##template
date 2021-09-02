@@ -44,3 +44,5 @@
 {% endif %}
 [commit]
 	gpgsign = true
+[includeIf "gitdir:projects/datto/"]
+	path = ~/projects/datto/.gitconfig
