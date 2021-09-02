@@ -219,7 +219,7 @@
           environment:
             NODENV_ROOT: "{{ nodenv_root }}"
             PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
-          when: nodenv_package_rehash.changed
+          when: nodenv_package_rehash is changed
 
         - name: Install Node {{ node_version }}
           shell: 'eval "$(nodenv init -)" && nodenv install {{ node_version }}'
@@ -346,13 +346,9 @@
           become: yes
     
         - name: Set Caps Lock to Escape
-          lineinfile:
-            path: /etc/default/keyboard
-            regexp: '^XKBOPTIONS='
-            line: 'XKBOPTIONS="caps:escape"'
-            state: present
-            create: yes
-          become: yes
+          dconf:
+            key: /org/gnome/desktop/input-sources/xkboptions
+            value: "['caps:escape']"
 
         - name: Set regular font
           dconf:
