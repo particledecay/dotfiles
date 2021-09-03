@@ -398,5 +398,5 @@
 
         - name: Create Projects directory
           file:
-            path: "{{ ansible_env.HOME }}/Projects"
+            path: "{{ ansible_env.HOME }}/projects"
             state: directory
