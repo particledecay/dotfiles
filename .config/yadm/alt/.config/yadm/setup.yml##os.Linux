@@ -272,6 +272,7 @@
             - kconf
             - kind
             - kubectl
+            - lab
             - packer
             - poetry
             - starship
