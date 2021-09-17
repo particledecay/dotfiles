@@ -159,7 +159,7 @@ module.exports = {
     'hypergoogle',
     'hyperlinks',
     'hyperterm-paste',
-    'hyper-dracula',
+    'hyper-tokyo-night',
     'hyper-native-window-decoration'
   ],
 
