@@ -98,9 +98,7 @@ status --is-interactive; and type -q pyenv; and pyenv init - | source
 status --is-interactive; and type -q pyenv; and pyenv virtualenv-init - | source
 
 # direnv
-if type -q direnv
-  eval (direnv hook fish)
-end
+status --is-interactive; and type -q direnv; and direnv hook fish | source
 
 # starship
 status --is-interactive; and type -q starship; and starship init fish | source
