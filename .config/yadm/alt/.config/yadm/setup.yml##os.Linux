@@ -212,6 +212,17 @@
             - alacritty
             - hyperfine
             - procs
+
+        - name: Detect fish path
+          shell: which fish
+          register: fish_cmd
+          changed_when: false
+
+        - name: Set fish shell for user
+          user:
+            name: "{{ ansible_user_id }}"
+            shell: "{{ fish_cmd.stdout }}"
+          become: yes
               
         - name: Set pyenv installation path
           set_fact:
