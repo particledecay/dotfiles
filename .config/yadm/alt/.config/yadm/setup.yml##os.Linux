@@ -319,7 +319,7 @@
             creates: "{{ nodenv_root }}/versions/{{ node_version }}/bin/node"
           environment:
             NODENV_ROOT: "{{ nodenv_root }}"
-            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
 
         - name: Set local Node version to {{ node_version }}
           shell: nodenv local {{ node_version }}
@@ -327,17 +327,17 @@
             executable: /bin/bash
           environment:
             NODENV_ROOT: "{{ nodenv_root }}"
-            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
           changed_when: false
 
         - name: Install Node packages
           npm:
             name: "{{ item }}"
             global: yes
-            executable: "{{ ansible_env.NODENV_ROOT }}/versions/{{ node_version }}/bin/npm"
+            executable: "{{ nodenv_root }}/versions/{{ node_version }}/bin/npm"
           environment:
-            NODENV_ROOT: "{{ ansible_env.HOME }}/.nodenv"
-            PATH: "{{ ansible_env.PATH }}:$NODENV_ROOT/bin"
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
           loop:
             - diff-so-fancy
             - bash-language-server
