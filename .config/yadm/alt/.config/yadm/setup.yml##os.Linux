@@ -210,7 +210,6 @@
             creates: "{{ ansible_env.HOME }}/.cargo/bin/{{ item }}"
           loop:
             - alacritty
-            - exa
             - hyperfine
             - procs
               
