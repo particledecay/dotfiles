@@ -481,7 +481,7 @@
             key: /org/gnome/nautilus/preferences/search-filter-time-type
             value: "'last_modified'"
 
-        - name: Create Projects directory
+        - name: Create projects directory
           file:
             path: "{{ ansible_env.HOME }}/projects"
             state: directory
