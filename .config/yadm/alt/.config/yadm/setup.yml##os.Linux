@@ -7,22 +7,14 @@
     node_version: 15.14.0
   
   tasks:
-    - name: PACKAGE INSTALLATION
+    - name: UBUNTU PACKAGE INSTALLATION
       block:
-        - name: Add Docker GPG key
-          apt_key:
-            url: https://download.docker.com/linux/ubuntu/gpg
-            state: present
-          become: yes
-    
         - name: Add repositories
           apt_repository:
             repo: "{{ item.repo }}"
             state: present
-          become: yes
           loop:
             - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
-            - repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
             - repo: ppa:neovim-ppa/unstable
     
         - name: Install command line packages
@@ -38,8 +30,6 @@
               - cmake
               - curl
               - direnv
-              - docker
-              - docker-compose
               - fish
               - fzf
               - git
@@ -68,6 +58,7 @@
               - openssh-server
               - pass
               - pkg-config
+              - podman
               - prettyping
               - qemu-kvm
               - ripgrep
@@ -88,7 +79,6 @@
               - xz-utils
               - zlib1g-dev
             state: present
-          become: yes
     
         - name: Install graphical packages
           package:
@@ -108,13 +98,11 @@
               - ttf-anonymous-pro
               - vlc
             state: present
-          become: yes
     
         - name: Install Snap packages
           snap:
             name: "{{ item.name }}"
             classic: "{{ item.classic }}"
-          become: yes
           loop:
             - name: slack
               classic: yes
@@ -432,13 +420,6 @@
           dconf:
             key: /org/gnome/shell/enable-hot-corners
             value: "true"
-    
-        - name: Add user to docker group
-          user:
-            name: "{{ ansible_user_id }}"
-            groups: docker
-            append: yes
-          become: yes
     
         - name: Set Caps Lock to Escape
           dconf:
