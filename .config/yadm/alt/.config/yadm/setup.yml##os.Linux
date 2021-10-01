@@ -342,6 +342,7 @@
             - diff-so-fancy
             - bash-language-server
             - vscode-langservers-extracted
+            - yaml-language-server
 
         - name: Set asdf installation path
           set_fact:
