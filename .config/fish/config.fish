@@ -106,6 +106,7 @@ set -Ux PYENV_ROOT "$HOME/.pyenv"
 contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT/bin
 # nodenv
 set -Ux NODENV_ROOT "$HOME/.nodenv"
+contains $NODENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/bin
 contains $NODENV_ROOT/shims $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/shims
 # asdf
 set -Ux ASDF_ROOT "$HOME/.asdf"
