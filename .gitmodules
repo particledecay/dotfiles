@@ -4,3 +4,6 @@
 [submodule ".tmux/plugins/tpm"]
   path = .tmux/plugins/tpm
   url = https://github.com/tmux-plugins/tpm
+[submodule "/home/joelinux/.fzf"]
+	path = /home/joelinux/.fzf
+	url = https://github.com/junegunn/fzf
