@@ -224,7 +224,7 @@ vim.g.carbon_now_sh_options = {
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [dracula/vim]
--- vim.api.nvim_exec([[ colorscheme dracula ]], false)
+vim.api.nvim_exec([[ colorscheme dracula ]], false)
 
 -- [folke/tokyonight]
-vim.cmd[[ colorscheme tokyonight ]]
+-- vim.cmd[[ colorscheme tokyonight ]]
