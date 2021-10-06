@@ -34,6 +34,9 @@ alias k='kubectl'
 if type -q bat
   alias cat='bat'
 end
+if type -q batcat
+  alias cat='batcat'
+end
 if type -q prettyping
   alias ping='prettyping'
 end
