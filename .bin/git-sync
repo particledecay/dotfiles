@@ -1,0 +1,45 @@
+#!/bin/bash
+
+get_upstream() {
+  echo $(git remote | egrep -o '(upstream|origin)' | sort | tail -1)
+}
+
+git_sync() {
+  REMOTES="$@"
+  if [ -z "$REMOTES" ]
+  then
+    REMOTES=$(get_upstream)  
+  fi
+
+  for rem in "${REMOTES[@]}"
+  do
+    git remote update $rem
+    branch=$(git branch | awk '$1 == "*" {print $2}')
+
+    rem_branch=refs/remotes/$rem/$branch
+    loc_branch=refs/heads/$branch
+    behind=$(( $(git rev-list --count ${loc_branch}..${rem_branch} 2>/dev/null) +0 ))
+    ahead=$(( $(git rev-list --count ${rem_branch}..${loc_branch} 2>/dev/null) +0 ))
+
+    if [ "$behind" -gt 0 ]
+    then
+      if [ "$ahead" -gt 0 ]
+      then
+        echo " branch ${branch} is ${behind} commit(s) behind and ${ahead} commit(s) ahead of $rem/$branch and could not be fast-forwarded"
+        exit 1
+      else
+        echo " branch ${branch} is ${behind} commit(s) behind $rem/$branch, fast-forwarding"
+        git merge --ff-only -q $rem_branch
+      fi
+    else
+      if [ "$ahead" -gt 0 ]
+      then
+        echo " branch ${branch} is up to date with $rem/$branch"
+      fi
+    fi
+  done
+  
+  exit 0
+}
+
+git_sync "$@"
