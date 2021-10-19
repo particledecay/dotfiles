@@ -71,15 +71,6 @@ local servers = {
       }
     }
   },
-  yamlls = {
-    settings = {
-      yaml = {
-        schemaDownload = {
-          enable = true,
-        },
-      },
-    },
-  },
 }
 
 -- Map all the defined servers

@@ -58,6 +58,7 @@ require('packer').startup(function()
   use 'sebdah/vim-delve'                    -- Delve debugging
   use 'machakann/vim-sandwich'              -- Surround plugin
   use 'fatih/vim-go'                        -- Go support (better than LSP for now)
+  use 'towolf/vim-helm'                     -- Helm chart support
   use 'folke/tokyonight.nvim'               -- TokyoNight theme
   use 'dracula/vim'                         -- Dracula
 end)
