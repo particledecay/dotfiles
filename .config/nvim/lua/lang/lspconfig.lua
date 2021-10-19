@@ -59,9 +59,7 @@ local servers = {
   pylsp = {},
   terraformls = {},
   bashls = {},
-  gopls = {
-    cmd = { 'gopls', '-remote=auto' },
-  },
+  gopls = {},
   jsonls = {
     commands = {
       Format = {
