@@ -9,10 +9,10 @@ module.exports = {
     updateChannel: 'stable',
 
     // default font size in pixels for all tabs
-    fontSize: 11,
+    fontSize: 12,
 
     // font family with optional fallbacks
-    fontFamily: 'Mono Lisa',
+    fontFamily: 'Mono Lisa, FuraCode Nerd Font',
     uiFontFamily: 'Fira Sans Black',
 
     // default font weight: 'normal' or 'bold'
@@ -159,7 +159,7 @@ module.exports = {
     'hypergoogle',
     'hyperlinks',
     'hyperterm-paste',
-    'hyper-tokyo-night',
+    'hyper-dracula',
     'hyper-native-window-decoration'
   ],
 

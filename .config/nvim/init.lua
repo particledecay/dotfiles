@@ -23,12 +23,18 @@ require('packer').startup(function()
   use 'tpope/vim-vinegar'                   -- netrw improvements
   use 'tpope/vim-commentary'                -- Code commenting
   use 'neovim/nvim-lspconfig'               -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/nvim-compe'                  -- Autocompletion
+  use 'hrsh7th/cmp-nvim-lsp'                -- nvim-cmp source for LSP
+  use 'hrsh7th/cmp-buffer'                  -- nvim-cmp source for buffer words
+  use 'hrsh7th/cmp-path'                    -- nvim-cmp source for filesystem paths
+  use 'hrsh7th/cmp-cmdline'                 -- nvim-cmp source for vim's cmdline
+  use 'saadparwaiz1/cmp_luasnip'            -- nvim-cmp source for LuaSnip
+  use 'hrsh7th/nvim-cmp'                    -- Autocompletion
+  use 'L3MON4D3/LuaSnip'                    -- LSP Snippets engine
   use 'airblade/vim-rooter'                 -- Identify root directories and chdir to them
   use 'nvim-treesitter/nvim-treesitter'     -- Advanced semantic code analysis
   use 'kyazdani42/nvim-web-devicons'        -- Icons
   use {
-    'hoob3rt/lualine.nvim',                 -- Statusline
+    'nvim-lualine/lualine.nvim',            -- Statusline
     requires = {
       {
         'kyazdani42/nvim-web-devicons',
@@ -59,7 +65,9 @@ require('packer').startup(function()
   use 'machakann/vim-sandwich'              -- Surround plugin
   use 'fatih/vim-go'                        -- Go support (better than LSP for now)
   use 'towolf/vim-helm'                     -- Helm chart support
-  use 'folke/tokyonight.nvim'               -- TokyoNight theme
+  use 'folke/trouble.nvim'                  -- Better diagnostics
+
+  -- Themes
   use 'dracula/vim'                         -- Dracula
 end)
 
@@ -145,44 +153,79 @@ require('nvim-treesitter.configs').setup {
   indent = { enable = true },
 }
 
--- [hrsh7th/nvim-compe] options
-require('compe').setup {
-  enabled = true,
-  autocomplete = true,
-
-  source = {
-    path = true,
-    buffer = true,
-    nvim_lsp = true,
-    nvim_lua = true,
-    vsnip = true,
+-- [hrsh7th/nvim-cmp] enable sources and mappings
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+cmp.mapping.confirm({ select = true })
+cmp.setup({
+  completion = {
+    completeopt = 'menu,menuone,noinsert,noselect'
+  },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable,
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+  }),
+})
+-- [hrsh7th/nvim-cmp] use buffer source for '/'
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
   }
-}
--- [hrsh7th/nvim-compe] mappings
-function smart_tab()
-    if vim.fn.pumvisible() ~= 0 then
-        vim.api.nvim_eval([[feedkeys("\<c-n>", "n")]])
-        return
-    end
+})
+-- [hrsh7th/nvim-cmp] use cmdline & path source for ':'
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
-    local col = vim.fn.col(".") - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-        vim.api.nvim_eval([[feedkeys("\<tab>", "n")]])
-        return
-    end
-
-    vim.fn["compe#complete"]();
-end
-function smart_s_tab()
-  if vim.fn.pumvisible() ~= 0 then
-    vim.api.nvim_eval([[feedkeys("\<c-p>", "n")]])
-    return
-  end
-
-  vim.api.nvim_eval([[feedkeys("\<s-tab>", "n")]])
-end
-vim.api.nvim_set_keymap('i', '<TAB>', '<cmd>lua smart_tab()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<S-TAB>', '<cmd>lua smart_s_tab()<CR>', { noremap = true, silent = true })
+-- [tpope/vim-commentary]
+vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
 
 -- [lewis6991/gitsigns.nvim] options
 require('gitsigns').setup {
@@ -192,7 +235,9 @@ require('gitsigns').setup {
 -- [hoob3rt/lualine.nvim]
 require('lualine').setup {
   options = {
-    theme = 'tokyonight'
+    theme = 'dracula',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
   }
 }
 
@@ -226,6 +271,3 @@ vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [dracula/vim]
 vim.api.nvim_exec([[ colorscheme dracula ]], false)
-
--- [folke/tokyonight]
--- vim.cmd[[ colorscheme tokyonight ]]
