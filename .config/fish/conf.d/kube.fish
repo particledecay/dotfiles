@@ -24,3 +24,9 @@ function kube_endpoints
 
   kubectl get endpoints $svc -o json | jq -r '.subsets[].addresses[].ip' | sort -V
 end
+
+function kube_logs
+  set -l app_name $argv[1]
+
+  kubectl logs --tail -1 -l app.kubernetes.io/name=$app_name $argv[2..]
+end
