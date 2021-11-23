@@ -108,12 +108,16 @@ status --is-interactive; and type -q direnv; and direnv hook fish | source
 status --is-interactive; and type -q starship; and starship init fish | source
 set -Ux PYENV_ROOT "$HOME/.pyenv"
 contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT/bin
+
 # nodenv
 set -Ux NODENV_ROOT "$HOME/.nodenv"
 contains $NODENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/bin
 contains $NODENV_ROOT/shims $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/shims
+
 # asdf
 set -Ux ASDF_ROOT "$HOME/.asdf"
 contains $ASDF_ROOT/bin $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/bin
 contains $ASDF_ROOT/shims $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/shims
 
+# krew (kubectl plugin)
+contains $HOME/.krew/bin $fish_user_paths; or set -a fish_user_paths $HOME/.krew/bin
