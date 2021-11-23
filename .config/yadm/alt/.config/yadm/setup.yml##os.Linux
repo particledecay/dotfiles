@@ -16,6 +16,7 @@
           loop:
             - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
             - repo: ppa:neovim-ppa/unstable
+            - repo: ppa:fish-shell/release-3
     
         - name: Install command line packages
           package:
