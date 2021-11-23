@@ -1,9 +1,8 @@
 acomagu/fish-async-prompt
 danhper/fish-ssh-agent
 evanlucas/fish-kubectl-completions
-jethrokuan/fzf
 jethrokuan/z
 jorgebucaran/fish-nvm
 rstacruz/fish-asdf
 dracula/fish
-ojiry/fish-tmux
+PatrickF1/fzf.fish
