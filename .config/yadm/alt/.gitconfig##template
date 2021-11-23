@@ -24,8 +24,6 @@
 	signingkey = BA210DB793D37A6157177FDDB9CEB1D5CFA7BE10
 	name = Joey Espinosa
 	email = jlouis.espinosa@gmail.com
-[url "git@github.com:"]
-	insteadof = https://github.com/
 [push]
 	default = simple
 [core]
