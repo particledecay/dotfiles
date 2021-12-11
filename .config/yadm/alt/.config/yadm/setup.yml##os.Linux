@@ -84,6 +84,7 @@
         - name: Install graphical packages
           package:
             name:
+              - flameshot
               - fonts-lato
               - fonts-powerline
               - gimp
@@ -180,6 +181,7 @@
           package:
             name:
               - ImageMagick
+              - flameshot
               - gimp
               - gnome-tweaks
               - gparted
