@@ -1,0 +1,6 @@
+starship 1.0.0
+kconf 1.11.0
+vault 1.9.1
+consul 1.10.4
+kubectl 1.23.0
+helm 3.7.2
