@@ -4,3 +4,4 @@ vault 1.9.1
 consul 1.10.4
 kubectl 1.23.0
 helm 3.7.2
+github-cli 2.3.0
