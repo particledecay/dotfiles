@@ -5,3 +5,5 @@ consul 1.10.4
 kubectl 1.23.0
 helm 3.7.2
 github-cli 2.3.0
+k9s 0.25.15
+polaris 4.2.0
