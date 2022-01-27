@@ -7,3 +7,4 @@ helm 3.7.2
 github-cli 2.4.0
 k9s 0.25.15
 polaris 4.2.0
+argo 3.2.6
