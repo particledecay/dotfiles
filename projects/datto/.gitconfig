@@ -2,5 +2,3 @@
 	signingkey = 204F9C50AAA7BC21A277D84510FEA628DC27A1D1
 	name = Joey Espinosa
 	email = jespinosa@datto.com
-[url "git@gitlab.datto.net:"]
-	insteadof = https://gitlab.datto.net/
