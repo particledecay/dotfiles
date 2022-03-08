@@ -59,7 +59,19 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 -- Define specific languages
 local default_lspconfig = { on_attach = on_attach, capabilities = capabilities }
 local servers = {
-  pylsp = {},
+  pylsp = {
+    configurationSources = { 'flake8' },
+    root_dir = function(fname)
+      local root_files = {
+        'pyproject.toml',
+        'setup.py',
+        'setup.cfg',
+        'requirements.txt',
+        'Pipfile',
+      }
+      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+    end,
+  },
   terraformls = {},
   bashls = {},
   gopls = {},
