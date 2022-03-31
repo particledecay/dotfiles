@@ -1,4 +1,5 @@
 local nvim_lsp = require('lspconfig')
+local util = require('lspconfig/util')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -74,7 +75,26 @@ local servers = {
   },
   terraformls = {},
   bashls = {},
-  gopls = {},
+  gopls = {
+    cmd = { 'gopls', 'serve' },
+    filetypes = { 'go', 'gomod', 'gotmpl' },
+    root_dir = function(fname)
+      local root_files = {
+        'go.work',
+        'go.mod',
+        '.git',
+      }
+      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+    end,
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+      },
+    },
+  },
   jsonls = {
     commands = {
       Format = {
