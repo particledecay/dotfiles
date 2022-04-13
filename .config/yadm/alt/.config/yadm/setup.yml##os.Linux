@@ -16,7 +16,13 @@
           loop:
             - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
             - repo: ppa:neovim-ppa/unstable
-            - repo: ppa:fish-shell/release-3
+
+        - name: Add fish repository
+          apt_repository:
+            repo: ppa:fish-shell/release-3
+            state: present
+          when:
+            - ansible_distribution_major_version | int < 22
     
         - name: Install command line packages
           package:
@@ -108,8 +114,6 @@
           loop:
             - name: slack
               classic: yes
-            - name: spotify
-              classic: no
       become: yes
       when: ansible_distribution == "Ubuntu"
 
