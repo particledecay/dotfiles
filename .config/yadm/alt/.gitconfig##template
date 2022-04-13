@@ -19,7 +19,7 @@
 	mkpatch = "!f() { git diff $1..$(git branch-name) > diff.patch && echo diff.patch; }; f"
 	tags = tag -l --sort=v:refname
 	last-tag = !git tags | tail -1
-	since-last-tag = "!f() { if [ -z \"$(git last-tag)\" ]; then git log --oneline --all; else git log --oneline $(git last-tag)..$(git branch-name); fi; }; f"
+	since-last-tag = "!f() { if [ -z \"$(git last-tag)\" ]; then git log --oneline --all; else git log --oneline --no-decorate $(git last-tag)..$(git branch-name) | sort -rk 2,2; fi; }; f"
 [user]
 	signingkey = BA210DB793D37A6157177FDDB9CEB1D5CFA7BE10
 	name = Joey Espinosa
