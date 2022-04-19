@@ -98,7 +98,12 @@ font:
     #   - (Windows) Consolas
     # family: Cartograph Mono CF
     # family: IBM Plex Mono
-    family: MonoLisa
+    family: SF Mono
+    # family: MonoLisa
+    # family: Operation Mono
+    # family: Monofur Nerd Font
+    # family: Gintronic
+    # family: Overpass Mono
 
     # The `style` can be specified to pick a specific face.
     style: Retina
@@ -155,7 +160,7 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
