@@ -117,7 +117,7 @@ module.exports = {
         macOptionSelectionMode: 'vertical',
         // Whether to use the WebGL renderer. Set it to false to use canvas-based
         // rendering (slower, but supports transparent backgrounds)
-        webGLRenderer: false,
+        webGLRenderer: true,
         // keypress required for weblink activation: [ctrl|alt|meta|shift]
         // todo: does not pick up config changes automatically, need to restart terminal :/
         webLinksActivationKey: '',
@@ -130,6 +130,13 @@ module.exports = {
         // set to true to preserve working directory when creating splits or tabs
         preserveCWD: true,
         // for advanced config flags please refer to https://hyper.is/#cfg
+    
+        // [hyper-startup]
+        commands: ['tmux attach || tmux'],
+        // [hyperborder]
+        hyperBorder: {
+          animate: true,
+        }
     },
     // a list of plugins to fetch and install from npm
     // format: [@org/]project[#version]
@@ -138,13 +145,11 @@ module.exports = {
     //   `@company/project`
     //   `project#1.0.1`
     plugins: [
-      'hyper-font-smoothing',
-      'hyperborder',
-      'hypergoogle',
       'hyperlinks',
-      'hyperterm-paste',
+      'hyper-startup',
+      'hyperborder',
       'hyper-dracula',
-      'hyper-native-window-decoration'
+      'hyperterm-open-devtools'
     ],
     // in development, you can create a directory under
     // `~/.hyper_plugins/local/` and include it here
