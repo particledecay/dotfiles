@@ -63,7 +63,7 @@ require('packer').startup(function()
   use 'chrisbra/csv.vim'                    -- CSV support
   use 'sebdah/vim-delve'                    -- Delve debugging
   use 'machakann/vim-sandwich'              -- Surround plugin
-  use 'fatih/vim-go'                        -- Go support (better than LSP for now)
+  use 'fatih/vim-go'                        -- Go support (better than lspconfig for now)
   use 'towolf/vim-helm'                     -- Helm chart support
   use 'folke/trouble.nvim'                  -- Better diagnostics
 
