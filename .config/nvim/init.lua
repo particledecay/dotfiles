@@ -150,7 +150,7 @@ require('telescope').setup {
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
   highlight = { enable = true },
-  indent = { enable = true },
+  indent = { enable = false },
 }
 
 -- [hrsh7th/nvim-cmp] enable sources and mappings
