@@ -30,3 +30,11 @@ function kube_logs
 
   kubectl logs --tail -1 -l app.kubernetes.io/name=$app_name $argv[2..]
 end
+
+function kube_load
+  for node in (k get nodes --no-headers | awk '{print $1}')
+    set -l proc_load (ssh -o StrictHostKeyChecking=no $node.datto.lan "cat /proc/loadavg")
+
+    printf "%-30s%-20s\n" "$node:" (echo $proc_load | awk '{print $1", "$2", "$3}')
+  end
+end
