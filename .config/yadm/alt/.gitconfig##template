@@ -43,5 +43,5 @@
 [commit]
 	gpgsign = true
 	verbose = true
-[includeIf "gitdir:projects/datto/"]
-	path = ~/projects/datto/.gitconfig
+[url "git@github.com:"]
+	insteadOf = https://github.com/
