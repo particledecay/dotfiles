@@ -447,22 +447,22 @@
         - name: Set regular font
           dconf:
             key: /org/gnome/desktop/interface/font-name
-            value: "'Fira Sans Regular 11'"
+            value: "'Lexend Regular 11'"
 
         - name: Set document font
           dconf:
             key: /org/gnome/desktop/interface/document-font-name
-            value: "'Fira Sans Regular 11'"
+            value: "'Lexend Regular 11'"
 
         - name: Set monospace font
           dconf:
             key: /org/gnome/desktop/interface/monospace-font-name
-            value: "'MonoLisa 10'"
+            value: "'MonoLisa 11'"
 
         - name: Set window title font
           dconf:
             key: /org/gnome/desktop/wm/preferences/titlebar-font
-            value: "'Raleway Black 12'"
+            value: "'Amazon Ember Display Heavy 13'"
 
         - name: Sort directories first in file-chooser
           dconf:
