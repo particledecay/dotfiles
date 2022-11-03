@@ -97,6 +97,11 @@ if test -d $HOME/Android/Sdk
   set -Ux ANDROID_HOME $ANDROID_SDK_ROOT
 end
 
+# asdf
+set -Ux ASDF_ROOT "$HOME/.asdf"
+contains $ASDF_ROOT/bin $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/bin
+contains $ASDF_ROOT/shims $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/shims
+
 # pyenv
 status --is-interactive; and type -q pyenv; and pyenv init - | source
 status --is-interactive; and type -q pyenv; and pyenv virtualenv-init - | source
@@ -105,7 +110,7 @@ status --is-interactive; and type -q pyenv; and pyenv virtualenv-init - | source
 status --is-interactive; and type -q direnv; and direnv hook fish | source
 
 # starship
-status --is-interactive; and type -q starship; and starship init fish | source
+type -q starship; and starship init fish | source
 set -Ux PYENV_ROOT "$HOME/.pyenv"
 contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT/bin
 
@@ -113,11 +118,6 @@ contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT
 set -Ux NODENV_ROOT "$HOME/.nodenv"
 contains $NODENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/bin
 contains $NODENV_ROOT/shims $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/shims
-
-# asdf
-set -Ux ASDF_ROOT "$HOME/.asdf"
-contains $ASDF_ROOT/bin $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/bin
-contains $ASDF_ROOT/shims $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/shims
 
 # krew (kubectl plugin)
 contains $HOME/.krew/bin $fish_user_paths; or set -a fish_user_paths $HOME/.krew/bin
