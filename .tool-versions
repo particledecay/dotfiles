@@ -2,9 +2,15 @@ starship 1.2.1
 kconf 1.12.0
 vault 1.10.3+ent
 consul 1.10.4
-kubectl 1.23.1
+kubectl 1.25.0
 helm 3.7.2
 github-cli 2.4.0
 k9s 0.25.15
 polaris 4.2.0
 argo 3.2.6
+shellcheck 0.8.0
+terraform-ls 0.29.2
+awscli 2.8.3
+aws-vault 6.6.0
+1password-cli 2.7.1
+terragrunt 0.39.2
