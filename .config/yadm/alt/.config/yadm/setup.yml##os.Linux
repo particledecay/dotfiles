@@ -350,8 +350,12 @@
             NODENV_ROOT: "{{ nodenv_root }}"
             PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
           loop:
-            - diff-so-fancy
+            - "@fsouza/prettierd"
             - bash-language-server
+            - diff-so-fancy
+            - eslint_d
+            - jsonlint
+            - markdownlint
             - vscode-langservers-extracted
             - yaml-language-server
 
