@@ -31,7 +31,9 @@ null_ls.setup({
     fmt.isort,
     fmt.jq,
     fmt.prettierd,
-    fmt.terraform_fmt,
+    fmt.terraform_fmt.with {
+      filetypes = { "terraform", "tf", "hcl" },
+    },
     fmt.trim_newlines,
     fmt.trim_whitespace,
 
