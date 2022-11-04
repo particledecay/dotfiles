@@ -5,7 +5,7 @@
   vars:
     python_version: 3.7.6
     node_version: 15.14.0
-  
+
   tasks:
     - name: UBUNTU PACKAGE INSTALLATION
       block:
@@ -23,7 +23,7 @@
             state: present
           when:
             - ansible_distribution_major_version | int < 22
-    
+
         - name: Install command line packages
           package:
             name:
@@ -86,7 +86,7 @@
               - xz-utils
               - zlib1g-dev
             state: present
-    
+
         - name: Install graphical packages
           package:
             name:
@@ -106,7 +106,7 @@
               - ttf-anonymous-pro
               - vlc
             state: present
-    
+
         - name: Install Snap packages
           snap:
             name: "{{ item.name }}"
@@ -206,8 +206,7 @@
             state: present
       become: yes
       when: ansible_distribution == "Fedora"
-    
-    
+
     - name: LINUX PACKAGE CONFIGURATION
       block:
         - name: Install Rust packages
@@ -230,7 +229,7 @@
             name: "{{ ansible_user_id }}"
             shell: "{{ fish_cmd.stdout }}"
           become: yes
-              
+
         - name: Set pyenv installation path
           set_fact:
             pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
@@ -283,7 +282,7 @@
 
         - name: Install nodenv for managing Node
           git:
-            repo: https://github.com/nodenv/nodenv 
+            repo: https://github.com/nodenv/nodenv
             dest: "{{ nodenv_root }}"
             update: no
 
@@ -394,25 +393,25 @@
         - name: Enable modular sudo files
           lineinfile:
             path: /etc/sudoers
-            regexp: '^#includedir /etc/sudoers.d'
-            line: '#includedir /etc/sudoers.d'
+            regexp: "^#includedir /etc/sudoers.d"
+            line: "#includedir /etc/sudoers.d"
             state: present
-            validate: 'visudo -cf %s'
+            validate: "visudo -cf %s"
           become: yes
-    
+
         - name: Create sudoers dir
           file:
             path: /etc/sudoers.d
             state: directory
           become: yes
-    
+
         - name: Enable passwordless sudo
           lineinfile:
             path: /etc/sudoers.d/10-installer
-            regexp: '^%wheel.*(NOPASSWD)?'
-            line: '%wheel ALL=(ALL:ALL) NOPASSWD: ALL'
+            regexp: "^%wheel.*(NOPASSWD)?"
+            line: "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
             state: present
-            validate: 'visudo -cf %s'
+            validate: "visudo -cf %s"
             create: yes
           become: yes
 
@@ -421,32 +420,32 @@
           args:
             executable: /bin/bash
             creates: "{{ ansible_env.HOME }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
-    
+
         - name: Set 24-hour clock format
           dconf:
             key: /org/gnome/desktop/interface/clock-format
             value: "'24'"
-    
+
         - name: Set flat mouse acceleration profile
           dconf:
             key: /org/gnome/desktop/peripherals/mouse/accel-profile
             value: "'flat'"
-    
+
         - name: Hide the desktop trash icon
           dconf:
             key: /org/gnome/nautilus/desktop/trash-icon-visible
             value: "false"
-    
+
         - name: Enable night light
           dconf:
             key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
             value: "true"
-    
+
         - name: Enable desktop overview hot corners
           dconf:
             key: /org/gnome/shell/enable-hot-corners
             value: "true"
-    
+
         - name: Set Caps Lock to Escape
           dconf:
             key: /org/gnome/desktop/input-sources/xkboptions
