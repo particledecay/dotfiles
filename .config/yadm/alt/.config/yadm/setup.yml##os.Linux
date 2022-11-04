@@ -270,7 +270,11 @@
             PYENV_ROOT: "{{ pyenv_root }}"
             PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
           loop:
+            - "ansible-lint"
+            - "djlint"
+            - "mypy"
             - "python-lsp-server[all]"
+            - "vulture"
 
         - name: Set nodenv installation path
           set_fact:

@@ -1,5 +1,6 @@
 local nvim_lsp = require('lspconfig')
 local util = require('lspconfig/util')
+local null_ls = require('null-ls')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -55,58 +56,115 @@ local on_attach = function(client, bufnr)
 end
 
 -- Update capabilities
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Define specific languages
 local default_lspconfig = { on_attach = on_attach, capabilities = capabilities }
-local servers = {
-  pylsp = {
-    configurationSources = { 'flake8' },
-    root_dir = function(fname)
-      local root_files = {
-        'pyproject.toml',
-        'setup.py',
-        'setup.cfg',
-        'requirements.txt',
-        'Pipfile',
-      }
-      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-    end,
-  },
-  terraformls = {},
-  bashls = {},
-  gopls = {
-    cmd = { 'gopls', 'serve' },
-    filetypes = { 'go', 'gomod', 'gotmpl' },
-    root_dir = function(fname)
-      local root_files = {
-        'go.work',
-        'go.mod',
-        '.git',
-      }
-      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-    end,
-    settings = {
-      gopls = {
-        analyses = {
-          unusedparams = true,
-        },
-        staticcheck = true,
-      },
-    },
-  },
-  jsonls = {
-    commands = {
-      Format = {
-        function()
-          vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
-        end
-      }
-    }
-  },
-}
+-- local servers = {
+--   pylsp = {
+--     configurationSources = { 'flake8' },
+--     root_dir = function(fname)
+--       local root_files = {
+--         'pyproject.toml',
+--         'setup.py',
+--         'setup.cfg',
+--         'requirements.txt',
+--         'Pipfile',
+--       }
+--       return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+--     end,
+--   },
+--   terraformls = {
+--     filetypes = { "terraform", "terragrunt", "tf", "hcl" },
+--   },
+--   bashls = {},
+--   gopls = {
+--     cmd = { 'gopls', 'serve' },
+--     filetypes = { 'go', 'gomod', 'gotmpl' },
+--     root_dir = function(fname)
+--       local root_files = {
+--         'go.work',
+--         'go.mod',
+--         '.git',
+--       }
+--       return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+--     end,
+--     settings = {
+--       gopls = {
+--         analyses = {
+--           unusedparams = true,
+--         },
+--         staticcheck = true,
+--       },
+--     },
+--   },
+--   jsonls = {
+--     commands = {
+--       Format = {
+--         function()
+--           vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+--         end
+--       }
+--     }
+--   },
+-- }
 
--- Map all the defined servers
-for server, config in pairs(servers) do
-  nvim_lsp[server].setup { vim.tbl_deep_extend('force', default_lspconfig, config) }
-end
+-- -- Map all the defined servers
+-- for server, config in pairs(servers) do
+--   nvim_lsp[server].setup { vim.tbl_deep_extend('force', default_lspconfig, config) }
+-- end
+
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local code = null_ls.builtins.code_actions
+local diag = null_ls.builtins.diagnostics
+local fmt = null_ls.builtins.formatting
+local hov = null_ls.builtins.hover
+
+null_ls.setup({
+  sources = {
+    code.gitrebase,
+    code.gitsigns,
+    code.shellcheck,
+    
+    diag.actionlint,
+    diag.ansiblelint,
+    diag.commitlint,
+    diag.djlint,
+    diag.eslint_d,
+    diag.fish,
+    diag.flake8,
+    diag.jsonlint,
+    diag.mypy,
+    diag.revive,
+    diag.shellcheck,
+    diag.todo_comments,
+    diag.vulture,
+
+    fmt.autopep8,
+    fmt.eslint_d,
+    fmt.fish_indent,
+    fmt.gofmt,
+    fmt.goimports,
+    fmt.isort,
+    fmt.jq,
+    fmt.prettierd,
+    fmt.terraform_fmt,
+    fmt.trim_newlines,
+    fmt.trim_whitespace,
+
+    hov.printenv,
+  },
+
+  on_attach = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.formatting_sync()
+        end,
+      })
+    end
+  end,
+})

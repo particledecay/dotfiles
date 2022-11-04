@@ -32,6 +32,7 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'                    -- LSP Snippets engine
   use 'airblade/vim-rooter'                 -- Identify root directories and chdir to them
   use 'nvim-treesitter/nvim-treesitter'     -- Advanced semantic code analysis
+  use 'jose-elias-alvarez/null-ls.nvim'     -- Make LSP configs easier
   use 'kyazdani42/nvim-web-devicons'        -- Icons
   use {
     'nvim-lualine/lualine.nvim',            -- Statusline
