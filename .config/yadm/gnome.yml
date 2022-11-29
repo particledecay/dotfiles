@@ -1,0 +1,74 @@
+- name: Set 24-hour clock format
+  dconf:
+    key: /org/gnome/desktop/interface/clock-format
+    value: "'24'"
+
+- name: Set flat mouse acceleration profile
+  dconf:
+    key: /org/gnome/desktop/peripherals/mouse/accel-profile
+    value: "'flat'"
+
+- name: Hide the desktop trash icon
+  dconf:
+    key: /org/gnome/nautilus/desktop/trash-icon-visible
+    value: "false"
+
+- name: Enable night light
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+
+- name: Enable desktop overview hot corners
+  dconf:
+    key: /org/gnome/shell/enable-hot-corners
+    value: "true"
+
+- name: Set Caps Lock to Escape
+  dconf:
+    key: /org/gnome/desktop/input-sources/xkboptions
+    value: "['caps:escape']"
+
+- name: Set regular font
+  dconf:
+    key: /org/gnome/desktop/interface/font-name
+    value: "'Lexend Regular 11'"
+
+- name: Set document font
+  dconf:
+    key: /org/gnome/desktop/interface/document-font-name
+    value: "'Lexend Regular 11'"
+
+- name: Set monospace font
+  dconf:
+    key: /org/gnome/desktop/interface/monospace-font-name
+    value: "'MonoLisa 11'"
+
+- name: Set window title font
+  dconf:
+    key: /org/gnome/desktop/wm/preferences/titlebar-font
+    value: "'Amazon Ember Display Heavy 13'"
+
+- name: Sort directories first in file-chooser
+  dconf:
+    key: /org/gtk/settings/file-chooser/sort-directories-first
+    value: "true"
+
+- name: Sort by descending order in file-chooser
+  dconf:
+    key: /org/gtk/settings/file-chooser/sort-order
+    value: "'descending'"
+
+- name: Set last modified sort in file-chooser
+  dconf:
+    key: /org/gtk/settings/file-chooser/sort-column
+    value: "'modified'"
+
+- name: Set single-click folder navigation
+  dconf:
+    key: /org/gnome/nautilus/preferences/click-policy
+    value: "'single'"
+
+- name: Set last modified sort in Nautilus
+  dconf:
+    key: /org/gnome/nautilus/preferences/search-filter-time-type
+    value: "'last_modified'"

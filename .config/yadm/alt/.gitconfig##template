@@ -35,13 +35,7 @@
 	ff = only
 	rebase = true
 [gpg]
-{% if yadm.os == "Darwin" %}
-	program = gpg2
-{% else %}
 	program = gpg
-{% endif %}
 [commit]
 	gpgsign = true
 	verbose = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/

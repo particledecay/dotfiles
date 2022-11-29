@@ -1,0 +1,47 @@
+- name: MACOS PACKAGE INSTALLATION
+  block:
+    - name: Install Homebrew
+      shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      args:
+        creates: /opt/homebrew/bin/brew
+      become: yes
+
+    - name: Install Homebrew packages
+      homebrew:
+        name:
+          - autoconf
+          - automake
+          - bat
+          - cabextract
+          - cmake
+          - curl
+          - direnv
+          - fzf
+          - git
+          - golang
+          - jq
+          - neovim
+          - nmap
+          - openssl
+          - pass
+          - pinentry-mac
+          - pkg-config
+          - podman
+          - prettyping
+          - readline
+          - ripgrep
+          - rust
+          - sqlite3
+          - tmate
+          - tree
+          - wget
+          - whois
+          - zlib
+        state: present
+
+    - name: Install Homebrew cask packages
+      homebrew_cask:
+        name:
+          - alacritty
+          - vlc
+        state: present

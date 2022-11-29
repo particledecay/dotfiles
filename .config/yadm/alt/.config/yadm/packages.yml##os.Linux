@@ -1,0 +1,209 @@
+- name: UBUNTU PACKAGE INSTALLATION
+  block:
+    - name: Add repositories
+      apt_repository:
+        repo: "{{ item.repo }}"
+        state: present
+      loop:
+        - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
+        - repo: ppa:neovim-ppa/unstable
+
+    - name: Add fish repository
+      apt_repository:
+        repo: ppa:fish-shell/release-3
+        state: present
+      when:
+        - ansible_distribution_major_version | int < 22
+
+    - name: Install command line packages
+      package:
+        name:
+          - autoconf
+          - automake
+          - bat
+          - build-essential
+          - ca-certificates
+          - cabextract
+          - cargo
+          - cmake
+          - curl
+          - direnv
+          - fish
+          - fzf
+          - git
+          - golang-go
+          - jq
+          - libbz2-dev
+          - libffi-dev
+          - libfontconfig1-dev
+          - libfreetype6-dev
+          - libpq-dev
+          - libreadline-dev
+          - libsqlite3-dev
+          - libssl-dev
+          - libtool
+          - libvirt-clients
+          - libvirt-daemon-system
+          - libxcb-xfixes0-dev
+          - libxkbcommon-dev
+          - libxslt-dev
+          - libyaml-dev
+          - llvm
+          - lm-sensors
+          - nfs-common
+          - neovim
+          - nmap
+          - openssh-server
+          - pass
+          - pkg-config
+          - podman
+          - prettyping
+          - qemu-kvm
+          - ripgrep
+          - software-properties-common
+          - sqlite3
+          - sshpass
+          - sshuttle
+          - tk-dev
+          - tmate
+          - tmux
+          - traceroute
+          - tree
+          - unrar
+          - unzip
+          - vim
+          - wget
+          - whois
+          - xz-utils
+          - zlib1g-dev
+        state: present
+
+    - name: Install graphical packages
+      package:
+        name:
+          - flameshot
+          - fonts-lato
+          - fonts-powerline
+          - gimp
+          - gnome-screensaver
+          - gnome-tweaks
+          - gparted
+          - imagemagick
+          - inkscape
+          - inotify-tools
+          - libappindicator-dev
+          - peek
+          - texlive-fonts-extra
+          - ttf-anonymous-pro
+          - vlc
+        state: present
+
+    - name: Install Snap packages
+      snap:
+        name: "{{ item.name }}"
+        classic: "{{ item.classic }}"
+      loop:
+        - name: slack
+          classic: yes
+  become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: FEDORA PACKAGE INSTALLATION
+  block:
+    - name: Add RPM Fusion repository
+      dnf:
+        name: "{{ item }}"
+        disable_gpg_check: yes
+        state: present
+      loop:
+        - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+        - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+
+    - name: Install command line packages
+      package:
+        name:
+          - "@development-tools"
+          - autoconf
+          - automake
+          - bat
+          - ca-certificates
+          - cabextract
+          - cargo
+          - cmake
+          - curl
+          - direnv
+          - fish
+          - fontconfig-devel
+          - freetype-devel
+          - fzf
+          - gcc-c++
+          - git
+          - go
+          - jq
+          - kernel-devel
+          - libffi-devel
+          - libpq-devel
+          - libvirt-client
+          - libvirt-daemon
+          - libxcb-devel
+          - libxkbcommon-devel
+          - libxslt-devel
+          - libyaml-devel
+          - lm_sensors
+          - neovim
+          - nfs-utils
+          - nmap
+          - openssh-server
+          - openssl-devel
+          - pass
+          - pkgconf-pkg-config
+          - podman
+          - prettyping
+          - qemu-kvm
+          - readline-devel
+          - ripgrep
+          - sqlite-devel
+          - sshpass
+          - sshuttle
+          - tk-devel
+          - tmate
+          - tmux
+          - unrar
+          - unzip
+        state: present
+
+    - name: Install graphical packages
+      package:
+        name:
+          - ImageMagick
+          - flameshot
+          - gimp
+          - gnome-tweaks
+          - gparted
+          - inkscape
+          - inotify-tools
+          - lato-fonts
+          - libappindicator-devel
+          - peek
+          - powerline-fonts
+          - texlive-collection-fontsextra
+          - vlc
+        state: present
+
+    - name: Install Slack
+      dnf:
+        name: https://downloads.slack-edge.com/releases/linux/4.19.2/prod/x64/slack-4.19.2-0.1.fc21.x86_64.rpm
+        disable_gpg_check: yes
+        state: present
+  become: yes
+  when: ansible_distribution == "Fedora"
+
+- name: Install Rust packages
+  shell: cargo install {{ item }}
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_env.HOME }}/.cargo/bin/{{ item }}"
+  loop:
+    - alacritty
+    - hyperfine
+    - procs
