@@ -20,6 +20,7 @@
           - git
           - golang
           - jq
+          - libffi
           - neovim
           - nmap
           - openssl
@@ -33,6 +34,7 @@
           - rust
           - sqlite3
           - tmate
+          - tmux
           - tree
           - wget
           - whois
@@ -43,5 +45,6 @@
       homebrew_cask:
         name:
           - alacritty
+          - flameshot
           - vlc
         state: present

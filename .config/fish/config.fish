@@ -3,9 +3,9 @@ fish_vi_key_bindings
 
 # find completion dir
 for d in (echo $XDG_DATA_DIRS | tr ':' '\n')
-  if test -d {$d}/fish/completions
-    set -Ux FPATH {$d}/fish/completions $FPATH
-  end
+    if test -d {$d}/fish/completions
+        set -Ux FPATH {$d}/fish/completions $FPATH
+    end
 end
 
 # pyenv settings
@@ -18,6 +18,78 @@ set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
 
 # for git commits
 set -Ux EDITOR nvim
+
+# for collecting all the custom executable paths
+set -l custom_paths
+
+# virtualenv settings
+set -Ux WORKON_HOME $HOME/.virtualenvs
+set -Ux PROJECT_HOME $HOME/projects
+if test -d $HOME/.poetry
+    set -a custom_paths $HOME/.poetry/bin
+end
+
+# system-wide binaries
+set -a custom_paths /usr/local/bin
+
+# ghostscript (for gimp)
+if test -f /usr/bin/gs
+    set -Ux GS_PROG /usr/bin/gs
+end
+
+# insert last arg from previous command
+bind -M insert \e. history-token-search-backward
+
+# cargo binaries (rust)
+set -a custom_paths $HOME/.cargo/bin
+
+# set go paths
+set -Ux GOROOT
+for dir in /usr/lib/go /usr/local/lib/go
+    test -e $dir && set GOROOT $dir
+    set -a custom_paths $HOME/go/bin $GOROOT/bin
+    break
+end
+
+# snap
+test -e /snap/bin && set -a custom_paths /snap/bin
+
+# xpath
+if test -d /usr/local/opt/libxml2/bin
+    set -a custom_paths /usr/local/opt/libxml2/bin
+end
+
+# android sdk
+if test -d $HOME/Android/Sdk
+    set -Ux ANDROID_SDK_ROOT $HOME/Android/Sdk
+    set -Ux ANDROID_HOME $ANDROID_SDK_ROOT
+end
+
+# homebrew
+if test -d /opt/homebrew
+    set -Ux HOMEBREW_PATH /opt/homebrew
+    set -a custom_paths $HOMEBREW_PATH/bin
+end
+
+# asdf
+set -Ux ASDF_ROOT "$HOME/.asdf"
+set -a custom_paths $ASDF_ROOT/bin $ASDF_ROOT/shims
+
+# pyenv
+set -Ux PYENV_ROOT "$HOME/.pyenv"
+set -a custom_paths $PYENV_ROOT/bin
+
+# nodenv
+set -Ux NODENV_ROOT "$HOME/.nodenv"
+set -a custom_paths $NODENV_ROOT/bin $NODENV_ROOT/shims
+
+# krew (kubectl plugin)
+set -a custom_paths $HOME/.krew/bin
+
+# set PATH with all the custom paths
+for path in $custom_paths
+    contains $path $fish_user_paths; or set -a fish_user_paths $path
+end
 
 # aliases
 alias d='docker'
@@ -33,91 +105,29 @@ alias grb='git rebase'
 alias k='kubectl'
 alias tf='terraform'
 if type -q bat
-  alias cat='bat'
+    alias cat='bat'
 end
 if type -q batcat
-  alias cat='batcat'
+    alias cat='batcat'
 end
 if type -q prettyping
-  alias ping='prettyping'
+    alias ping='prettyping'
 end
 if type -q hub
-  alias git='hub'
+    alias git='hub'
 end
 if test -x $HOME/.cargo/bin/exa
-  alias ls='exa'
+    alias ls='exa'
 end
 if test -x $HOME/.cargo/bin/btm
-  alias top='btm'
+    alias top='btm'
 end
 if type -q nvim
-  alias vim='nvim'
+    alias vim='nvim'
 end
 
-# virtualenv settings
-set -Ux WORKON_HOME $HOME/.virtualenvs
-set -Ux PROJECT_HOME $HOME/projects
-if test -d $HOME/.poetry
-  set -gx PATH $HOME/.poetry/bin $PATH
-end
-
-# system-wide binaries
-contains /usr/local/bin $fish_user_paths; or set -a fish_user_paths /usr/local/bin
-
-# ghostscript (for gimp)
-if test -f /usr/bin/gs
-  set -Ux GS_PROG /usr/bin/gs
-end
-
-# insert last arg from previous command
-bind -M insert \e. history-token-search-backward
-
-# cargo binaries (rust)
-set -gx PATH $HOME/.cargo/bin $PATH
-
-# set go paths
-set -Ux GOROOT
-for dir in /usr/lib/go /usr/local/lib/go
-  test -e $dir && set GOROOT $dir
-  set -gx PATH $HOME/go/bin $GOROOT/bin $PATH
-  break
-end
-
-# snap
-set -gx PATH /snap/bin $PATH
-
-# xpath
-if test -d /usr/local/opt/libxml2/bin
-  set -gx PATH $PATH /usr/local/opt/libxml2/bin
-end
-
-# android sdk
-if test -d $HOME/Android/Sdk
-  set -Ux ANDROID_SDK_ROOT $HOME/Android/Sdk
-  set -Ux ANDROID_HOME $ANDROID_SDK_ROOT
-end
-
-# asdf
-set -Ux ASDF_ROOT "$HOME/.asdf"
-contains $ASDF_ROOT/bin $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/bin
-contains $ASDF_ROOT/shims $fish_user_paths; or set -a fish_user_paths $ASDF_ROOT/shims
-
-# pyenv
+# source custom apps
 status --is-interactive; and type -q pyenv; and pyenv init - | source
 status --is-interactive; and type -q pyenv; and pyenv virtualenv-init - | source
-
-# direnv
 status --is-interactive; and type -q direnv; and direnv hook fish | source
-
-# starship
 type -q starship; and starship init fish | source
-set -Ux PYENV_ROOT "$HOME/.pyenv"
-contains $PYENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $PYENV_ROOT/bin
-
-# nodenv
-set -Ux NODENV_ROOT "$HOME/.nodenv"
-contains $NODENV_ROOT/bin $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/bin
-contains $NODENV_ROOT/shims $fish_user_paths; or set -a fish_user_paths $NODENV_ROOT/shims
-
-# krew (kubectl plugin)
-contains $HOME/.krew/bin $fish_user_paths; or set -a fish_user_paths $HOME/.krew/bin

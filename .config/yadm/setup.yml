@@ -3,7 +3,7 @@
   connection: localhost
   gather_facts: yes
   vars:
-    python_version: 3.7.6
+    python_version: 3.7.13
     node_version: 15.14.0
 
   tasks:
@@ -46,6 +46,43 @@
             dest: "{{ pyenv_root }}/plugins/pyenv-virtualenv"
             update: no
 
+        - name: Set library paths
+          set_fact:
+            cflags: "{{ ansible_env.CFLAGS | default('') }}"
+            ldflags: "{{ ansible_env.LDFLAGS | default('') }}"
+            python_configure_opts: "{{ ansible_env.PYTHON_CONFIGURE_OPTS | default('') }}"
+          changed_when: false
+
+        - name: Override MacOS library paths
+          block:
+            - name: Detect OpenSSL prefix
+              shell: brew --prefix openssl
+              register: openssl_path
+              environment:
+                PATH: "{{ ansible_env.PATH }}:/opt/homebrew/bin"
+              changed_when: false
+
+            - name: Detect readline prefix
+              shell: brew --prefix readline
+              register: readline_path
+              environment:
+                PATH: "{{ ansible_env.PATH }}:/opt/homebrew/bin"
+              changed_when: false
+
+            - name: Detect xcrun path
+              shell: xcrun --show-sdk-path
+              register: xcrun_path
+              changed_when: false
+
+            - name: Set MacOS library paths
+              set_fact:
+                cflags: "-I{{ readline_path.stdout }}/include -I{{ openssl_path.stdout }}/include -I{{ xcrun_path.stdout }}/usr/include -I/opt/homebrew/include"
+                ldflags: "-L{{ readline_path.stdout }}/lib -L{{ openssl_path.stdout }}/lib -L/opt/homebrew/lib"
+                python_configure_opts: "--enable-unicode=ucs2"
+              changed_when: false
+          when:
+            - ansible_distribution == "MacOSX"
+
         - name: Install Python {{ python_version }}
           shell: 'eval "$(pyenv init -)" && pyenv install {{ python_version }}'
           args:
@@ -54,6 +91,9 @@
           environment:
             PYENV_ROOT: "{{ pyenv_root }}"
             PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
+            CFLAGS: "{{ cflags }}"
+            LDFLAGS: "{{ ldflags }}"
+            PYTHON_CONFIGURE_OPTS: "{{ python_configure_opts }}"
 
         - name: Install Python packages
           pip:
@@ -61,7 +101,10 @@
             executable: "{{ pyenv_root }}/versions/{{ python_version }}/bin/pip"
           environment:
             PYENV_ROOT: "{{ pyenv_root }}"
+            PYENV_VERSION: "{{ python_version }}"
             PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
+            CFLAGS: "{{ cflags }}"
+            LDFLAGS: "{{ ldflags }}"
           loop:
             - "ansible-lint"
             - "djlint"
@@ -123,7 +166,9 @@
             creates: "{{ nodenv_root }}/versions/{{ node_version }}/bin/node"
           environment:
             NODENV_ROOT: "{{ nodenv_root }}"
-            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
+            PYENV_ROOT: "{{ pyenv_root }}"
+            PYENV_VERSION: "{{ python_version }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims:{{ pyenv_root }}/bin"
 
         - name: Set local Node version to {{ node_version }}
           shell: nodenv local {{ node_version }}
@@ -164,26 +209,31 @@
             update: no
 
         - name: Install asdf plugins
-          include_tasks: "{{ ansible_env.HOME }}/.config/yadm/asdf.yml"
-          loop:
-            - 1password-cli
-            - github-cli
-            - helm
-            - kconf
-            - kind
-            - kubectl
-            - lab
-            - packer
-            - poetry
-            - starship
-            - talos
-            - task
-            - terraform
-            - terraform-ls
-            - vault
+          shell: for line in $(cat {{ ansible_env.HOME }}/.tool-versions); do asdf plugin-add $(echo $line | awk '{print $1}'); asdf install $(echo $line | awk '{print $2}'); done
+          args:
+            executable: /bin/bash
+          register: asdf_install
+          environment:
+            ASDF_ROOT: "{{ asdf_root }}"
+            PATH: "{{ ansible_env.PATH }}:$ASDF_ROOT/bin"
+          changed_when: "'Installed' in asdf_install.stdout"
 
     - name: CUSTOMIZATION
       block:
+        - name: Create wheel group
+          group:
+            name: wheel
+            state: present
+          become: yes
+
+        - name: Add current user to wheel group
+          user:
+            name: "{{ ansible_user_id }}"
+            groups:
+              - wheel
+            append: true
+          become: yes
+
         - name: Enable modular sudo files
           lineinfile:
             path: /etc/sudoers
@@ -222,4 +272,10 @@
 
         - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/gnome.yml"
           when:
-            - ansible_distribution != "Darwin"
+            - ansible_distribution != "MacOSX"
+
+        - name: Copy MacOS fonts
+          copy:
+            src: "{{ ansible_env.HOME }}/.fonts/"
+            dest: "{{ ansible_env.HOME }}/Library/Fonts/"
+            owner: "{{ ansible_user_id }}"
