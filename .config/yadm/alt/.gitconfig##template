@@ -28,9 +28,16 @@
 	default = simple
 [core]
 	editor = nvim
-	pager = diff-so-fancy | less -FXRi
 [color]
 	ui = auto
+[diff]
+	tool = difftastic
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+	difftool = true
 [pull]
 	ff = only
 	rebase = true
