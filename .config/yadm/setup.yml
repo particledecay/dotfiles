@@ -279,3 +279,5 @@
             src: "{{ ansible_env.HOME }}/.fonts/"
             dest: "{{ ansible_env.HOME }}/Library/Fonts/"
             owner: "{{ ansible_user_id }}"
+          when:
+            - ansible_distribution == "MacOSX"
