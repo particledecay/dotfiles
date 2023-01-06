@@ -32,6 +32,7 @@ alias gr='git remote'
 alias grb='git rebase'
 alias k='kubectl'
 alias tf='terraform'
+alias tg='terragrunt'
 if type -q bat
   alias cat='bat'
 end
