@@ -1,0 +1,281 @@
+---
+- hosts: localhost
+  connection: localhost
+  gather_facts: yes
+  vars:
+    python_version: 3.7.13
+    node_version: 15.14.0
+
+  tasks:
+    - name: PACKAGES
+      block:
+        - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/packages.yml"
+
+    - name: PACKAGE CONFIGURATION
+      block:
+        - name: Detect fish path
+          shell: which fish
+          register: fish_cmd
+          changed_when: false
+
+        - name: Set fish shell for user
+          user:
+            name: "{{ ansible_user_id }}"
+            shell: "{{ fish_cmd.stdout }}"
+          become: yes
+
+        - name: Set pyenv installation path
+          set_fact:
+            pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
+            pyenv_bin: "{{ ansible_env.HOME }}/.pyenv/bin/pyenv"
+
+        - name: Install pyenv for managing Python
+          git:
+            repo: https://github.com/pyenv/pyenv
+            dest: "{{ pyenv_root }}"
+            update: no
+
+        - name: Create pyenv plugin directory
+          file:
+            path: "{{ pyenv_root }}/plugins"
+            state: directory
+
+        - name: Install pyenv virtualenv plugin
+          git:
+            repo: https://github.com/pyenv/pyenv-virtualenv
+            dest: "{{ pyenv_root }}/plugins/pyenv-virtualenv"
+            update: no
+
+        - name: Set library paths
+          set_fact:
+            cflags: "{{ ansible_env.CFLAGS | default('') }}"
+            ldflags: "{{ ansible_env.LDFLAGS | default('') }}"
+            python_configure_opts: "{{ ansible_env.PYTHON_CONFIGURE_OPTS | default('') }}"
+          changed_when: false
+
+        - name: Override MacOS library paths
+          block:
+            - name: Detect OpenSSL prefix
+              shell: brew --prefix openssl
+              register: openssl_path
+              environment:
+                PATH: "{{ ansible_env.PATH }}:/opt/homebrew/bin"
+              changed_when: false
+
+            - name: Detect readline prefix
+              shell: brew --prefix readline
+              register: readline_path
+              environment:
+                PATH: "{{ ansible_env.PATH }}:/opt/homebrew/bin"
+              changed_when: false
+
+            - name: Detect xcrun path
+              shell: xcrun --show-sdk-path
+              register: xcrun_path
+              changed_when: false
+
+            - name: Set MacOS library paths
+              set_fact:
+                cflags: "-I{{ readline_path.stdout }}/include -I{{ openssl_path.stdout }}/include -I{{ xcrun_path.stdout }}/usr/include -I/opt/homebrew/include"
+                ldflags: "-L{{ readline_path.stdout }}/lib -L{{ openssl_path.stdout }}/lib -L/opt/homebrew/lib"
+                python_configure_opts: "--enable-unicode=ucs2"
+              changed_when: false
+          when:
+            - ansible_distribution == "MacOSX"
+
+        - name: Install Python {{ python_version }}
+          shell: 'eval "$(pyenv init -)" && pyenv install {{ python_version }}'
+          args:
+            executable: /bin/bash
+            creates: "{{ pyenv_root }}/versions/{{ python_version }}"
+          environment:
+            PYENV_ROOT: "{{ pyenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
+            CFLAGS: "{{ cflags }}"
+            LDFLAGS: "{{ ldflags }}"
+            PYTHON_CONFIGURE_OPTS: "{{ python_configure_opts }}"
+
+        - name: Install Python packages
+          pip:
+            name: "{{ item }}"
+            executable: "{{ pyenv_root }}/versions/{{ python_version }}/bin/pip"
+          environment:
+            PYENV_ROOT: "{{ pyenv_root }}"
+            PYENV_VERSION: "{{ python_version }}"
+            PATH: "{{ ansible_env.PATH }}:{{ pyenv_root }}/bin"
+            CFLAGS: "{{ cflags }}"
+            LDFLAGS: "{{ ldflags }}"
+          loop:
+            - "ansible-lint"
+            - "djlint"
+            - "mypy"
+            - "python-lsp-server[all]"
+            - "vulture"
+
+        - name: Set nodenv installation path
+          set_fact:
+            nodenv_root: "{{ ansible_env.HOME }}/.nodenv"
+            nodenv_bin: "{{ ansible_env.HOME }}/.nodenv/bin/nodenv"
+
+        - name: Install nodenv for managing Node
+          git:
+            repo: https://github.com/nodenv/nodenv
+            dest: "{{ nodenv_root }}"
+            update: no
+
+        - name: Compile nodenv extension for performance
+          shell: "{{ nodenv_root }}/src/configure && make -C {{ nodenv_root }}/src"
+          args:
+            executable: /bin/bash
+            creates: "{{ nodenv_root }}/src/realpath.o"
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+
+        - name: Create nodenv plugin directory
+          file:
+            path: "{{ nodenv_root }}/plugins"
+            state: directory
+
+        - name: Install Node Build plugin
+          git:
+            repo: https://github.com/nodenv/node-build
+            dest: "{{ nodenv_root }}/plugins/node-build"
+            update: no
+
+        - name: Install nodenv package rehash plugin
+          git:
+            repo: https://github.com/nodenv/nodenv-package-rehash
+            dest: "{{ nodenv_root }}/plugins/nodenv-package-rehash"
+            update: no
+          register: nodenv_package_rehash
+
+        - name: Install nodenv package hooks
+          shell: 'eval "$(nodenv init -)" && nodenv package-hooks install --all'
+          args:
+            executable: /bin/bash
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin"
+          when: nodenv_package_rehash is changed
+
+        - name: Install Node {{ node_version }}
+          shell: 'eval "$(nodenv init -)" && nodenv install {{ node_version }}'
+          args:
+            executable: /bin/bash
+            creates: "{{ nodenv_root }}/versions/{{ node_version }}/bin/node"
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PYENV_ROOT: "{{ pyenv_root }}"
+            PYENV_VERSION: "{{ python_version }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims:{{ pyenv_root }}/bin"
+
+        - name: Set local Node version to {{ node_version }}
+          shell: nodenv local {{ node_version }}
+          args:
+            executable: /bin/bash
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
+          changed_when: false
+
+        - name: Install Node packages
+          npm:
+            name: "{{ item }}"
+            global: yes
+            executable: "{{ nodenv_root }}/versions/{{ node_version }}/bin/npm"
+          environment:
+            NODENV_ROOT: "{{ nodenv_root }}"
+            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
+          loop:
+            - "@fsouza/prettierd"
+            - bash-language-server
+            - diff-so-fancy
+            - eslint_d
+            - jsonlint
+            - markdownlint
+            - vscode-langservers-extracted
+            - yaml-language-server
+
+        - name: Set asdf installation path
+          set_fact:
+            asdf_root: "{{ ansible_env.HOME }}/.asdf"
+            asdf_bin: "{{ ansible_env.HOME }}/.asdf/bin/asdf"
+
+        - name: Install asdf
+          git:
+            repo: https://github.com/asdf-vm/asdf
+            dest: "{{ asdf_root }}"
+            update: no
+
+        - name: Install asdf plugins
+          shell: for line in $(cat {{ ansible_env.HOME }}/.tool-versions); do asdf plugin-add $(echo $line | awk '{print $1}'); asdf install $(echo $line | awk '{print $2}'); done
+          args:
+            executable: /bin/bash
+          register: asdf_install
+          environment:
+            ASDF_ROOT: "{{ asdf_root }}"
+            PATH: "{{ ansible_env.PATH }}:$ASDF_ROOT/bin"
+          changed_when: "'Installed' in asdf_install.stdout"
+
+    - name: CUSTOMIZATION
+      block:
+        - name: Create wheel group
+          group:
+            name: wheel
+            state: present
+          become: yes
+
+        - name: Add current user to wheel group
+          user:
+            name: "{{ ansible_user_id }}"
+            groups:
+              - wheel
+            append: true
+          become: yes
+
+        - name: Enable modular sudo files
+          lineinfile:
+            path: /etc/sudoers
+            regexp: "^#includedir /etc/sudoers.d"
+            line: "#includedir /etc/sudoers.d"
+            state: present
+            validate: "visudo -cf %s"
+          become: yes
+
+        - name: Create sudoers dir
+          file:
+            path: /etc/sudoers.d
+            state: directory
+          become: yes
+
+        - name: Enable passwordless sudo
+          lineinfile:
+            path: /etc/sudoers.d/10-installer
+            regexp: "^%wheel.*(NOPASSWD)?"
+            line: "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
+            state: present
+            validate: "visudo -cf %s"
+            create: yes
+          become: yes
+
+        - name: Install Neovim plugins
+          shell: nvim +PackerInstall +qall
+          args:
+            executable: /bin/bash
+            creates: "{{ ansible_env.HOME }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
+        - name: Create projects directory
+          file:
+            path: "{{ ansible_env.HOME }}/projects"
+            state: directory
+
+        - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/gnome.yml"
+          when:
+            - ansible_distribution != "MacOSX"
+
+        - name: Copy MacOS fonts
+          copy:
+            src: "{{ ansible_env.HOME }}/.fonts/"
+            dest: "{{ ansible_env.HOME }}/Library/Fonts/"
+            owner: "{{ ansible_user_id }}"
