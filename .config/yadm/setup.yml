@@ -111,6 +111,7 @@
             - "mypy"
             - "python-lsp-server[all]"
             - "vulture"
+            - "pynvim"
 
         - name: Set nodenv installation path
           set_fact:
