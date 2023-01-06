@@ -4,7 +4,7 @@ local execute = vim.api.nvim_command
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
 vim.api.nvim_exec([[
@@ -17,25 +17,39 @@ vim.api.nvim_exec([[
 -- Packer plugins
 local use = require('packer').use
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim'              -- Package manager
-  use 'tpope/vim-fugitive'                  -- Git commands
-  use 'tpope/vim-rhubarb'                   -- GitHub integration
-  use 'tpope/vim-vinegar'                   -- netrw improvements
-  use 'tpope/vim-commentary'                -- Code commenting
-  use 'neovim/nvim-lspconfig'               -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/cmp-nvim-lsp'                -- nvim-cmp source for LSP
-  use 'hrsh7th/cmp-buffer'                  -- nvim-cmp source for buffer words
-  use 'hrsh7th/cmp-path'                    -- nvim-cmp source for filesystem paths
-  use 'hrsh7th/cmp-cmdline'                 -- nvim-cmp source for vim's cmdline
-  use 'saadparwaiz1/cmp_luasnip'            -- nvim-cmp source for LuaSnip
-  use 'hrsh7th/nvim-cmp'                    -- Autocompletion
-  use 'L3MON4D3/LuaSnip'                    -- LSP Snippets engine
-  use 'airblade/vim-rooter'                 -- Identify root directories and chdir to them
-  use 'nvim-treesitter/nvim-treesitter'     -- Advanced semantic code analysis
-  use 'jose-elias-alvarez/null-ls.nvim'     -- Make LSP configs easier
-  use 'kyazdani42/nvim-web-devicons'        -- Icons
+  use 'wbthomason/packer.nvim' -- Package manager
+  use 'tpope/vim-fugitive' -- Git commands
+  use 'tpope/vim-rhubarb' -- GitHub integration
+  use 'tpope/vim-vinegar' -- netrw improvements
+  use 'tpope/vim-commentary' -- Code commenting
+  use 'airblade/vim-rooter' -- Identify root directories and chdir to them
+  use 'nvim-treesitter/nvim-treesitter' -- Advanced semantic code analysis
+  -- use 'jose-elias-alvarez/null-ls.nvim' -- Make LSP configs easier
+  use 'kyazdani42/nvim-web-devicons' -- Icons
   use {
-    'nvim-lualine/lualine.nvim',            -- Statusline
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
+
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
+      { 'hrsh7th/cmp-cmdline' },
+
+      -- Snippets
+      { 'L3MON4D3/LuaSnip' },
+      { 'rafamadriz/friendly-snippets' },
+    }
+  }
+  use {
+    'nvim-lualine/lualine.nvim', -- Statusline
     requires = {
       {
         'kyazdani42/nvim-web-devicons',
@@ -44,32 +58,45 @@ require('packer').startup(function()
     }
   }
   use {
-    'nvim-telescope/telescope.nvim',        -- Fuzzy finder
+    'nvim-telescope/telescope.nvim', -- Fuzzy finder
     requires = {
-      {'nvim-lua/popup.nvim'},
-      {'nvim-lua/plenary.nvim'},
+      { 'nvim-lua/popup.nvim' },
+      { 'nvim-lua/plenary.nvim' },
     }
   }
   use {
-    'lewis6991/gitsigns.nvim',              -- Git signs
+    'lewis6991/gitsigns.nvim', -- Git signs
     requires = {
-      {'nvim-lua/plenary.nvim'},
+      { 'nvim-lua/plenary.nvim' },
     }
   }
   use {
-    'euclio/vim-markdown-composer',         -- Markdown live preview
+    'euclio/vim-markdown-composer', -- Markdown live preview
     run = 'cargo build --release'
   }
-  use 'kristijanhusak/vim-carbon-now-sh'    -- Carbon Now code screenshots
-  use 'chrisbra/csv.vim'                    -- CSV support
-  use 'sebdah/vim-delve'                    -- Delve debugging
-  use 'machakann/vim-sandwich'              -- Surround plugin
-  use 'fatih/vim-go'                        -- Go support (better than lspconfig for now)
-  use 'towolf/vim-helm'                     -- Helm chart support
-  use 'folke/trouble.nvim'                  -- Better diagnostics
+  use 'kristijanhusak/vim-carbon-now-sh' -- Carbon Now code screenshots
+  use 'chrisbra/csv.vim' -- CSV support
+  use 'sebdah/vim-delve' -- Delve debugging
+  use 'machakann/vim-sandwich' -- Surround plugin
+  use 'fatih/vim-go' -- Go support (better than lspconfig for now)
+  use 'towolf/vim-helm' -- Helm chart support
+
+  -- Better diagnostics
+  use {
+    'folke/trouble.nvim',
+    requires = {
+      {
+        'kyazdani42/nvim-web-devicons',
+        opt = true,
+      }
+    },
+    config = function()
+      require('trouble').setup {}
+    end
+  }
 
   -- Themes
-  use 'dracula/vim'                         -- Dracula
+  use 'dracula/vim' -- Dracula
 end)
 
 -- Global settings
@@ -110,7 +137,7 @@ vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 vim.cmd('autocmd FileType netrw setl bufhidden=delete')
 
 -- LSP configuration
-require('lang/lspconfig')
+-- require('lang/lspconfig')
 
 -- Go-specific config
 require('lang/go')
@@ -141,7 +168,7 @@ vim.api.nvim_set_keymap('n', '<C-g>', '<cmd>Telescope live_grep<CR>', { noremap 
 -- [nvim-telescope/telescope.nvim] options
 require('telescope').setup {
   defaults = {
-    file_ignore_patterns = {'.git'},
+    file_ignore_patterns = { '.git' },
     sorting_strategy = 'ascending',
     layout_strategy = 'horizontal',
   }
@@ -154,75 +181,10 @@ require('nvim-treesitter.configs').setup {
   indent = { enable = false },
 }
 
--- [hrsh7th/nvim-cmp] enable sources and mappings
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-local cmp = require('cmp')
-local luasnip = require('luasnip')
-cmp.mapping.confirm({ select = true })
-cmp.setup({
-  completion = {
-    completeopt = 'menu,menuone,noinsert,noselect'
-  },
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-y>'] = cmp.config.disable,
-    ['<C-e>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-  },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  }),
-})
--- [hrsh7th/nvim-cmp] use buffer source for '/'
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
--- [hrsh7th/nvim-cmp] use cmdline & path source for ':'
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- [VonHeikemen/lsp-zero.nvim]
+local lsp = require('lsp-zero')
+lsp.preset('recommended')
+lsp.setup()
 
 -- [tpope/vim-commentary]
 vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
