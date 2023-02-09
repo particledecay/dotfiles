@@ -177,7 +177,7 @@ require('telescope').setup {
 -- [nvim-treesitter/nvim-treesitter] enable modules
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
-  highlight = { enable = true },
+  highlight = { enable = false },
   indent = { enable = false },
 }
 
