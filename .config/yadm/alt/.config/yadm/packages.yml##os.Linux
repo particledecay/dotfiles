@@ -206,4 +206,3 @@
   loop:
     - alacritty
     - hyperfine
-    - procs
