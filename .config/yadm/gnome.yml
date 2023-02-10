@@ -25,7 +25,7 @@
 
 - name: Set Caps Lock to Escape
   dconf:
-    key: /org/gnome/desktop/input-sources/xkboptions
+    key: /org/gnome/desktop/input-sources/xkb-options
     value: "['caps:escape']"
 
 - name: Set regular font
