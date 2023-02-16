@@ -1,11 +1,11 @@
-local null_ls = require('null-ls')
+local nls = require('null-ls')
+local code = nls.builtins.code_actions
+local diag = nls.builtins.diagnostics
+local fmt = nls.builtins.formatting
+local hov = nls.builtins.hover
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-local code = null_ls.builtins.code_actions
-local diag = null_ls.builtins.diagnostics
-local fmt = null_ls.builtins.formatting
-local hov = null_ls.builtins.hover
 
-null_ls.setup({
+nls.setup({
   sources = {
     code.gitrebase,
     code.gitsigns,

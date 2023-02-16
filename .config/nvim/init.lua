@@ -24,28 +24,15 @@ require('packer').startup(function()
   use 'tpope/vim-commentary' -- Code commenting
   use 'airblade/vim-rooter' -- Identify root directories and chdir to them
   use 'nvim-treesitter/nvim-treesitter' -- Advanced semantic code analysis
-  -- use 'jose-elias-alvarez/null-ls.nvim' -- Make LSP configs easier
   use 'kyazdani42/nvim-web-devicons' -- Icons
+  use 'neovim/nvim-lspconfig' -- LSP config support
+  use 'williamboman/mason.nvim' -- LSP installer
+  use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
+
   use {
-    'VonHeikemen/lsp-zero.nvim',
+    'jose-elias-alvarez/null-ls.nvim', -- Make LSP configs easier
     requires = {
-      -- LSP Support
-      { 'neovim/nvim-lspconfig' },
-      { 'williamboman/mason.nvim' },
-      { 'williamboman/mason-lspconfig.nvim' },
-
-      -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lua' },
-      { 'hrsh7th/cmp-cmdline' },
-
-      -- Snippets
-      { 'L3MON4D3/LuaSnip' },
-      { 'rafamadriz/friendly-snippets' },
+      { 'nvim-lua/plenary.nvim' },
     }
   }
   use {
@@ -137,7 +124,7 @@ vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 vim.cmd('autocmd FileType netrw setl bufhidden=delete')
 
 -- LSP configuration
--- require('lang/lspconfig')
+require('lang/lspconfig')
 
 -- Go-specific config
 require('lang/go')
@@ -180,11 +167,6 @@ require('nvim-treesitter.configs').setup {
   highlight = { enable = false },
   indent = { enable = false },
 }
-
--- [VonHeikemen/lsp-zero.nvim]
-local lsp = require('lsp-zero')
-lsp.preset('recommended')
-lsp.setup()
 
 -- [tpope/vim-commentary]
 vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
