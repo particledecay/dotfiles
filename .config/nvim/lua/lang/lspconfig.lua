@@ -7,37 +7,46 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 nls.setup({
   sources = {
-    code.gitrebase,
-    code.gitsigns,
-    code.shellcheck,
+    -- Code Actions
+    code.gitrebase,                 -- git
+    code.gitsigns,                  -- git
+    code.refactoring,               -- refactoring by martin fowler
+    code.shellcheck,                -- shell
 
-    diag.actionlint,
-    diag.ansiblelint,
-    diag.djlint,
-    diag.eslint_d,
-    diag.fish,
-    diag.flake8,
-    diag.jsonlint,
-    -- diag.revive,
-    diag.shellcheck,
-    diag.todo_comments,
-    diag.vulture,
+    -- Diagnostics
+    diag.actionlint,                -- github actions
+    diag.ansiblelint,               -- ansible
+    diag.curlylint,                 -- HTML template linting
+    diag.djlint,                    -- django
+    diag.eslint_d,                  -- javascript
+    diag.fish,                      -- fish
+    diag.flake8,                    -- python
+    diag.jsonlint,                  -- json
+    diag.semgrep.with {             -- semgrep
+      args = { "-q", "--config=auto", "$FILENAME" },
+    },
+    diag.shellcheck,                -- shell
+    diag.staticcheck,               -- go
+    diag.todo_comments,             -- todos
+    diag.vulture,                   -- find unused python code
 
-    fmt.autopep8,
-    fmt.eslint_d,
-    fmt.fish_indent,
-    -- fmt.gofmt,
-    -- fmt.goimports,
-    fmt.isort,
-    fmt.jq,
-    fmt.prettierd,
-    fmt.terraform_fmt.with {
+    -- Formatting
+    fmt.autopep8,                   -- python
+    fmt.eslint_d,                   -- javascript
+    fmt.fish_indent,                -- fish
+    fmt.gofumpt,                    -- go
+    fmt.goimports,                  -- go imports
+    fmt.isort,                      -- python imports
+    fmt.jq,                         -- json
+    fmt.prettierd,                  -- javascript
+    fmt.terraform_fmt.with {        -- terraform
       filetypes = { "terraform", "tf", "hcl" },
     },
-    fmt.trim_newlines,
-    fmt.trim_whitespace,
+    fmt.trim_newlines,              -- trailing newlines
+    fmt.trim_whitespace,            -- trailing whitespace
 
-    hov.printenv,
+    -- Hover
+    hov.printenv,                   -- show environment variable values
   },
 
   on_attach = function(client, bufnr)
