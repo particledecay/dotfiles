@@ -17,6 +17,13 @@ vim.api.nvim_exec([[
 -- Packer plugins
 local use = require('packer').use
 require('packer').startup(function()
+  -- Completion
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/nvim-cmp'
+
   use 'wbthomason/packer.nvim' -- Package manager
   use 'tpope/vim-fugitive' -- Git commands
   use 'tpope/vim-rhubarb' -- GitHub integration
@@ -28,6 +35,11 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig' -- LSP config support
   use 'williamboman/mason.nvim' -- LSP installer
   use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
+
+  -- Snippets
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'rafamadriz/friendly-snippets'
 
   use {
     'jose-elias-alvarez/null-ls.nvim', -- Make LSP configs easier
@@ -167,6 +179,21 @@ require('nvim-treesitter.configs').setup {
   highlight = { enable = false },
   indent = { enable = false },
 }
+
+-- [L3MON4D3/LuaSnip]
+require('luasnip.loaders.from_vscode').lazy_load()
+
+-- [rafamadriz/friendly-snippets]
+local snip = require('luasnip')
+snip.filetype_extend('django', {'django'})
+snip.filetype_extend('docker', {'docker'})
+snip.filetype_extend('go', {'go'})
+snip.filetype_extend('javascript', {'javascript'})
+snip.filetype_extend('kubernetes', {'kubernetes'})
+snip.filetype_extend('make', {'make'})
+snip.filetype_extend('python', {'python'})
+snip.filetype_extend('shell', {'shell'})
+snip.filetype_extend('sql', {'sql'})
 
 -- [tpope/vim-commentary]
 vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })

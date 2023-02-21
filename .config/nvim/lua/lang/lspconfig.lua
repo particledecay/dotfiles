@@ -1,5 +1,6 @@
 local nls = require('null-ls')
 local code = nls.builtins.code_actions
+local cmp = nls.builtins.completion
 local diag = nls.builtins.diagnostics
 local fmt = nls.builtins.formatting
 local hov = nls.builtins.hover
@@ -12,6 +13,9 @@ nls.setup({
     code.gitsigns,                  -- git
     code.refactoring,               -- refactoring by martin fowler
     code.shellcheck,                -- shell
+
+    -- Completion
+    cmp.luasnip,                    -- Lua Snip
 
     -- Diagnostics
     diag.actionlint,                -- github actions
@@ -34,7 +38,7 @@ nls.setup({
     fmt.autopep8,                   -- python
     fmt.eslint_d,                   -- javascript
     fmt.fish_indent,                -- fish
-    fmt.gofumpt,                    -- go
+    fmt.gofmt,                      -- go
     fmt.goimports,                  -- go imports
     fmt.isort,                      -- python imports
     fmt.jq,                         -- json
