@@ -14,9 +14,6 @@ nls.setup({
     code.refactoring,               -- refactoring by martin fowler
     code.shellcheck,                -- shell
 
-    -- Completion
-    cmp.luasnip,                    -- Lua Snip
-
     -- Diagnostics
     diag.actionlint,                -- github actions
     diag.ansiblelint,               -- ansible

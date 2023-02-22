@@ -138,6 +138,9 @@ vim.cmd('autocmd FileType netrw setl bufhidden=delete')
 -- LSP configuration
 require('lang/lspconfig')
 
+-- Completion sources
+require('lang/comp')
+
 -- Go-specific config
 require('lang/go')
 
