@@ -95,7 +95,7 @@ require('packer').startup(function()
   }
 
   -- Themes
-  use 'dracula/vim' -- Dracula
+  use 'Mofiqul/dracula.nvim'
 end)
 
 -- Global settings
@@ -245,4 +245,7 @@ vim.g.carbon_now_sh_options = {
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
 -- [dracula/vim]
+require('dracula').setup({
+  italic_comment = true,
+})
 vim.api.nvim_exec([[ colorscheme dracula ]], false)
