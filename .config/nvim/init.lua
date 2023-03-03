@@ -179,7 +179,7 @@ require('telescope').setup {
 -- [nvim-treesitter/nvim-treesitter] enable modules
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
-  highlight = { enable = false },
+  highlight = { enable = true },
   indent = { enable = false },
 }
 
@@ -197,6 +197,9 @@ snip.filetype_extend('make', {'make'})
 snip.filetype_extend('python', {'python'})
 snip.filetype_extend('shell', {'shell'})
 snip.filetype_extend('sql', {'sql'})
+
+-- [williamboman/mason]
+require('mason').setup()
 
 -- [tpope/vim-commentary]
 vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
