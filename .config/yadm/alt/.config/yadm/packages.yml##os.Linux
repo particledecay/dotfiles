@@ -56,7 +56,6 @@
           - openssh-server
           - pass
           - pkg-config
-          - podman
           - prettyping
           - qemu-kvm
           - ripgrep
@@ -110,6 +109,11 @@
 
 - name: FEDORA PACKAGE INSTALLATION
   block:
+    - name: Install dnf core plugins
+      package:
+        name: dnf-plugins-core
+        state: present
+
     - name: Add RPM Fusion repository
       dnf:
         name: "{{ item }}"
@@ -157,7 +161,6 @@
           - openssl-devel
           - pass
           - pkgconf-pkg-config
-          - podman
           - prettyping
           - qemu-kvm
           - readline-devel
