@@ -141,11 +141,11 @@ require('lang/lspconfig')
 -- Completion sources
 require('lang/comp')
 
--- Go-specific config
+-- Language-specific configs
+require('lang/docker')
 require('lang/go')
-
--- Python-specific config
 require('lang/python')
+require('lang/terraform')
 
 -- [airblade/vim-rooter] patterns for finding root directory
 vim.g.rooter_patterns = {

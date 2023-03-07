@@ -28,7 +28,9 @@ nls.setup({
     },
     diag.shellcheck,                -- shell
     diag.staticcheck,               -- go
-    diag.terraform_validate,        -- terraform
+    diag.terraform_validate.with {  -- terraform
+      filetypes = { "terraform", "tf", "hcl" },
+    },
     diag.todo_comments,             -- todos
     diag.vulture,                   -- find unused python code
 
