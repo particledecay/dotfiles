@@ -129,6 +129,9 @@ vim.api.nvim_set_keymap('n', '<leader>P', '"+P', { noremap = true })
 vim.api.nvim_set_keymap('v', '<leader>p', '"+p', { noremap = true })
 vim.api.nvim_set_keymap('v', '<leader>P', '"+P', { noremap = true })
 
+-- Open terminal
+vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<CR>', { noremap = true })
+
 -- Include line numbers in netrw (why isn't this the default?)
 vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
 
