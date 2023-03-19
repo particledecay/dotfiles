@@ -2,6 +2,7 @@ local wezterm = require 'wezterm';
 
 return {
   color_scheme = "Dracula (Official)",
+  default_prog = {"fish", "-c", "tmux a || tmux"},
   enable_tab_bar = false,
   font = wezterm.font_with_fallback {
     "MonoLisa",

@@ -116,6 +116,8 @@ font:
     # family: Space Mono
     # family: B612 Mono
     # family: DM Mono
+    # family: Source Code Pro
+    # family: FuraCode Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     style: Retina
