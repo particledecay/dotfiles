@@ -1,9 +1,13 @@
 local wezterm = require 'wezterm';
 
 return {
-  color_scheme = "OneHalfDark",
-  font = wezterm.font("MonoLisa"),
-  font_size = 11.0,
+  color_scheme = "Dracula (Official)",
+  enable_tab_bar = false,
+  font = wezterm.font_with_fallback {
+    "MonoLisa",
+    "FuraCode Nerd Font Mono",
+  },
+  font_size = 10.5,
   font_rules = {
 	  {
 		  italic = true,
