@@ -1,20 +1,22 @@
 local wezterm = require 'wezterm';
 
-return {
+local config = {
   color_scheme = "Dracula (Official)",
   default_prog = {"fish", "-c", "tmux a || tmux"},
-  enable_tab_bar = false,
   font = wezterm.font_with_fallback {
-    "MonoLisa",
+    "PTMono Nerd Font",
     "FuraCode Nerd Font Mono",
   },
-  font_size = 10.5,
+  font_size = 11.5,
   font_rules = {
 	  {
 		  italic = true,
 		  font = wezterm.font("MonoLisa", {italic=true})
-	  }
+	  },
   },
-  font_antialias = "Greyscale",
-  font_hinting = "Full"
+  freetype_load_target = "Light",
+  freetype_render_target = "HorizontalLcd",
+  hide_tab_bar_if_only_one_tab = true,
 }
+
+return config
