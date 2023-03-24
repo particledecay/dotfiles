@@ -60,9 +60,11 @@ if test -d /usr/local/opt/libxml2/bin
 end
 
 # android sdk
-if test -d $HOME/Android/Sdk
+if test -d $PROJECT_HOME/android/platform-tools
     set -Ux ANDROID_SDK_ROOT $HOME/Android/Sdk
     set -Ux ANDROID_HOME $ANDROID_SDK_ROOT
+    set -a custom_paths $ANDROID_SDK_ROOT/platform-tools
+    set -a custom_paths $ANDROID_SDK_ROOT/cmdline-tools/bin
 end
 
 # homebrew
