@@ -23,6 +23,7 @@ nls.setup({
     diag.fish,                      -- fish
     diag.flake8,                    -- python
     diag.jsonlint,                  -- json
+    diag.mypy,                      -- python
     diag.semgrep.with {             -- semgrep
       args = { "-q", "--config=auto", "$FILENAME" },
     },
