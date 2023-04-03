@@ -4,10 +4,10 @@ local config = {
   color_scheme = "Dracula (Official)",
   default_prog = {"fish", "-c", "tmux a || tmux"},
   font = wezterm.font_with_fallback {
-    "PTMono Nerd Font",
+    "MonoLisa",
     "FuraCode Nerd Font Mono",
   },
-  font_size = 11.5,
+  font_size = 12.0,
   font_rules = {
 	  {
 		  italic = true,
