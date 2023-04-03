@@ -18,3 +18,4 @@ sops 3.7.3
 shfmt 3.6.0
 eksctl 0.123.0
 conform v0.1.0-alpha.27
+task 3.23.0
