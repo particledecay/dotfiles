@@ -7,6 +7,13 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
+-- Copilot
+local copilot_path = vim.fn.stdpath('data') .. '/site/pack/github/start/copilot.vim'
+
+if vim.fn.empty(vim.fn.glob(copilot_path)) > 0 then
+  execute('!git clone https://github.com/github/copilot.vim.git ' .. copilot_path)
+end
+
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
