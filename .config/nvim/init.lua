@@ -101,6 +101,9 @@ require('packer').startup(function()
     end
   }
 
+  -- ActivityWatcher
+  use 'ActivityWatch/aw-watcher-vim'
+
   -- Themes
   use 'Mofiqul/dracula.nvim'
 end)
