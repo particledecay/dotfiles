@@ -29,6 +29,7 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-copilot'
   use 'hrsh7th/nvim-cmp'
 
   use 'wbthomason/packer.nvim' -- Package manager
@@ -159,6 +160,9 @@ require('lang/docker')
 require('lang/go')
 require('lang/python')
 require('lang/terraform')
+
+-- GitHub Copilot
+require('lang/copilot')
 
 -- [airblade/vim-rooter] patterns for finding root directory
 vim.g.rooter_patterns = {
