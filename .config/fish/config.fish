@@ -95,7 +95,7 @@ end
 
 # aliases
 alias d='docker'
-alias dc='/usr/bin/docker-compose'
+alias dc='docker compose'
 alias g='git'
 alias ga='git add'
 alias gb='git branch'

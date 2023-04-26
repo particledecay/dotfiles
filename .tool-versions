@@ -4,7 +4,7 @@ vault 1.10.3+ent
 consul 1.14.2
 kubectl 1.25.0
 helm 3.9.3
-github-cli 2.20.2
+github-cli 2.26.1
 k9s 0.25.15
 polaris 4.2.0
 argo 3.2.6
@@ -19,3 +19,4 @@ shfmt 3.6.0
 eksctl 0.123.0
 conform v0.1.0-alpha.27
 task 3.23.0
+tflint 0.46.1
