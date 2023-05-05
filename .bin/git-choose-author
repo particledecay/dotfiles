@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Function to find the Git project root directory
+find_git_root() {
+  local dir="$PWD"
+  while [[ ! -d "${dir}/.git" ]]; do
+    if [[ "${dir}" == "/" ]]; then
+      echo "Not inside a Git repository"
+      exit 1
+    fi
+    dir="$(dirname "$dir")"
+  done
+  echo "$dir"
+}
+
+# Main script starts here
+GIT_ROOT="$(find_git_root)"
+cd "$GIT_ROOT" || exit 1
+
+# List GPG public keys and store them in an array
+declare -a KEY_IDS
+declare -a USER_INFO
+KEY_ID=""
+while IFS= read -r line; do
+  if [[ $line == pub:* ]]; then
+    KEY_ID=$(echo "$line" | awk -F: '{print $5}')
+    KEY_IDS+=("$KEY_ID")
+  elif [[ $line == uid:* ]]; then
+    USER_INFO+=("$(echo "$line" | awk -F: '{print $10}')")
+  fi
+done < <(gpg --list-keys --with-colons --fingerprint)
+
+# Display the menu with numbered options
+echo "Listing GPG public keys:"
+echo "-------------------------"
+for i in "${!KEY_IDS[@]}"; do
+  echo "$((i+1)). ${KEY_IDS[i]} - ${USER_INFO[i]}"
+done
+echo "-------------------------"
+echo -n "Enter the number of the GPG key you want to use: "
+read -r KEY_INDEX
+
+# Validate user input
+if ! [[ "$KEY_INDEX" =~ ^[0-9]+$ ]] || (( KEY_INDEX < 1 )) || (( KEY_INDEX > ${#KEY_IDS[@]} )); then
+  echo "Invalid input. Please enter a number between 1 and ${#KEY_IDS[@]}."
+  exit 1
+fi
+
+# Extract the key ID, name, and email from the selected key
+KEY_ID="${KEY_IDS[KEY_INDEX-1]}"
+CHOSEN_USER="${USER_INFO[KEY_INDEX-1]}"
+NAME=$(echo "$CHOSEN_USER" | awk -F '<' '{print $1}' | xargs)
+EMAIL=$(echo "$CHOSEN_USER" | tr -d '>' | awk -F '<' '{print $2}' | xargs)
+
+# Update Git configuration to use the selected GPG key, name, and email
+git config user.signingkey "$KEY_ID"
+git config user.name "$NAME"
+git config user.email "$EMAIL"
+
+# Enable commit signing
+git config commit.gpgsign true
+
+echo "Using key '$KEY_ID' and associated name '$NAME' and email '$EMAIL'."
