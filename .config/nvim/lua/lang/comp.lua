@@ -16,6 +16,12 @@ cmp.setup({
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
       else
         fallback()
+        local copilot_keys = vim.fn["copilot#Accept"]()
+        if copilot_keys ~= "" then
+          vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        else
+          fallback()
+        end
       end
     end,
     ['<S-Tab>'] = function(fallback)
@@ -25,6 +31,12 @@ cmp.setup({
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
       else
         fallback()
+        local copilot_keys = vim.fn["copilot#Accept"]()
+        if copilot_keys ~= "" then
+          vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        else
+          fallback()
+        end
       end
     end,
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
