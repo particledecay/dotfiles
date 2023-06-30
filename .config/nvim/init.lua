@@ -91,6 +91,7 @@ require('packer').startup(function()
   use 'machakann/vim-sandwich' -- Surround plugin
   use 'fatih/vim-go' -- Go support (better than lspconfig for now)
   use 'towolf/vim-helm' -- Helm chart support
+  use 'b0o/schemastore.nvim' -- JSON Schemas
 
   -- Better diagnostics
   use {
