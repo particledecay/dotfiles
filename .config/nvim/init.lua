@@ -107,6 +107,16 @@ require('packer').startup(function()
     end
   }
 
+  -- Git diffs
+  use {
+    'sindrets/diffview.nvim',
+    requires = {
+      {
+        'nvim-lua/plenary.nvim',
+      }
+    }
+  }
+
   -- ActivityWatcher
   use 'ActivityWatch/aw-watcher-vim'
 
