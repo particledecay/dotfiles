@@ -4,14 +4,14 @@ local config = {
   color_scheme = "Dracula (Official)",
   default_prog = {"fish", "-c", "tmux a || tmux"},
   font = wezterm.font_with_fallback {
-    "MonoLisa",
+    "PTMono Nerd Font",
     "FuraCode Nerd Font Mono",
   },
-  font_size = 12.0,
+  font_size = 11.0,
   font_rules = {
 	  {
 		  italic = true,
-		  font = wezterm.font("MonoLisa", {italic=true})
+		  font = wezterm.font("Operation Mono", {italic=true})
 	  },
   },
   freetype_load_target = "Light",
