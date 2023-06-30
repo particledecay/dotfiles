@@ -38,7 +38,6 @@ require('packer').startup(function()
   use 'tpope/vim-vinegar' -- netrw improvements
   use 'tpope/vim-commentary' -- Code commenting
   use 'airblade/vim-rooter' -- Identify root directories and chdir to them
-  use 'nvim-treesitter/nvim-treesitter' -- Advanced semantic code analysis
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'neovim/nvim-lspconfig' -- LSP config support
   use 'williamboman/mason.nvim' -- LSP installer
@@ -48,6 +47,11 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use 'rafamadriz/friendly-snippets'
+
+  use {
+    'nvim-treesitter/nvim-treesitter', -- Advanced semantic code analysis
+    run = ':TSUpdate'
+  }
 
   use {
     'jose-elias-alvarez/null-ls.nvim', -- Make LSP configs easier
@@ -195,7 +199,42 @@ require('telescope').setup {
 
 -- [nvim-treesitter/nvim-treesitter] enable modules
 require('nvim-treesitter.configs').setup {
-  ensure_installed = 'all',
+  ensure_installed = {
+    'awk',
+    'bash',
+    'dockerfile',
+    'fish',
+    'git_config',
+    'git_rebase',
+    'gitattributes',
+    'gitcommit',
+    'gitignore',
+    'go',
+    'gomod',
+    'gosum',
+    'hcl',
+    'html',
+    'htmldjango',
+    'ini',
+    'javascript',
+    'jq',
+    'json',
+    'json5',
+    'lua',
+    'make',
+    'markdown',
+    'markdown_inline',
+    'python',
+    'regex',
+    'ruby',
+    'rust',
+    'scss',
+    'sql',
+    'terraform',
+    'toml',
+    'vim',
+    'yaml',
+  },
   highlight = { enable = true },
   indent = { enable = false },
 }
