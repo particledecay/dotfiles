@@ -107,6 +107,7 @@ alias grb='git rebase'
 alias k='kubectl'
 alias tf='terraform'
 alias tg='terragrunt'
+alias tgall='terragrunt run-all'
 if type -q bat
     alias cat='bat'
 end
