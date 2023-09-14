@@ -38,7 +38,7 @@ require('packer').startup(function()
   use 'tpope/vim-vinegar' -- netrw improvements
   use 'tpope/vim-commentary' -- Code commenting
   use 'airblade/vim-rooter' -- Identify root directories and chdir to them
-  use 'kyazdani42/nvim-web-devicons' -- Icons
+  use 'nvim-tree/nvim-web-devicons' -- Icons
   use 'neovim/nvim-lspconfig' -- LSP config support
   use 'williamboman/mason.nvim' -- LSP installer
   use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
@@ -84,6 +84,12 @@ require('packer').startup(function()
   use {
     'euclio/vim-markdown-composer', -- Markdown live preview
     run = 'cargo build --release'
+  }
+  use {
+    'nvim-tree/nvim-tree.lua', -- nvim-tree plugin
+    requires = {
+      { 'nvim-tree/nvim-web-devicons' }
+    }
   }
   use 'kristijanhusak/vim-carbon-now-sh' -- Carbon Now code screenshots
   use 'chrisbra/csv.vim' -- CSV support
@@ -159,7 +165,10 @@ vim.api.nvim_set_keymap('v', '<leader>P', '"+P', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>t', ':terminal<CR>', { noremap = true })
 
 -- Include line numbers in netrw (why isn't this the default?)
-vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
+-- vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- Don't save hidden buffers
 vim.cmd('autocmd FileType netrw setl bufhidden=delete')
@@ -313,6 +322,65 @@ vim.g.carbon_now_sh_options = {
 }
 -- [kristijanhusak/vim-carbon-now-sh] use F12 for taking screenshots
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
+
+
+-- [nvim-tree/nvim-tree.lua]
+require('nvim-tree').setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+    side = "left",
+  },
+  update_focused_file = {
+    enable = true,
+    update_cwd = true,
+  },
+  renderer = {
+    group_empty = true,
+    icons = {
+      glyphs = {
+        default = "",
+        symlink = "",
+        folder = {
+          arrow_open = "",
+          arrow_closed = "",
+          default = "",
+          open = "",
+          empty = "",
+          empty_open = "",
+          symlink = "",
+          symlink_open = "",
+        },
+        git = {
+          unstaged = "",
+          staged = "S",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "U",
+          deleted = "",
+          ignored = "◌",
+        },
+      },
+    },
+  },
+  filters = {
+    dotfiles = true,
+  },
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    },
+  },
+})
+-- [nvim-tree/nvim-tree.lua] use ctrl+n for toggling file tree
+vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
+-- [nvim-tree/nvim-tree.lua] use <leader>+ctrl+n for finding file
+vim.api.nvim_set_keymap('n', '<leader><C-n>', ':NvimTreeFindFile<CR>', { noremap = true })
 
 -- [dracula/vim]
 require('dracula').setup({
