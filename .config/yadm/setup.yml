@@ -107,9 +107,7 @@
             LDFLAGS: "{{ ldflags }}"
           loop:
             - "ansible-lint"
-            - "djlint"
             - "mypy"
-            - "python-lsp-server[all]"
             - "vulture"
             - "pynvim"
 
@@ -190,13 +188,7 @@
             PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
           loop:
             - "@fsouza/prettierd"
-            - bash-language-server
             - diff-so-fancy
-            - eslint_d
-            - jsonlint
-            - markdownlint
-            - vscode-langservers-extracted
-            - yaml-language-server
 
         - name: Set asdf installation path
           set_fact:

@@ -42,6 +42,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig' -- LSP config support
   use 'williamboman/mason.nvim' -- LSP installer
   use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
+  use 'lukas-reineke/lsp-format.nvim' -- Autoformatting
 
   -- Snippets
   use 'L3MON4D3/LuaSnip'
@@ -53,12 +54,6 @@ require('packer').startup(function()
     run = ':TSUpdate'
   }
 
-  use {
-    'jose-elias-alvarez/null-ls.nvim', -- Make LSP configs easier
-    requires = {
-      { 'nvim-lua/plenary.nvim' },
-    }
-  }
   use {
     'nvim-lualine/lualine.nvim', -- Statusline
     requires = {
@@ -174,16 +169,14 @@ vim.g.loaded_netrwPlugin = 1
 vim.cmd('autocmd FileType netrw setl bufhidden=delete')
 
 -- LSP configuration
-require('lang/lspconfig')
+require('lang/mason')
 
 -- Completion sources
 require('lang/comp')
 
 -- Language-specific configs
-require('lang/docker')
 require('lang/go')
 require('lang/python')
-require('lang/terraform')
 
 -- GitHub Copilot
 require('lang/copilot')
@@ -274,9 +267,6 @@ snip.filetype_extend('python', {'python'})
 snip.filetype_extend('shell', {'shell'})
 snip.filetype_extend('sql', {'sql'})
 
--- [williamboman/mason]
-require('mason').setup()
-
 -- [tpope/vim-commentary]
 vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
@@ -330,6 +320,8 @@ require('nvim-tree').setup({
   view = {
     width = 30,
     side = "left",
+    number = true,
+    relativenumber = true,
   },
   update_focused_file = {
     enable = true,
