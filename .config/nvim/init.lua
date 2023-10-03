@@ -7,11 +7,18 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
--- Copilot
-local copilot_path = vim.fn.stdpath('data') .. '/site/pack/github/start/copilot.vim'
+-- -- Copilot
+-- local copilot_path = vim.fn.stdpath('data') .. '/site/pack/github/start/copilot.vim'
 
-if vim.fn.empty(vim.fn.glob(copilot_path)) > 0 then
-  execute('!git clone https://github.com/github/copilot.vim.git ' .. copilot_path)
+-- if vim.fn.empty(vim.fn.glob(copilot_path)) > 0 then
+--   execute('!git clone https://github.com/github/copilot.vim.git ' .. copilot_path)
+-- end
+
+-- Codeium
+local codeium_path = vim.fn.stdpath('data') .. '/site/pack/Exafunction/start/codeium.vim'
+
+if vim.fn.empty(vim.fn.glob(codeium_path)) > 0 then
+  execute('!git clone https://github.com/Exafunction/codeium.vim.git ' .. codeium_path)
 end
 
 vim.api.nvim_exec([[
@@ -29,25 +36,37 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-copilot'
+  -- use 'hrsh7th/cmp-copilot'
   use 'hrsh7th/nvim-cmp'
 
-  use 'wbthomason/packer.nvim' -- Package manager
-  use 'tpope/vim-fugitive' -- Git commands
-  use 'tpope/vim-rhubarb' -- GitHub integration
-  use 'tpope/vim-vinegar' -- netrw improvements
-  use 'tpope/vim-commentary' -- Code commenting
-  use 'airblade/vim-rooter' -- Identify root directories and chdir to them
-  use 'nvim-tree/nvim-web-devicons' -- Icons
-  use 'neovim/nvim-lspconfig' -- LSP config support
-  use 'williamboman/mason.nvim' -- LSP installer
+  use 'wbthomason/packer.nvim'            -- Package manager
+  use 'tpope/vim-fugitive'                -- Git commands
+  use 'tpope/vim-rhubarb'                 -- GitHub integration
+  use 'tpope/vim-vinegar'                 -- netrw improvements
+  use 'tpope/vim-commentary'              -- Code commenting
+  use 'airblade/vim-rooter'               -- Identify root directories and chdir to them
+  use 'nvim-tree/nvim-web-devicons'       -- Icons
+  use 'neovim/nvim-lspconfig'             -- LSP config support
+  use 'williamboman/mason.nvim'           -- LSP installer
   use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
-  use 'lukas-reineke/lsp-format.nvim' -- Autoformatting
+  use 'lukas-reineke/lsp-format.nvim'     -- Autoformatting
 
   -- Snippets
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use 'rafamadriz/friendly-snippets'
+
+  -- AI completion
+  use {
+    'Exafunction/codeium.nvim',
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'hrsh7th/nvim-cmp' },
+    },
+    config = function()
+      require('codeium').setup()
+    end
+  }
 
   use {
     'nvim-treesitter/nvim-treesitter', -- Advanced semantic code analysis
@@ -87,12 +106,12 @@ require('packer').startup(function()
     }
   }
   use 'kristijanhusak/vim-carbon-now-sh' -- Carbon Now code screenshots
-  use 'chrisbra/csv.vim' -- CSV support
-  use 'sebdah/vim-delve' -- Delve debugging
-  use 'machakann/vim-sandwich' -- Surround plugin
-  use 'fatih/vim-go' -- Go support (better than lspconfig for now)
-  use 'towolf/vim-helm' -- Helm chart support
-  use 'b0o/schemastore.nvim' -- JSON Schemas
+  use 'chrisbra/csv.vim'                 -- CSV support
+  use 'sebdah/vim-delve'                 -- Delve debugging
+  use 'machakann/vim-sandwich'           -- Surround plugin
+  use 'fatih/vim-go'                     -- Go support (better than lspconfig for now)
+  use 'towolf/vim-helm'                  -- Helm chart support
+  use 'b0o/schemastore.nvim'             -- JSON Schemas
 
   -- Better diagnostics
   use {
@@ -179,7 +198,10 @@ require('lang/go')
 require('lang/python')
 
 -- GitHub Copilot
-require('lang/copilot')
+-- require('lang/copilot')
+
+-- Codeium
+require('lang/codeium')
 
 -- [airblade/vim-rooter] patterns for finding root directory
 vim.g.rooter_patterns = {
@@ -257,15 +279,15 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 -- [rafamadriz/friendly-snippets]
 local snip = require('luasnip')
-snip.filetype_extend('django', {'django'})
-snip.filetype_extend('docker', {'docker'})
-snip.filetype_extend('go', {'go'})
-snip.filetype_extend('javascript', {'javascript'})
-snip.filetype_extend('kubernetes', {'kubernetes'})
-snip.filetype_extend('make', {'make'})
-snip.filetype_extend('python', {'python'})
-snip.filetype_extend('shell', {'shell'})
-snip.filetype_extend('sql', {'sql'})
+snip.filetype_extend('django', { 'django' })
+snip.filetype_extend('docker', { 'docker' })
+snip.filetype_extend('go', { 'go' })
+snip.filetype_extend('javascript', { 'javascript' })
+snip.filetype_extend('kubernetes', { 'kubernetes' })
+snip.filetype_extend('make', { 'make' })
+snip.filetype_extend('python', { 'python' })
+snip.filetype_extend('shell', { 'shell' })
+snip.filetype_extend('sql', { 'sql' })
 
 -- [tpope/vim-commentary]
 vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>', { noremap = true, silent = true })
@@ -374,8 +396,21 @@ vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
 -- [nvim-tree/nvim-tree.lua] use <leader>+ctrl+n for finding file
 vim.api.nvim_set_keymap('n', '<leader><C-n>', ':NvimTreeFindFile<CR>', { noremap = true })
 
+-- [folke/trouble.nvim]
+vim.api.nvim_set_keymap('n', '<C-t>', ':TroubleToggle<CR>', { noremap = true, silent = true })
+
 -- [dracula/vim]
 require('dracula').setup({
   italic_comment = true,
 })
 vim.api.nvim_exec([[ colorscheme dracula ]], false)
+
+-- Random keybindings
+-- go to definition
+vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+-- hover
+vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+-- go to references
+vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+-- source code refactoring
+vim.api.nvim_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
