@@ -265,7 +265,7 @@
 
         - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/gnome.yml"
           when:
-            - ansible_distribution != "MacOSX"
+            - ansible_distribution == "Linux"
 
         - name: Copy MacOS fonts
           copy:
