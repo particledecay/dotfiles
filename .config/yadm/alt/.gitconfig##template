@@ -46,3 +46,7 @@
 [commit]
 	gpgsign = true
 	verbose = true
+{% if yadm.class == "work" %}
+[includeIf "gitdir:~/projects/gametime/"]
+  path = ~/projects/gametime/.gitconfig
+{% endif %}
