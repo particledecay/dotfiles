@@ -13,6 +13,10 @@ set -Ux PYENV_ROOT $HOME/.pyenv
 set -gx PATH $PYENV_ROOT/bin $PATH
 set -gx PATH $PYENV_ROOT/shims $PATH
 
+# rbenv settings
+set -Ux RBENV_ROOT $HOME/.rbenv
+set -gx PATH $RBENV_ROOT/bin $PATH
+
 # user-local binaries
 set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
 
@@ -133,5 +137,6 @@ end
 # source custom apps
 status --is-interactive; and type -q pyenv; and pyenv init - | source
 status --is-interactive; and type -q pyenv; and pyenv virtualenv-init - | source
+status --is-interactive; and type -q rbenv; and rbenv init - fish | source
 status --is-interactive; and type -q direnv; and direnv hook fish | source
 type -q starship; and starship init fish | source
