@@ -178,18 +178,6 @@
             PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
           changed_when: false
 
-        - name: Install Node packages
-          npm:
-            name: "{{ item }}"
-            global: yes
-            executable: "{{ nodenv_root }}/versions/{{ node_version }}/bin/npm"
-          environment:
-            NODENV_ROOT: "{{ nodenv_root }}"
-            PATH: "{{ ansible_env.PATH }}:{{ nodenv_root }}/bin:{{ nodenv_root }}/shims"
-          loop:
-            - "@fsouza/prettierd"
-            - diff-so-fancy
-
         - name: Set asdf installation path
           set_fact:
             asdf_root: "{{ ansible_env.HOME }}/.asdf"
