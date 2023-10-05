@@ -137,9 +137,6 @@ require('packer').startup(function()
     }
   }
 
-  -- ActivityWatcher
-  use 'ActivityWatch/aw-watcher-vim'
-
   -- Themes
   use 'Mofiqul/dracula.nvim'
 end)
@@ -190,12 +187,12 @@ vim.cmd('autocmd FileType netrw setl bufhidden=delete')
 -- LSP configuration
 require('lang/mason')
 
--- Completion sources
-require('lang/comp')
-
 -- Language-specific configs
 require('lang/go')
 require('lang/python')
+
+-- Completion sources
+require('lang/comp')
 
 -- GitHub Copilot
 -- require('lang/copilot')
@@ -335,6 +332,10 @@ vim.g.carbon_now_sh_options = {
 -- [kristijanhusak/vim-carbon-now-sh] use F12 for taking screenshots
 vim.api.nvim_set_keymap('v', '<F12>', ':CarbonNowSh<CR>', { noremap = true })
 
+{% if yadm.os == "WSL" %}
+-- [euclio/vim-markdown-composer] open in browser properly in WSL environments
+vim.g.markdown_composer_browser = 'wslview'
+{% endif %}
 
 -- [nvim-tree/nvim-tree.lua]
 require('nvim-tree').setup({
