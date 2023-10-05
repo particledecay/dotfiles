@@ -14,7 +14,7 @@ local servers = {
   'biome',                           -- JavsScript, JSON, TypeScript
   'lua_ls',                          -- Lua
   'marksman',                        -- Markdown
-  'pylsp',                           -- Python
+  -- 'pylsp',                           -- Python
   'ruby_ls',                         -- Ruby
   'terraformls',                     -- Terraform
   'yamlls',                          -- YAML
