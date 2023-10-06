@@ -61,6 +61,6 @@ cmp.setup({
     { name = 'luasnip' },
     { name = 'path' },
     -- { name = 'copilot' },
-    { name = 'codeium' },
+    -- { name = 'codeium' },
   },
 })
