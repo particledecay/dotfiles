@@ -47,8 +47,12 @@ local overrides = {
     },
   },
   lua_ls = {
-    diagnostics = {
-      globals = { 'vim' },
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' },
+        },
+      },
     },
   },
   marksman = {
