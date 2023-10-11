@@ -111,6 +111,7 @@ alias grb='git rebase'
 alias k='kubectl'
 {% if yadm.os == "WSL" %}
 alias op='/mnt/c/Program\ Files/1Password\ CLI/op.exe'
+alias open=wslview
 {% endif %}
 alias tf='terraform'
 alias tg='terragrunt'
