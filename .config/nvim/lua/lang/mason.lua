@@ -17,6 +17,7 @@ local servers = {
   -- 'pylsp',                           -- Python
   'ruby_ls',                         -- Ruby
   'terraformls',                     -- Terraform
+  'tflint',                          -- Terraform
   'yamlls',                          -- YAML
 }
 
