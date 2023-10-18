@@ -15,3 +15,9 @@ vim.cmd [[
   set softtabstop=2
   set tabstop=2
 ]]
+
+-- Include line numbers in netrw (why isn't this the default?)
+-- vim.g.netrw_bufsettings = 'noma nomod rnu nu nobl nowrap ro'
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
