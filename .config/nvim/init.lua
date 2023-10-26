@@ -7,7 +7,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
--- -- Copilot
+-- Copilot
 -- local copilot_path = vim.fn.stdpath('data') .. '/site/pack/github/start/copilot.vim'
 
 -- if vim.fn.empty(vim.fn.glob(copilot_path)) > 0 then
@@ -132,7 +132,10 @@ require('packer').startup(function()
   }
 
   -- Themes
-  use 'Mofiqul/dracula.nvim'
+  use {
+    'catppuccin/nvim',
+    as = 'catppuccin',
+  }
 end)
 
 -- Global settings
@@ -177,9 +180,9 @@ require('plugins/gitsigns')
 require('plugins/carbon-now')
 require('plugins/markdown')
 require('plugins/trouble')
-require('plugins/dracula')
+require('plugins/catppuccin')
 require('plugins/nvim-tree')
 
 
 -- Colorscheme
-vim.api.nvim_exec([[ colorscheme dracula ]], false)
+vim.cmd.colorscheme 'catppuccin'

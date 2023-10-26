@@ -40,7 +40,7 @@ require('nvim-tree').setup({
     },
   },
   filters = {
-    dotfiles = true,
+    dotfiles = false,
   },
   diagnostics = {
     enable = true,

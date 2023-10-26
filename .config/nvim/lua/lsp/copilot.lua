@@ -1,6 +1,7 @@
+-- disable Tab as the accept key
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
-vim.g.copilot_tab_fallback = ""
+-- vim.g.copilot_tab_fallback = ""
 
 -- enable specific languages
 vim.g.copilot_filetypes = {
@@ -26,3 +27,7 @@ vim.g.copilot_filetypes = {
   xml = true,
   fish = true,
 }
+
+-- map accept to another key
+vim.api.nvim_set_keymap('i', '<Right>', 'copilot#Complete()',
+  { expr = true, silent = true, noremap = true })
