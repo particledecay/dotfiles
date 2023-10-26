@@ -25,3 +25,4 @@ vault 1.10.3+ent
 difftastic 0.51.1
 terrascan 1.18.3
 terraform-docs 0.16.0
+dive 0.11.0
