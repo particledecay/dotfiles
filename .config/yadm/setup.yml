@@ -107,6 +107,7 @@
             LDFLAGS: "{{ ldflags }}"
           loop:
             - "ansible-lint"
+            - "libtmux"
             - "mypy"
             - "vulture"
             - "pynvim"
