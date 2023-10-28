@@ -136,6 +136,8 @@ require('packer').startup(function()
     'catppuccin/nvim',
     as = 'catppuccin',
   }
+  -- dracula
+  use 'Mofiqul/dracula.nvim'
 end)
 
 -- Global settings
@@ -181,8 +183,9 @@ require('plugins/carbon-now')
 require('plugins/markdown')
 require('plugins/trouble')
 require('plugins/catppuccin')
+require('plugins/dracula')
 require('plugins/nvim-tree')
 
 
 -- Colorscheme
-vim.cmd.colorscheme 'catppuccin'
+vim.cmd.colorscheme 'dracula'
