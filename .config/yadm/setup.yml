@@ -7,6 +7,18 @@
     node_version: 18.7.0
 
   tasks:
+    - name: PREREQUISITES
+      block:
+        - name: Enable passwordless sudo
+          lineinfile:
+            path: /etc/sudoers.d/10-installer
+            regexp: "^%adm.*(NOPASSWD)?"
+            line: "%adm ALL=(ALL:ALL) NOPASSWD: ALL"
+            state: present
+            validate: "visudo -cf %s"
+            create: yes
+          become: yes
+
     - name: PACKAGES
       block:
         - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/packages.yml"
@@ -229,16 +241,6 @@
           file:
             path: /etc/sudoers.d
             state: directory
-          become: yes
-
-        - name: Enable passwordless sudo
-          lineinfile:
-            path: /etc/sudoers.d/10-installer
-            regexp: "^%adm.*(NOPASSWD)?"
-            line: "%adm ALL=(ALL:ALL) NOPASSWD: ALL"
-            state: present
-            validate: "visudo -cf %s"
-            create: yes
           become: yes
 
         - name: Install Neovim plugins
