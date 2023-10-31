@@ -5,7 +5,6 @@
         repo: "{{ item.repo }}"
         state: present
       loop:
-        - repo: deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
         - repo: ppa:neovim-ppa/unstable
 
     - name: Add fish repository
@@ -59,6 +58,7 @@
           - prettyping
           - qemu-kvm
           - ripgrep
+          - ruby-dev
           - software-properties-common
           - sqlite3
           - sshpass
@@ -81,6 +81,7 @@
       package:
         name:
           - flameshot
+          - fonts-anonymous-pro
           - fonts-lato
           - fonts-powerline
           - gimp
@@ -93,7 +94,6 @@
           - libappindicator-dev
           - peek
           - texlive-fonts-extra
-          - ttf-anonymous-pro
           - vlc
         state: present
 

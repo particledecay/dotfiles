@@ -191,13 +191,13 @@
             update: no
 
         - name: Install asdf plugins
-          shell: for line in $(cat {{ ansible_env.HOME }}/.tool-versions); do asdf plugin-add $(echo $line | awk '{print $1}'); asdf install $(echo $line | awk '{print $2}'); done
+          shell: source "{{ asdf_root }}/asdf.sh"; for line in $(cat {{ ansible_env.HOME }}/.tool-versions); do asdf plugin-add $(echo $line | awk '{print $1}'); asdf install $(echo $line | awk '{print $2}'); done
           args:
             executable: /bin/bash
           register: asdf_install
           environment:
             ASDF_ROOT: "{{ asdf_root }}"
-            PATH: "{{ ansible_env.PATH }}:$ASDF_ROOT/bin"
+            PATH: "$ASDF_ROOT/bin:{{ ansible_env.PATH }}"
           changed_when: "'Installed' in asdf_install.stdout"
 
     - name: CUSTOMIZATION
@@ -234,8 +234,8 @@
         - name: Enable passwordless sudo
           lineinfile:
             path: /etc/sudoers.d/10-installer
-            regexp: "^%wheel.*(NOPASSWD)?"
-            line: "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
+            regexp: "^%adm.*(NOPASSWD)?"
+            line: "%adm ALL=(ALL:ALL) NOPASSWD: ALL"
             state: present
             validate: "visudo -cf %s"
             create: yes
@@ -254,7 +254,7 @@
 
         - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/gnome.yml"
           when:
-            - ansible_distribution == "Linux"
+            - ansible_distribution in ["Linux", "Ubuntu"]
 
         - name: Copy MacOS fonts
           copy:
