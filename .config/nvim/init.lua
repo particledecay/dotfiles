@@ -190,7 +190,7 @@ require('plugins/gitsigns')
 require('plugins/carbon-now')
 require('plugins/markdown')
 require('plugins/trouble')
-require('plugins/catppuccin')
+-- require('plugins/catppuccin')
 require('plugins/dracula')
 require('plugins/nvim-tree')
 
