@@ -28,6 +28,35 @@ vim.g.copilot_filetypes = {
   fish = true,
 }
 
+require('copilot').setup({
+  panel = {
+    enabled = false,
+    keymap = {
+      accept = '<Right>',
+    },
+  },
+  suggestion = {
+    enabled = false,
+    auto_trigger = true,
+    keymap = {
+      accept = '<Right>',
+      accept_word = false,
+      accept_line = false,
+    },
+  },
+  filetypes = vim.g.copilot_filetypes,
+  copilot_node_command = 'node',
+  server_opts_overrides = {
+    settings = {
+      advanced = {
+        inlineSuggestCount = 1,
+      },
+    },
+  },
+})
+
 -- map accept to another key
-vim.api.nvim_set_keymap('i', '<Right>', 'copilot#Complete()',
-  { expr = true, silent = true, noremap = true })
+vim.keymap.set('i', '<Right>', 'copilot#Accept("<CR>")',
+  { expr = true, silent = true, noremap = true, replace_keycodes = false })
+vim.keymap.set('i', '<C-Down>', '<Plug>(copilot-next)', { silent = true, noremap = true })
+vim.keymap.set('i', '<C-Up>', '<Plug>(copilot-previous)', { silent = true, noremap = true })

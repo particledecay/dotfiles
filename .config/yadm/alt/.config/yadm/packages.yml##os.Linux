@@ -200,12 +200,3 @@
         state: present
   become: yes
   when: ansible_distribution == "Fedora"
-
-- name: Install Rust packages
-  shell: cargo install {{ item }}
-  args:
-    executable: /bin/bash
-    creates: "{{ ansible_env.HOME }}/.cargo/bin/{{ item }}"
-  loop:
-    - alacritty
-    - hyperfine

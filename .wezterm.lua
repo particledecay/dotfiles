@@ -7,7 +7,7 @@ local config = {
     "0xProto",
     "FuraCode Nerd Font Mono",
   },
-  font_size = 10.5,
+  font_size = 11.0,
   line_height = 1.0,
   freetype_load_target = "Light",
   freetype_render_target = "HorizontalLcd",
