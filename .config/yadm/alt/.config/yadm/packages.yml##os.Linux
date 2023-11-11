@@ -163,8 +163,10 @@
           - pkgconf-pkg-config
           - prettyping
           - qemu-kvm
+          - rbenv
           - readline-devel
           - ripgrep
+          - ruby-devel
           - sqlite-devel
           - sshpass
           - sshuttle
