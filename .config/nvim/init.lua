@@ -129,6 +129,22 @@ require('packer').startup(function()
     }
   }
 
+  -- TODO comments
+  use {
+    'folke/todo-comments.nvim',
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      {
+        'nvim-telescope/telescope.nvim',
+        opt = true,
+      },
+      {
+        'folke/trouble.nvim',
+        opt = true,
+      },
+    },
+  }
+
   -- Git diffs
   use {
     'sindrets/diffview.nvim',
@@ -190,6 +206,7 @@ require('plugins/gitsigns')
 require('plugins/carbon-now')
 require('plugins/markdown')
 require('plugins/trouble')
+require('plugins/todo-comments')
 -- require('plugins/catppuccin')
 require('plugins/dracula')
 require('plugins/nvim-tree')
