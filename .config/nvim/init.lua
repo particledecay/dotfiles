@@ -14,13 +14,6 @@ if vim.fn.empty(vim.fn.glob(copilot_path)) > 0 then
   execute('!git clone https://github.com/github/copilot.vim.git ' .. copilot_path)
 end
 
--- Codeium
--- local codeium_path = vim.fn.stdpath('data') .. '/site/pack/Exafunction/start/codeium.vim'
-
--- if vim.fn.empty(vim.fn.glob(codeium_path)) > 0 then
---   execute('!git clone https://github.com/Exafunction/codeium.vim.git ' .. codeium_path)
--- end
-
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
@@ -36,7 +29,6 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
-  -- use 'hrsh7th/cmp-copilot'
   use 'hrsh7th/nvim-cmp'
 
   use 'wbthomason/packer.nvim'            -- Package manager
@@ -56,14 +48,6 @@ require('packer').startup(function()
   use 'saadparwaiz1/cmp_luasnip'
   use 'rafamadriz/friendly-snippets'
 
-  -- AI completion
-  -- use {
-  --   'Exafunction/codeium.nvim',
-  --   requires = {
-  --     { 'nvim-lua/plenary.nvim' },
-  --     { 'hrsh7th/nvim-cmp' },
-  --   }
-  -- }
   use {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
@@ -187,12 +171,6 @@ require('lsp/mason')
 -- Language-specific configs
 require('lsp/go')
 require('lsp/python')
-
--- GitHub Copilot
--- require('lsp/copilot')
-
--- Codeium
--- require('lsp/codeium')
 
 -- Plugin configs
 require('plugins/comp')
