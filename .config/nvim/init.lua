@@ -185,10 +185,11 @@ require('plugins/carbon-now')
 require('plugins/markdown')
 require('plugins/trouble')
 require('plugins/todo-comments')
--- require('plugins/catppuccin')
-require('plugins/dracula')
+require('plugins/catppuccin')
+-- require('plugins/dracula')
 require('plugins/nvim-tree')
 
 
 -- Colorscheme
-vim.cmd.colorscheme 'dracula'
+-- vim.cmd.colorscheme 'dracula'
+vim.cmd.colorscheme 'catppuccin-macchiato'

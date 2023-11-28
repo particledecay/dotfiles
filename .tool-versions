@@ -7,10 +7,10 @@ eksctl 0.123.0
 github-cli 2.31.0
 helm 3.9.3
 k9s 0.25.15
-kconf 1.12.0
-kubectl 1.25.0
+kconf 2.0.0
+kubectl 1.28.4
 polaris 4.2.0
-pre-commit 3.4.0
+pre-commit 3.5.0
 shellcheck 0.8.0
 shfmt 3.6.0
 sops 3.7.3
@@ -27,3 +27,4 @@ terrascan 1.18.3
 terraform-docs 0.16.0
 dive 0.11.0
 golangci-lint 1.55.2
+goreleaser 1.22.1

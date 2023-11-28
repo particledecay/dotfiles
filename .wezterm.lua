@@ -4,9 +4,9 @@ local config = {
   adjust_window_size_when_changing_font_size = false,
   color_scheme = "Dracula (Official)",
   default_prog = { "fish", "-c", "tmux a || tmux" },
-  font = wezterm.font_with_fallback {
-    "MonoLisa",
-    "FuraCode Nerd Font Mono",
+  font = wezterm.font {
+    family = "Space Mono",
+    harfbuzz_features = { "liga=0" },
   },
   font_size = 11.0,
   initial_rows = 55,
