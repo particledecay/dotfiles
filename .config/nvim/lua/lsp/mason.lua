@@ -14,7 +14,6 @@ local servers = {
   'biome',                           -- JavsScript, JSON, TypeScript
   'lua_ls',                          -- Lua
   'marksman',                        -- Markdown
-  -- 'pylsp',                           -- Python
   'ruby_ls',                         -- Ruby
   'terraformls',                     -- Terraform
   'tflint',                          -- Terraform
@@ -71,7 +70,8 @@ local overrides = {
   },
   yamlls = {
     schemas = {
-      ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = 'docker-compose.yml',
+      ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] =
+      'docker-compose.yml',
     },
   },
 }
