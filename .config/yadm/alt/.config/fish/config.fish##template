@@ -100,6 +100,8 @@ end
 # aliases
 alias d='docker'
 alias dc='docker compose'
+alias dx='docker exec -it'
+alias db='docker buildx build'
 alias g='git'
 alias ga='git add'
 alias gb='git branch'
