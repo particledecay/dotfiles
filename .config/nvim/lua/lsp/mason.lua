@@ -17,7 +17,6 @@ local servers = {
   'ruby_ls',                         -- Ruby
   'terraformls',                     -- Terraform
   'tflint',                          -- Terraform
-  'yamlls',                          -- YAML
 }
 
 -- define custom settings map for any servers that need it
@@ -66,12 +65,6 @@ local overrides = {
       args = { 'fmt', '-' },
       command = 'terraform',
       stdin = true,
-    },
-  },
-  yamlls = {
-    schemas = {
-      ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] =
-      'docker-compose.yml',
     },
   },
 }

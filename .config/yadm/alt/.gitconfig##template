@@ -46,6 +46,10 @@
 [commit]
 	gpgsign = true
 	verbose = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "git@gist.github.com:"]
+	insteadOf = https://gist.github.com/
 {% if yadm.class == "work" %}
 [includeIf "gitdir:~/projects/gametime/"]
   path = ~/projects/gametime/.gitconfig
