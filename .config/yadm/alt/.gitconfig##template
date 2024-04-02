@@ -18,6 +18,7 @@
 	delete-merged = !git co $(git head-branch) && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d
 	mkpatch = "!f() { git diff $1..$(git branch-name) > diff.patch && echo diff.patch; }; f"
 	tags = tag -l --sort=v:refname
+	files = "!f() { git log --name-status --pretty='' ${1:-$(git head-branch)}..HEAD; }; f"
 	last-tag = !git tags | tail -1
 	since-last-tag = "!f() { if [ -z \"$(git last-tag)\" ]; then git log --oneline --all; else git log --oneline --no-decorate ${1:-$(git last-tag)}..$(git branch-name) | sort -rk 2,2; fi; }; f"
 [user]
