@@ -30,4 +30,3 @@ golangci-lint 1.55.2
 goreleaser 1.25.1
 atlas 0.19.0
 gam 6.58
-jq 1.7.1
