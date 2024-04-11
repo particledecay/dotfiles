@@ -124,6 +124,9 @@ end
 if type -q batcat
     alias cat='batcat'
 end
+if type -q fdfind
+    alias fd='fdfind'
+end
 if type -q prettyping
     alias ping='prettyping'
 end

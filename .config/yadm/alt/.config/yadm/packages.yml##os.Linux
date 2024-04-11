@@ -27,6 +27,7 @@
           - cmake
           - curl
           - direnv
+          - fd-find
           - fish
           - fzf
           - git
