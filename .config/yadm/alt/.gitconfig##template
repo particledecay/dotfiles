@@ -21,7 +21,7 @@
 	files = "!f() { git log --name-status --pretty='' ${1:-$(git head-branch)}..HEAD; }; f"
 	last-tag = !git tags | tail -1
 	since-last-tag = "!f() { if [ -z \"$(git last-tag)\" ]; then git log --oneline --all; else git log --oneline --no-decorate ${1:-$(git last-tag)}..$(git branch-name) | sort -rk 2,2; fi; }; f"
-  unfuck-this-branch = "!f() { \
+	unfuck-this-branch = "!f() { \
     start_commit=$1; \
     new_branch=$(shuf -n3 /usr/share/dict/words | tr '\n' '-' | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-' | sed 's/-$//'); \
     old_branch=$(git symbolic-ref --short HEAD); \
