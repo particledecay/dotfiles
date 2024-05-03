@@ -22,23 +22,23 @@
 	last-tag = !git tags | tail -1
 	since-last-tag = "!f() { if [ -z \"$(git last-tag)\" ]; then git log --oneline --all; else git log --oneline --no-decorate ${1:-$(git last-tag)}..$(git branch-name) | sort -rk 2,2; fi; }; f"
 	unfuck-this-branch = "!f() { \
-    start_commit=$1; \
-    new_branch=$(shuf -n3 /usr/share/dict/words | tr '\n' '-' | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-' | sed 's/-$//'); \
-    old_branch=$(git symbolic-ref --short HEAD); \
-    if [ -z \"$start_commit\" ]; then \
-      echo \"You must specify the SHA of the first bad commit\"; \
-      return 1; \
-    fi; \
-    if git rev-parse --verify $new_branch > /dev/null 2>&1; then \
-      echo \"Branch '${new_branch}' already exists\"; \
-      return 1; \
-    fi; \
-    git checkout -b $new_branch > /dev/null 2>&1; \
-    git checkout $old_branch > /dev/null 2>&1; \
-    git reset --hard $start_commit^; \
-    echo \"New branch '${new_branch}' created\"; \
-    git checkout $new_branch; \
-  }; f"
+		start_commit=$1; \
+		new_branch=$(shuf -n3 /usr/share/dict/words | tr '\n' '-' | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-' | sed 's/-$//'); \
+		old_branch=$(git symbolic-ref --short HEAD); \
+		if [ -z \"$start_commit\" ]; then \
+			echo \"You must specify the SHA of the first bad commit\"; \
+			return 1; \
+		fi; \
+		if git rev-parse --verify $new_branch > /dev/null 2>&1; then \
+			echo \"Branch '${new_branch}' already exists\"; \
+			return 1; \
+		fi; \
+		git checkout -b $new_branch > /dev/null 2>&1; \
+		git checkout $old_branch > /dev/null 2>&1; \
+		git reset --hard $start_commit^; \
+		echo \"New branch '${new_branch}' created\"; \
+		git checkout $new_branch; \
+	}; f"
 [user]
 	signingkey = BA210DB793D37A6157177FDDB9CEB1D5CFA7BE10
 	name = Joey Espinosa
