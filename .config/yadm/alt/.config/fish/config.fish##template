@@ -49,7 +49,7 @@ set -a custom_paths $HOME/.cargo/bin
 
 # set go paths
 set -Ux GOROOT
-for dir in /usr/lib/go /usr/local/lib/go
+for dir in /usr/local/go /usr/lib/go /usr/local/lib/go
     test -e $dir && set GOROOT $dir
     set -a custom_paths $HOME/go/bin $GOROOT/bin
     break
