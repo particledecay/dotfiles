@@ -92,6 +92,18 @@ set -a custom_paths $NODENV_ROOT/bin $NODENV_ROOT/shims
 # krew (kubectl plugin)
 set -a custom_paths $HOME/.krew/bin
 
+{% if yadm.os == "Linux" %}
+# homebrew on linux
+if test -d /home/linuxbrew/.linuxbrew
+  set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew"
+  set -gx HOMEBREW_CELLAR "/home/linuxbrew/.linuxbrew/Cellar"
+  set -gx HOMEBREW_REPOSITORY "/home/linuxbrew/.linuxbrew/Homebrew"
+  set -gx MANPATH "$HOMEBREW_PREFIX/share/man" $MANPATH
+  set -gx INFOPATH "$HOMEBREW_PREFIX/share/info" $INFOPATH
+  set -a custom_paths $HOMEBREW_PREFIX/bin $HOMEBREW_PREFIX/sbin
+end
+{% endif %}
+
 # set PATH with all the custom paths
 for path in $custom_paths
     contains $path $fish_user_paths; or set -a fish_user_paths $path
