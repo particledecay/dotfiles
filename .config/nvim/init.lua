@@ -139,6 +139,16 @@ require('packer').startup(function()
     }
   }
 
+  -- GitHub reviews
+  use {
+    'pwntester/octo.nvim',
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope.nvim' },
+      { 'nvim-tree/nvim-web-devicons' },
+    }
+  }
+
   -- Themes
   use {
     'catppuccin/nvim',
@@ -164,6 +174,7 @@ require('keymaps/buffer')
 require('keymaps/clipboard')
 require('keymaps/commentary')
 require('keymaps/fugitive')
+require('keymaps/octo')
 
 -- LSP configuration
 require('lsp/mason')
@@ -185,6 +196,7 @@ require('plugins/carbon-now')
 require('plugins/markdown')
 require('plugins/trouble')
 require('plugins/todo-comments')
+require('plugins/octo')
 require('plugins/catppuccin')
 -- require('plugins/dracula')
 require('plugins/nvim-tree')
