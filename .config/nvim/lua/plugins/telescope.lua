@@ -5,7 +5,7 @@ local root_dir = dir.find_git_or_pwd(vim.fn.getcwd())
 -- [nvim-telescope/telescope.nvim] use ctrl+p for fuzzy search
 key('n', '<C-p>', '<cmd>Telescope find_files search_dirs={"' .. root_dir .. '"}<CR>', { noremap = true })
 -- [nvim-telescope/telescope.nvim] use ctrl+g for fuzzy grep
-key('n', '<C-g>', '<cmd>Telescope live_grep<CR>', { noremap = true })
+key('n', '<C-g>', '<cmd>Telescope live_grep search_dirs={"' .. root_dir .. '"}<CR>', { noremap = true })
 -- [nvim-telescope/telescope.nvim] options
 require('telescope').setup {
   defaults = {
