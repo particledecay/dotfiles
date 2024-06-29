@@ -9,6 +9,20 @@
   tasks:
     - name: PREREQUISITES
       block:
+        - name: Create adm group
+          group:
+            name: adm
+            state: present
+          become: yes
+
+        - name: Add current user to adm group
+          user:
+            name: "{{ ansible_user_id }}"
+            groups:
+              - adm
+            append: true
+          become: yes
+
         - name: Enable passwordless sudo
           lineinfile:
             path: /etc/sudoers.d/10-installer
