@@ -15,3 +15,6 @@ vim.api.nvim_set_keymap('v', '<leader>S', ':s/$/ # pragma: allowlist secret/<CR>
 -- remove '# pragma: allowlist secret' from end of all selected lines
 vim.api.nvim_set_keymap('v', '<leader>s', ':s/ # pragma: allowlist secret$//<CR>:noh<CR>',
   { noremap = true, silent = true })
+
+-- custom :SudoWrite command to write file with sudo and then reload file
+vim.api.nvim_command('command! -nargs=0 SudoWrite :execute "silent w !sudo tee % > /dev/null" | execute "e!"')
