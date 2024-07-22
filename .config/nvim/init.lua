@@ -82,6 +82,7 @@ require('packer').startup(function()
     'lewis6991/gitsigns.nvim', -- Git signs
     requires = {
       { 'nvim-lua/plenary.nvim' },
+      { 'seanbreckenridge/gitsigns-yadm.nvim' },
     }
   }
   use {
