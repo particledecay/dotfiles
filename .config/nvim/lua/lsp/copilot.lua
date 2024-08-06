@@ -8,6 +8,7 @@ vim.g.copilot_filetypes = {
   python = true,
   go = true,
   javascript = true,
+  javsscriptreact = true,
   typescript = true,
   typescriptreact = true,
   html = true,

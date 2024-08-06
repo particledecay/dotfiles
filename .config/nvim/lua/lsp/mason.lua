@@ -33,6 +33,12 @@ local overrides = {
       interpreterPath = vim.g.python3_host_prog,
     },
   },
+  biome = {
+    root_dir = function(fname)
+      return lspconfig.util.root_pattern('.git', '.biome')(fname) or lspconfig.util.find_git_ancestor(fname) or
+      lspconfig.util.path.dirname(fname)
+    end,
+  },
   gopls = {
     analyses = {
       unusedparams = true,
