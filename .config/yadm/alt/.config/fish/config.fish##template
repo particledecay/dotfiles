@@ -74,7 +74,7 @@ end
 # homebrew
 if test -d /opt/homebrew
     set -Ux HOMEBREW_PATH /opt/homebrew
-    set -a custom_paths $HOMEBREW_PATH/bin
+    set custom_paths $HOMEBREW_PATH/bin $custom_paths
 end
 
 # asdf
