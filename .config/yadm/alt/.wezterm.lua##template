@@ -19,6 +19,11 @@ local config = {
   freetype_render_target = "HorizontalLcd",
   freetype_load_flags = "NO_HINTING",
   hide_tab_bar_if_only_one_tab = true,
+{% if yadm.os == "Darwin" %}
+  set_environment_variables = {
+    PATH = "/opt/homebrew/bin:" .. os.getenv("PATH")
+  },
+{% endif %}
 }
 
 return config
