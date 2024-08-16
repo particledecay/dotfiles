@@ -153,6 +153,7 @@ if test -x $HOME/.cargo/bin/btm
 end
 if type -q nvim
     alias vim='nvim'
+    alias v='nvim'
 end
 
 # source custom apps
