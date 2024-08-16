@@ -36,7 +36,7 @@ local overrides = {
   biome = {
     root_dir = function(fname)
       return lspconfig.util.root_pattern('.git', '.biome')(fname) or lspconfig.util.find_git_ancestor(fname) or
-      lspconfig.util.path.dirname(fname)
+          lspconfig.util.path.dirname(fname)
     end,
   },
   gopls = {
@@ -79,12 +79,22 @@ mason.setup()
 masonlsp.setup({ ensure_installed = servers })
 lspformat.setup({ sync = true })
 
+-- capabilities and formatter
+local caps_and_format = {
+  capabilities = {
+    ["workspace/didChangeWatchedFiles"] = {
+      dynamicRegistration = true,
+    },
+  },
+  on_attach = lspformat.on_attach,
+}
+
 -- set up the language servers
 for _, server in ipairs(servers) do
   -- initialize each language server with override settings if found
   if overrides[server] then
-    lspconfig[server].setup(vim.tbl_deep_extend('force', overrides[server], { on_attach = lspformat.on_attach }))
+    lspconfig[server].setup(vim.tbl_deep_extend('force', overrides[server], caps_and_format))
   else
-    lspconfig[server].setup({ on_attach = lspformat.on_attach })
+    lspconfig[server].setup(caps_and_format)
   end
 end
