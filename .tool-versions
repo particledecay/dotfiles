@@ -16,9 +16,9 @@ shfmt 3.6.0
 sops 3.7.3
 starship 1.16.0
 task 3.31.0
-terraform 1.7.4
+terraform 1.9.5
 terraform-ls 0.29.2
-terragrunt 0.55.10
+terragrunt 0.66.9
 tflint 0.46.1
 trivy 0.44.1
 vault 1.10.3+ent
@@ -31,3 +31,4 @@ goreleaser 1.25.1
 atlas 0.19.0
 gam 6.58
 go-swagger 0.30.5
+scaffold 0.3.0
