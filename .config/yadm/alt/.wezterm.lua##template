@@ -6,10 +6,10 @@ local config = {
   color_scheme = "Dracula (Official)",
   default_prog = { "fish", "-c", "tmux a || tmux" },
   font = wezterm.font {
-    family = "MonoLisa",
+    family = "PTMono Nerd Font",
     -- harfbuzz_features = { "liga=0" },
   },
-  font_size = 11.0,
+  font_size = 11.5,
   -- initial_rows = 55,
   -- initial_cols = 180,
   initial_rows = 50,
