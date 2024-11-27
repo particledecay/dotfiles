@@ -17,6 +17,7 @@ local config = {
   -- initial_rows = 50,
   -- initial_cols = 170,
   line_height = 1.0,
+  max_fps = 120,
   freetype_load_target = "HorizontalLcd",
   freetype_render_target = "HorizontalLcd",
   freetype_load_flags = "NO_HINTING",
