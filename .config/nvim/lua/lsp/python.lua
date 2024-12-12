@@ -2,7 +2,7 @@ local lspconfig = require('lspconfig')
 local lspformat = require('lsp-format')
 
 -- Python virtualenv for Neovim
-vim.g.python3_host_prog = "$HOME/.pyenv/versions/3.7.13/bin/python"
+vim.g.python3_host_prog = "$HOME/.pyenv/versions/3.8.18/bin/python"
 
 -- prefer virtualenv (check env var) if available otherwise default to python3_host_prog
 if vim.env.VIRTUAL_ENV then

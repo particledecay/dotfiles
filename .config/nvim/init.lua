@@ -114,6 +114,22 @@ require('packer').startup(function()
     }
   }
 
+  -- Debugging
+  use {
+    'rcarriga/nvim-dap-ui',
+    requires = {
+      { 'mfussenegger/nvim-dap' },
+      { 'theHamsta/nvim-dap-virtual-text' },
+      { 'nvim-neotest/nvim-nio' },
+    }
+  }
+
+  -- Python debugging
+  use 'mfussenegger/nvim-dap-python'
+
+  -- Go debugging
+  use 'leoluz/nvim-dap-go'
+
   -- TODO comments
   use {
     'folke/todo-comments.nvim',
@@ -183,6 +199,9 @@ require('lsp/mason')
 -- Language-specific configs
 require('lsp/go')
 require('lsp/python')
+
+-- DAP configuration
+require('lsp/dap-ui')
 
 -- Plugin configs
 require('plugins/comp')
