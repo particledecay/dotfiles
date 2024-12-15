@@ -125,10 +125,20 @@ require('packer').startup(function()
   }
 
   -- Python debugging
-  use 'mfussenegger/nvim-dap-python'
+  use {
+    'mfussenegger/nvim-dap-python',
+    requires = {
+      { 'mfussenegger/nvim-dap' },
+    }
+  }
 
   -- Go debugging
-  use 'leoluz/nvim-dap-go'
+  use {
+    'leoluz/nvim-dap-go',
+    requires = {
+      { 'mfussenegger/nvim-dap' },
+    }
+  }
 
   -- TODO comments
   use {
