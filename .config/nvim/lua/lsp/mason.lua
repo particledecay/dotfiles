@@ -17,6 +17,7 @@ local servers = {
   'ruby_lsp',                        -- Ruby
   'terraformls',                     -- Terraform
   'tflint',                          -- Terraform
+  'ts_ls',                           -- TypeScript
 }
 
 -- define custom settings map for any servers that need it
