@@ -1,4 +1,8 @@
-command = tmux a || tmux
+{% if yadm.os == "Darwin" %}
+command = /opt/homebrew/bin/fish -c "tmux a || tmux"
+{% else %}
+command = fish -c "tmux a || tmux"
+{% endif %}
 quit-after-last-window-closed = true
 shell-integration = fish
 clipboard-read = allow
