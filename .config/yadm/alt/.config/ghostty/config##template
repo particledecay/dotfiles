@@ -12,10 +12,14 @@ window-width = 193
 window-step-resize = true
 window-padding-x = 10
 font-size = 11.0
+
+# good way to use github font variations
 font-family = Monaspace Argon
 font-family-italic = Monaspace Radon
 font-family-bold = Monaspace Argon ExtraBold
 font-family-bold-italic = Monaspace Radon ExtraBold
+
+# all the font features
 font-feature = calt
 font-feature = liga
 font-feature = dlig
@@ -27,9 +31,14 @@ font-feature = ss05
 font-feature = ss06
 font-feature = ss07
 font-feature = ss08
+
+# currently only works on macos
 font-thicken = true
 
-# catppucin macchiato
+# higher numbers moves baseline up, lower moves it down
+adjust-font-baseline = -1
+
+# theme - catppucin macchiato
 # https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-macchiato.conf
 palette = 0=#494d64
 palette = 1=#ed8796
