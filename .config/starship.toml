@@ -2,14 +2,14 @@ format = """
 [](#c6a0f6)\
 $os\
 $username\
-[](bg:#a6da95 fg:#c6a0f6)\
-$kubernetes\
-[](bg:#f0c6c6 fg:#a6da95)\
+[](fg:#c6a0f6 bg:#f0c6c6)\
 $directory\
-[](fg:#f0c6c6 bg:#f5a97f)\
+[](fg:#f0c6c6 bg:#7dc4e4)\
+$kubernetes\
+[](fg:#7dc4e4 bg:#f5a97f)\
 $git_branch\
 $git_status\
-[](fg:#f5a97f bg:#91d7e3)\
+[](fg:#f5a97f bg:#a6da95)\
 $c\
 $elixir\
 $elm\
@@ -23,9 +23,9 @@ $nim\
 $python\
 $rust\
 $scala\
-[](fg:#91d7e3 bg:#8bd5ca)\
+[](fg:#a6da95 bg:#f5bde6)\
 $docker_context\
-[](fg:#8bd5ca bg:#8aadf4)\
+[](fg:#f5bde6 bg:#8aadf4)\
 $time\
 [ ](fg:#8aadf4)\
 $line_break$character
@@ -73,11 +73,6 @@ symbol = " "
 style = "bg:#91d7e3"
 format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
 
-[docker_context]
-symbol = " "
-style = "bg:#8bd5ca"
-format = '[ $symbol $context ](fg:#363a4f bg:#8bd5ca)($style)'
-
 [elixir]
 symbol = " "
 style = "bg:#91d7e3"
@@ -99,53 +94,58 @@ format = '[$all_status$ahead_behind ](fg:#363a4f bg:#f5a97f)($style)'
 
 [golang]
 symbol = " "
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [gradle]
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [haskell]
 symbol = " "
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [java]
 symbol = " "
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [julia]
 symbol = " "
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [nim]
 symbol = "󰆥 "
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [python]
 symbol = ""
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 pyenv_version_name = true
 
 [rust]
 symbol = ""
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
 
 [scala]
 symbol = " "
-style = "bg:#91d7e3"
-format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+style = "bg:#a6da95"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#a6da95)($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:#f5bde6"
+format = '[ $symbol $context ](fg:#363a4f bg:#f5bde6)($style)'
 
 [time]
 disabled = false
@@ -155,8 +155,8 @@ format = '[ ♥ $time ](fg:#363a4f bg:#8aadf4)($style)'
 
 [kubernetes]
 disabled = false
-style = "bg:#a6da95"
-format = '[ $symbol $context \($namespace\) ](fg:#363a4f bg:#a6da95)($style)'
+style = "bg:#7dc4e4"
+format = '[ $symbol $context \($namespace\) ](fg:#363a4f bg:#7dc4e4)($style)'
 
 [character]
 disabled = false
