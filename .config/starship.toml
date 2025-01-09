@@ -2,7 +2,9 @@ format = """
 [](#c6a0f6)\
 $os\
 $username\
-[](bg:#f0c6c6 fg:#c6a0f6)\
+[](bg:#a6da95 fg:#c6a0f6)\
+$kubernetes\
+[](bg:#f0c6c6 fg:#a6da95)\
 $directory\
 [](fg:#f0c6c6 bg:#f5a97f)\
 $git_branch\
@@ -18,6 +20,7 @@ $java\
 $julia\
 $nodejs\
 $nim\
+$python\
 $rust\
 $scala\
 [](fg:#91d7e3 bg:#8bd5ca)\
@@ -128,6 +131,12 @@ symbol = "󰆥 "
 style = "bg:#91d7e3"
 format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
 
+[python]
+symbol = ""
+style = "bg:#91d7e3"
+format = '[ $symbol ($version) ](fg:#363a4f bg:#91d7e3)($style)'
+pyenv_version_name = true
+
 [rust]
 symbol = ""
 style = "bg:#91d7e3"
@@ -146,7 +155,8 @@ format = '[ ♥ $time ](fg:#363a4f bg:#8aadf4)($style)'
 
 [kubernetes]
 disabled = false
-style = "blue bold"
+style = "bg:#a6da95"
+format = '[ $symbol $context \($namespace\) ](fg:#363a4f bg:#a6da95)($style)'
 
 [character]
 disabled = false
