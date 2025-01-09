@@ -7,32 +7,37 @@ quit-after-last-window-closed = true
 shell-integration = fish
 clipboard-read = allow
 clipboard-write = allow
-window-height = 55
-window-width = 182
+window-height = 64
+window-width = 193
 window-step-resize = true
-theme = Dracula
-bold-is-bright = true
-background = #1e1f29
-foreground = #f8f8f2
-selection-background = #44475a
-selection-foreground = #ffffff
-cursor-color = #bbbbbb
-cursor-style = bar
-palette = 0=#000000
-palette = 1=#ff5555
-palette = 2=#50fa7b
-palette = 3=#f1fa8c
-palette = 4=#bd93f9
-palette = 5=#ff79c6
-palette = 6=#8be9fd
-palette = 7=#bbbbbb
-palette = 8=#555555
-palette = 9=#ff5555
-palette = 10=#50fa7b
-palette = 11=#f1fa8c
-palette = 12=#bd93f9
-palette = 13=#ff79c6
-palette = 14=#8be9fd
-palette = 15=#ffffff
+window-padding-x = 10
 font-size = 11.0
-font-family = 0xProto
+font-family = Monaspace Argon
+font-family-italic = Monaspace Radon
+font-family-bold = Monaspace Argon ExtraBold
+font-family-bold-italic = Monaspace Radon ExtraBold
+font-thicken = true
+
+# catppucin macchiato
+# https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-macchiato.conf
+palette = 0=#494d64
+palette = 1=#ed8796
+palette = 2=#a6da95
+palette = 3=#eed49f
+palette = 4=#8aadf4
+palette = 5=#f5bde6
+palette = 6=#8bd5ca
+palette = 7=#b8c0e0
+palette = 8=#5b6078
+palette = 9=#ed8796
+palette = 10=#a6da95
+palette = 11=#eed49f
+palette = 12=#8aadf4
+palette = 13=#f5bde6
+palette = 14=#8bd5ca
+palette = 15=#a5adcb
+background = 24273a
+foreground = cad3f5
+cursor-color = f4dbd6
+selection-background = 3a3e53
+selection-foreground = cad3f5
