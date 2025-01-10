@@ -14,10 +14,32 @@ local servers = {
   'biome',                           -- JavsScript, JSON, TypeScript
   'lua_ls',                          -- Lua
   'marksman',                        -- Markdown
+  'pyright',                         -- Python
   'ruby_lsp',                        -- Ruby
   'terraformls',                     -- Terraform
   'tflint',                          -- Terraform
   'ts_ls',                           -- TypeScript
+}
+
+-- python-specific overrides
+local python_dir;
+if vim.env.VIRTUAL_ENV then
+  python_dir = vim.env.VIRTUAL_ENV .. "/bin/"
+else
+  python_dir = "$HOME/.pyenv/versions/3.8.18/bin/"
+end
+vim.g.python3_host_prog = python_dir .. "python"
+
+-- python ignored lint rules
+local ignored_rules = {
+  "C0114", -- missing module docstring
+  "C0115", -- missing class docstring
+  "C0116", -- missing function docstring
+  "D100",  -- missing docstring in public module
+  "D101",  -- missing docstring in public class
+  "D104",  -- missing docstring in public package
+  "D105",  -- missing docstring in magic method
+  "D107",  -- missing docstring in __init__
 }
 
 -- define custom settings map for any servers that need it
@@ -64,6 +86,17 @@ local overrides = {
   marksman = {
     lint = {
       with = 'markdownlint',
+    },
+  },
+  pyright = {
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+        },
+        pythonPath = vim.g.python3_host_prog,
+      },
     },
   },
   terraformls = {

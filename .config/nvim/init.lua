@@ -208,7 +208,6 @@ require('lsp/mason')
 
 -- Language-specific configs
 require('lsp/go')
-require('lsp/python')
 
 -- DAP configuration
 require('lsp/dap-ui')
@@ -228,10 +227,8 @@ require('plugins/trouble')
 require('plugins/todo-comments')
 require('plugins/github')
 require('plugins/catppuccin')
--- require('plugins/dracula')
 require('plugins/nvim-tree')
 
 
 -- Colorscheme
--- vim.cmd.colorscheme 'dracula'
 vim.cmd.colorscheme 'catppuccin-macchiato'
