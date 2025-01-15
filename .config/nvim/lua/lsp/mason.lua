@@ -30,18 +30,6 @@ else
 end
 vim.g.python3_host_prog = python_dir .. "python"
 
--- python ignored lint rules
-local ignored_rules = {
-  "C0114", -- missing module docstring
-  "C0115", -- missing class docstring
-  "C0116", -- missing function docstring
-  "D100",  -- missing docstring in public module
-  "D101",  -- missing docstring in public class
-  "D104",  -- missing docstring in public package
-  "D105",  -- missing docstring in magic method
-  "D107",  -- missing docstring in __init__
-}
-
 -- define custom settings map for any servers that need it
 local overrides = {
   ansiblels = {

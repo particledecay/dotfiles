@@ -41,7 +41,8 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'             -- LSP config support
   use 'williamboman/mason.nvim'           -- LSP installer
   use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
-  use 'lukas-reineke/lsp-format.nvim'     -- Autoformatting
+  use 'lukas-reineke/lsp-format.nvim'     -- LSP autoformatting
+  use 'stevearc/conform.nvim'             -- Language-agnostic autoformatting
 
   -- Snippets
   use 'L3MON4D3/LuaSnip'
@@ -181,8 +182,6 @@ require('packer').startup(function()
     'catppuccin/nvim',
     as = 'catppuccin',
   }
-  -- dracula
-  use 'Mofiqul/dracula.nvim'
 end)
 
 -- Global settings
@@ -216,6 +215,7 @@ require('lsp/dap-ui')
 require('plugins/comp')
 require('plugins/treesitter')
 require('plugins/lualine')
+require('plugins/conform')
 require('plugins/rooter')
 require('plugins/telescope')
 require('plugins/snippets')
