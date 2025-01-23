@@ -12,12 +12,13 @@ window-width = 193
 window-step-resize = true
 window-padding-x = 10
 font-size = 11.0
+freetype-load-flags = no-hinting
 
 # good way to use github font variations
 font-family = Monaspace Argon
-font-family-italic = Monaspace Radon
-font-family-bold = Monaspace Argon ExtraBold
-font-family-bold-italic = Monaspace Radon ExtraBold
+font-family-italic = Monaspace Xenon
+font-family-bold = Monaspace Radon
+font-family-bold-italic = Monaspace Krypton
 
 # all the font features
 font-feature = calt

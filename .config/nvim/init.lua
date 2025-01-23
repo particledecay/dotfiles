@@ -43,6 +43,7 @@ require('packer').startup(function()
   use 'williamboman/mason-lspconfig.nvim' -- LSP configurer
   use 'lukas-reineke/lsp-format.nvim'     -- LSP autoformatting
   use 'stevearc/conform.nvim'             -- Language-agnostic autoformatting
+  use 'jackplus-xyz/monaspace.nvim'       -- Mixed Monaspace font
 
   -- Snippets
   use 'L3MON4D3/LuaSnip'
@@ -228,6 +229,7 @@ require('plugins/todo-comments')
 require('plugins/github')
 require('plugins/catppuccin')
 require('plugins/nvim-tree')
+require('plugins/monaspace')
 
 
 -- Colorscheme
