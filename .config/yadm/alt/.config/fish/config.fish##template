@@ -104,6 +104,15 @@ if test -d /home/linuxbrew/.linuxbrew
 end
 {% endif %}
 
+{% if yadm.os == "Linux" %}
+if test -d /opt/rocm/bin
+    set -a custom_paths /opt/rocm/bin
+end
+if test -d /opt/rocm/opencl/bin
+    set -a custom_paths /opt/rocm/opencl/bin
+end
+{% endif %}
+
 # set PATH with all the custom paths
 for path in $custom_paths
     contains $path $fish_user_paths; or set -a fish_user_paths $path
