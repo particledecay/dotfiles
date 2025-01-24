@@ -173,11 +173,6 @@ _G.packer_plugins = {
     path = "/home/joelinux/.local/share/nvim/site/pack/packer/start/monaspace.nvim",
     url = "https://github.com/jackplus-xyz/monaspace.nvim"
   },
-  ["nui.nvim"] = {
-    loaded = true,
-    path = "/home/joelinux/.local/share/nvim/site/pack/packer/start/nui.nvim",
-    url = "https://github.com/MunifTanjim/nui.nvim"
-  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/joelinux/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -257,6 +252,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/joelinux/.local/share/nvim/site/pack/packer/start/schemastore.nvim",
     url = "https://github.com/b0o/schemastore.nvim"
+  },
+  ["smear-cursor.nvim"] = {
+    loaded = true,
+    path = "/home/joelinux/.local/share/nvim/site/pack/packer/start/smear-cursor.nvim",
+    url = "https://github.com/sphamba/smear-cursor.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

@@ -104,6 +104,7 @@ require('packer').startup(function()
   use 'fatih/vim-go'                     -- Go support (better than lspconfig for now)
   use 'towolf/vim-helm'                  -- Helm chart support
   use 'b0o/schemastore.nvim'             -- JSON Schemas
+  use 'sphamba/smear-cursor.nvim'        -- Animated cursor
 
   -- Better diagnostics
   use {
@@ -230,6 +231,7 @@ require('plugins/github')
 require('plugins/catppuccin')
 require('plugins/nvim-tree')
 require('plugins/monaspace')
+require('plugins/smear-cursor')
 
 
 -- Colorscheme
