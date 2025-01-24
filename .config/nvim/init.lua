@@ -179,6 +179,15 @@ require('packer').startup(function()
     }
   }
 
+  -- GPT Models
+  use {
+    'Aaronik/GPTModels.nvim',
+    requires = {
+      { 'MunifTanjim/nui.nvim' },
+      { 'nvim-telescope/telescope.nvim' },
+    }
+  }
+
   -- Themes
   use {
     'catppuccin/nvim',
@@ -203,6 +212,7 @@ require('keymaps/clipboard')
 require('keymaps/commentary')
 require('keymaps/fugitive')
 require('keymaps/github')
+require('keymaps/gptmodels')
 
 -- LSP configuration
 require('lsp/mason')
