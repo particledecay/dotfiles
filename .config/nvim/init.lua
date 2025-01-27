@@ -64,6 +64,15 @@ require('packer').startup(function()
     run = ':TSUpdate'
   }
 
+  -- Noice
+  use {
+    'folke/noice.nvim',
+    requires = {
+      { 'MunifTanjim/nui.nvim' },
+      { 'rcarriga/nvim-notify' },
+    }
+  }
+
   use {
     'nvim-lualine/lualine.nvim', -- Statusline
     requires = {
@@ -242,6 +251,7 @@ require('plugins/catppuccin')
 require('plugins/nvim-tree')
 require('plugins/monaspace')
 require('plugins/smear-cursor')
+require('plugins/noice')
 
 
 -- Colorscheme
