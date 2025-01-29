@@ -3,13 +3,69 @@ local wezterm = require 'wezterm';
 local config = {
   adjust_window_size_when_changing_font_size = false,
   check_for_updates = false,
-  color_scheme = "Dracula (Official)",
-  default_prog = { "fish", "-c", "tmux a || tmux" },
-  font = wezterm.font_with_fallback {
-    { family = "Basis Grotesque Trial Mono", harfbuzz_features = { "liga=0", "ss01" } },
-    -- { family = "Space Mono", harfbuzz_features = { "liga=0", "ss01" } },
-    -- harfbuzz_features = { "liga=0" },
-    'FuraCode Nerd Font Mono',
+  color_scheme = "Catppuccin Macchiato",
+  font = wezterm.font_with_fallback { "Monaspace Argon" },
+  font_rules = {
+    -- Normal font
+    {
+      intensity = "Normal",
+      italic = false,
+      font = wezterm.font {
+        family = "Monaspace Argon",
+        weight = "Regular",
+        italic = false,
+        harfbuzz_features = {
+          "liga", "ss01", "calt", "liga", "dlig",
+          "ss01", "ss02", "ss03", "ss04", "ss05",
+          "ss06", "ss07", "ss08", 
+        },
+      },
+    },
+    -- Italic font
+    {
+      intensity = "Normal",
+      italic = true,
+      font = wezterm.font {
+        family = "Monaspace Xenon",
+        weight = "Regular",
+        italic = true,
+        harfbuzz_features = {
+          "liga", "ss01", "calt", "liga", "dlig",
+          "ss01", "ss02", "ss03", "ss04", "ss05",
+          "ss06", "ss07", "ss08", 
+        },
+      },
+    },
+    -- Bold font
+    {
+      intensity = "Bold",
+      italic = false,
+      font = wezterm.font {
+        family = "Monaspace Radon",
+        weight = "Bold",
+        italic = false,
+        harfbuzz_features = {
+          "liga", "ss01", "calt", "liga", "dlig",
+          "ss01", "ss02", "ss03", "ss04", "ss05",
+          "ss06", "ss07", "ss08", 
+        },
+      },
+    },
+    -- Bold Italic font
+    {
+      intensity = "Bold",
+      italic = true,
+      font = wezterm.font {
+        family = "Monaspace Krypton",
+        weight = "Bold",
+        italic = true,
+        harfbuzz_features = {
+          "liga", "ss01", "calt", "liga", "dlig",
+          "ss01", "ss02", "ss03", "ss04", "ss05",
+          "ss06", "ss07", "ss08", 
+        },
+      },
+    },
   },
   font_size = 11.0,
   initial_rows = 55,
