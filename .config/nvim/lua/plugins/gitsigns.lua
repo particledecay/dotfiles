@@ -1,7 +1,17 @@
--- [lewis6991/gitsigns.nvim] options
-require('gitsigns').setup {
-  _on_attach_pre = function(_, callback)
-    require('gitsigns-yadm').yadm_signs(callback)
-  end,
-  current_line_blame = false,
+return {
+  -- https://github.com/lewis6991/gitsigns.nvim
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      current_line_blame = true,
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+        delay = 1000,
+        ignore_whitespace = false,
+        virt_text_priority = 100,
+        use_focus = true,
+      },
+    },
+  },
 }

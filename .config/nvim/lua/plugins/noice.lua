@@ -1,16 +1,26 @@
-local noice = require('noice')
-
-noice.setup({
-  lsp = {
-    override = {
-      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-      ['vim.lsp.util.stylize_markdown'] = true,
+return {
+  -- https://github.com/folke/noice.nvim
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
     },
-  },
-  presets = {
-    bottom_search = true,
-    long_message_to_split = true,
-    inc_rename = false,
-    lsp_doc_border = false,
-  },
-})
+    opts = {
+      cmdline = {
+        enabled = true,
+        view = "cmdline_popup",
+      },
+      messages = {
+        enabled = false,
+      },
+      notify = {
+        enabled = false,
+      },
+      popmenu = {
+        enabled = false,
+      },
+    },
+  }
+}

@@ -1,8 +1,9 @@
-require('monaspace').setup({
-  use_default = true,
-  -- style_map = {
-  --   bold = {},
-  --   italic = {},
-  --   bold_italic = {},
-  -- },
-})
+return {
+  -- https://github.com/jackplus-xyz/monaspace.nvim
+  {
+    "jackplus-xyz/monaspace.nvim",
+    opts = {
+      use_default = true,
+    },
+  }
+}
