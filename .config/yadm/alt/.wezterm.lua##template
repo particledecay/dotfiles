@@ -1,5 +1,10 @@
 local wezterm = require 'wezterm';
 
+local font_features = {
+  "liga", "ss01", "calt", "liga", "dlig",
+  "ss01", "ss02", "ss03", "ss04", "ss05",
+  "ss06", "ss07", "ss08", "ss09", "ss10"
+}
 local config = {
   adjust_window_size_when_changing_font_size = false,
   check_for_updates = false,
@@ -21,14 +26,10 @@ local config = {
       intensity = "Normal",
       italic = false,
       font = wezterm.font {
-        family = "Monaspace Argon",
+        family = "Monaspace Argon Var",
         weight = "Regular",
-        italic = false,
-        harfbuzz_features = {
-          "liga", "ss01", "calt", "liga", "dlig",
-          "ss01", "ss02", "ss03", "ss04", "ss05",
-          "ss06", "ss07", "ss08", 
-        },
+        style = "Normal",
+        harfbuzz_features = font_features,
       },
     },
     -- Italic font
@@ -36,14 +37,10 @@ local config = {
       intensity = "Normal",
       italic = true,
       font = wezterm.font {
-        family = "Monaspace Xenon",
+        family = "Monaspace Xenon Var",
         weight = "Regular",
-        italic = true,
-        harfbuzz_features = {
-          "liga", "ss01", "calt", "liga", "dlig",
-          "ss01", "ss02", "ss03", "ss04", "ss05",
-          "ss06", "ss07", "ss08", 
-        },
+        style = "Italic",
+        harfbuzz_features = font_features,
       },
     },
     -- Bold font
@@ -51,14 +48,10 @@ local config = {
       intensity = "Bold",
       italic = false,
       font = wezterm.font {
-        family = "Monaspace Radon",
+        family = "Monaspace Radon Var",
         weight = "Bold",
-        italic = false,
-        harfbuzz_features = {
-          "liga", "ss01", "calt", "liga", "dlig",
-          "ss01", "ss02", "ss03", "ss04", "ss05",
-          "ss06", "ss07", "ss08", 
-        },
+        stretch = "Expanded",
+        harfbuzz_features = font_features,
       },
     },
     -- Bold Italic font
@@ -66,18 +59,18 @@ local config = {
       intensity = "Bold",
       italic = true,
       font = wezterm.font {
-        family = "Monaspace Krypton",
+        family = "Monaspace Krypton Var",
         weight = "Bold",
-        italic = true,
-        harfbuzz_features = {
-          "liga", "ss01", "calt", "liga", "dlig",
-          "ss01", "ss02", "ss03", "ss04", "ss05",
-          "ss06", "ss07", "ss08", 
-        },
+        style = "Italic",
+        harfbuzz_features = font_features,
       },
     },
   },
+{% if yadm.os == "Darwin" %}
+  font_size = 13.0,
+{% else %}
   font_size = 11.0,
+{% endif %}
   initial_rows = 60,
   initial_cols = 190,
   line_height = 1.0,
