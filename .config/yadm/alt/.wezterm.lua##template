@@ -1,9 +1,14 @@
 local wezterm = require 'wezterm';
 
-local font_features = {
-  "liga", "ss01", "calt", "liga", "dlig",
+local monaspace_features = {
+  "liga", "calt", "dlig",
   "ss01", "ss02", "ss03", "ss04", "ss05",
-  "ss06", "ss07", "ss08", "ss09", "ss10"
+  "ss06", "ss07", "ss08", "ss09", "ss10",
+  "cv04", -- "0" with the cut-out slash
+  "cv02", -- "1" without the bottom serif
+  "cv11", -- "jfrt" alternatives
+  "cv30", -- "*" aligned closer to the top
+  "cv32", -- ">=" and "<=" with angled bottoms
 }
 local config = {
   adjust_window_size_when_changing_font_size = false,
@@ -19,19 +24,11 @@ local config = {
     selection_bg = "#f4dbd6",
   },
 
-  font = wezterm.font_with_fallback { "Monaspace Argon" },
+  font = wezterm.font_with_fallback {
+    { family = "Monaspace Argon", harfbuzz_features = monaspace_features },
+    "FuraCode Nerd Font Mono",
+  },
   font_rules = {
-    -- Normal font
-    {
-      intensity = "Normal",
-      italic = false,
-      font = wezterm.font {
-        family = "Monaspace Argon Var",
-        weight = "Regular",
-        style = "Normal",
-        harfbuzz_features = font_features,
-      },
-    },
     -- Italic font
     {
       intensity = "Normal",
@@ -40,7 +37,7 @@ local config = {
         family = "Monaspace Xenon Var",
         weight = "Regular",
         style = "Italic",
-        harfbuzz_features = font_features,
+        harfbuzz_features = monaspace_features,
       },
     },
     -- Bold font
@@ -49,9 +46,8 @@ local config = {
       italic = false,
       font = wezterm.font {
         family = "Monaspace Radon Var",
-        weight = "Bold",
-        stretch = "Expanded",
-        harfbuzz_features = font_features,
+        weight = "Regular",
+        harfbuzz_features = monaspace_features,
       },
     },
     -- Bold Italic font
@@ -62,7 +58,7 @@ local config = {
         family = "Monaspace Krypton Var",
         weight = "Bold",
         style = "Italic",
-        harfbuzz_features = font_features,
+        harfbuzz_features = monaspace_features,
       },
     },
   },
@@ -79,6 +75,7 @@ local config = {
   freetype_render_target = "HorizontalLcd",
   freetype_load_flags = "NO_HINTING",
   hide_tab_bar_if_only_one_tab = true,
+  underline_position = 0,
   window_background_opacity = 0.90,
 {% if yadm.os == "Darwin" %}
   set_environment_variables = {
