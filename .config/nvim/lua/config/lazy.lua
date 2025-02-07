@@ -24,8 +24,12 @@ vim.g.maplocalleader = ","
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    -- import your plugins
-    { import = "plugins" },
+    -- always import these plugins
+    { import = "plugins",        cond = true },
+    -- import these plugins if not using vscode
+    { import = "plugins-native", cond = not vim.g.vscode },
+    -- import these plugins only if using vscode
+    -- { import = "plugins-vscode", cond = vim.g.vscode },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
