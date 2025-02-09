@@ -217,7 +217,7 @@
             update: no
 
         - name: Install asdf plugins
-          shell: source "{{ asdf_root }}/asdf.sh"; for line in $(cat {{ ansible_env.HOME }}/.tool-versions); do asdf plugin-add $(echo $line | awk '{print $1}'); asdf install $(echo $line | awk '{print $2}'); done
+          shell: source "{{ asdf_root }}/asdf.sh"; cut -d" " -f1 {{ ansible_env.HOME }}/.tool-versions | grep '^[^\#]' | xargs -n1 asdf plugin add || true; asdf install
           args:
             executable: /bin/bash
           register: asdf_install
@@ -257,12 +257,6 @@
             state: directory
           become: yes
 
-        - name: Install Neovim plugins
-          shell: nvim +PackerInstall +qall
-          args:
-            executable: /bin/bash
-            creates: "{{ ansible_env.HOME }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
-
         - name: Create projects directory
           file:
             path: "{{ ansible_env.HOME }}/projects"
@@ -279,3 +273,31 @@
             owner: "{{ ansible_user_id }}"
           when:
             - ansible_distribution == "MacOSX"
+
+        - name: Install Monaspace font
+          block:
+            - name: Clone Monaspace repo
+              git:
+                repo: https://github.com/githubnext/monaspace
+                dest: "{{ ansible_env.HOME }}/projects/monaspace"
+                version: "v1.200"
+                update: false
+                depth: 1
+
+            - name: Run Monaspace install script (Linux)
+              command: bash {{ ansible_env.HOME }}/projects/monaspace/util/install_linux.sh
+              args:
+                creates: "{{ ansible_env.HOME }}/.local/share/fonts/Monaspace"
+              register: monaspace_install
+              when: ansible_distribution == "Linux"
+
+            - name: Run Monaspace install script (MacOS)
+              command: bash {{ ansible_env.HOME }}/projects/monaspace/util/install_macos.sh
+              args:
+                creates: "{{ ansible_env.HOME }}/Library/Fonts/Monaspace"
+              register: monaspace_install
+              when: ansible_distribution == "MacOSX"
+
+            - name: Update font cache
+              command: fc-cache -f -v
+              when: monaspace_install is changed
