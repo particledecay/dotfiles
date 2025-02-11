@@ -1,19 +1,5 @@
 - name: UBUNTU PACKAGE INSTALLATION
   block:
-    - name: Add repositories
-      apt_repository:
-        repo: "{{ item.repo }}"
-        state: present
-      loop:
-        - repo: ppa:neovim-ppa/unstable
-
-    - name: Add fish repository
-      apt_repository:
-        repo: ppa:fish-shell/release-3
-        state: present
-      when:
-        - ansible_distribution_major_version | int < 22
-
     - name: Install dependencies for 3rd party repos
       apt:
         name:
@@ -25,29 +11,48 @@
       become: yes
       when: ansible_os_family == "Debian"
 
-    - name: Add WezTerm GPG key (Debian-based)
+    - name: Add repository GPG keys
       shell: |
-        curl -fsSL https://apt.fury.io/wez/gpg.key | gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
+        curl -fsSL {{ item.url }} | gpg --yes --dearmor -o /etc/apt/trusted.gpg.d/{{ item.name }}.gpg \
+          && chmod 644 /etc/apt/trusted.gpg.d/{{ item.name }}.gpg \
+          && chown root:root /etc/apt/trusted.gpg.d/{{ item.name }}.gpg \
+          && apt-key add /etc/apt/trusted.gpg.d/{{ item.name }}.gpg
       args:
         executable: /bin/bash
-        creates: /etc/apt/keyrings/wezterm-fury.gpg
+        creates: /etc/apt/trusted.gpg.d/{{ item.name }}.gpg
+      loop:
+        - name: docker
+          url: https://download.docker.com/linux/ubuntu/gpg
+        - name: wezterm-fury
+          url: https://apt.fury.io/wez/gpg.key
+        - name: spotify
+          url: https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg
       become: yes
+      register: gpg_keys
       when: ansible_os_family == "Debian"
 
-    - name: Ensure correct permissions for GPG key
-      file:
-        path: /etc/apt/keyrings/wezterm-fury.gpg
-        mode: '0644'
-      become: yes
-      when: ansible_os_family == "Debian"
+    - name: Set architecture
+      set_fact:
+        deb_architecture: "{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"
 
-    - name: Add WezTerm repository (Debian-based)
-      ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *"
-        filename: wezterm
+    - name: Add repositories
+      apt_repository:
+        repo: "{{ item.repo }}"
         state: present
       become: yes
-      when: ansible_os_family == "Debian"
+      loop:
+        - repo: ppa:neovim-ppa/unstable
+        - repo: "deb [arch={{ deb_architecture }} signed-by=/etc/apt/trusted.gpg.d/wezterm-fury.gpg] https://apt.fury.io/wez/ * *"
+        - repo: "deb [arch={{ deb_architecture }} signed-by=/etc/apt/trusted.gpg.d/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        - repo: "deb http://repository.spotify.com stable non-free"
+
+    - name: Add fish repository
+      apt_repository:
+        repo: ppa:fish-shell/release-3
+        state: present
+      become: yes
+      when:
+        - ansible_distribution_major_version | int < 22
 
     - name: Install command line packages
       package:
@@ -60,12 +65,18 @@
           - cabextract
           - cargo
           - cmake
+          - containerd.io
           - curl
           - direnv
+          - docker-buildx-plugin
+          - docker-ce
+          - docker-ce-cli
+          - docker-compose-plugin
           - fd-find
           - fish
           - fzf
           - git
+          - golang-docker-credential-helpers
           - golang-go
           - jq
           - libbz2-dev
@@ -113,6 +124,7 @@
           - xz-utils
           - zlib1g-dev
         state: present
+      become: yes
 
     - name: Install graphical packages
       package:
@@ -129,19 +141,12 @@
           - inkscape
           - inotify-tools
           - peek
+          - spotify-client
           - texlive-fonts-extra
           - vlc
           - wezterm
         state: present
-
-    - name: Install Snap packages
-      snap:
-        name: "{{ item.name }}"
-        classic: "{{ item.classic }}"
-      loop:
-        - name: slack
-          classic: yes
-  become: yes
+      become: yes
   when: ansible_distribution == "Ubuntu"
 
 - name: FEDORA PACKAGE INSTALLATION

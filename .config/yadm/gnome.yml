@@ -31,17 +31,17 @@
 - name: Set regular font
   dconf:
     key: /org/gnome/desktop/interface/font-name
-    value: "'Lexend Regular 11'"
+    value: "'Accord Alternate Regular 12'"
 
 - name: Set document font
   dconf:
     key: /org/gnome/desktop/interface/document-font-name
-    value: "'Lexend Regular 11'"
+    value: "'Accord Alternate 12'"
 
 - name: Set monospace font
   dconf:
     key: /org/gnome/desktop/interface/monospace-font-name
-    value: "'MonoLisa 11'"
+    value: "'Monaspace Argon 11'"
 
 - name: Set window title font
   dconf:

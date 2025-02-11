@@ -1,29 +1,29 @@
 #!/bin/bash
 
 ansible_install_linux() {
-  if type apt > /dev/null 2>&1; then
+  if type apt >/dev/null 2>&1; then
     REPOS=$(find /etc/apt/ -name '*.list' -exec grep '^[[:space:]]*deb' {} \;)
 
     # add other repositories
     for repo in universe multiverse restricted; do
       if [ -z "$(echo "${REPOS[@]}" | awk -v repo=$repo '$NF == repo {print}')" ]; then
-        sudo add-apt-repository -y $repo
+        sudo add-apt-repository -n -y $repo
       fi
     done
 
     if [ -z "$(apt list --installed ansible | awk -F/ '$1 == "ansible" {print}')" ]; then
-      sudo apt install -y ansible python3-apt python3-psutil
+      sudo apt update && sudo apt install -y ansible python3-apt python3-psutil
     fi
-  elif type yum > /dev/null 2>&1; then
-    if !yum list installed ansible > /dev/null 2>&1; then
+  elif type yum >/dev/null 2>&1; then
+    if !yum list installed ansible >/dev/null 2>&1; then
       sudo yum install -y ansible
     fi
-  elif type dnf > /dev/null 2>&1; then
+  elif type dnf >/dev/null 2>&1; then
     if [ -z "$(dnf list installed | awk F. '$1 == "ansible" {print 0}')" ]; then
       sudo dnf -y install ansible
     fi
-  elif type pacman > /dev/null 2>&1; then
-    if pacman -Qi ansible > /dev/null 2>&1; then
+  elif type pacman >/dev/null 2>&1; then
+    if pacman -Qi ansible >/dev/null 2>&1; then
       sudo pacman -S --noconfirm ansible
     fi
   fi
@@ -39,15 +39,15 @@ ansible_install_win() {
 
 OS_TYPE=$(uname)
 case $OS_TYPE in
-  Linux)
-    ansible_install_linux
-    ;;
-  Darwin)
-    ansible_install_mac
-    ;;
-  WindowsNT)
-    ansible_install_win
-    ;;
+Linux)
+  ansible_install_linux
+  ;;
+Darwin)
+  ansible_install_mac
+  ;;
+WindowsNT)
+  ansible_install_win
+  ;;
 esac
 
 # update submodules
@@ -55,5 +55,5 @@ yadm submodule update --init
 
 # execute playbook
 env ANSIBLE_FORCE_COLOR=true \
-ansible-playbook \
+  ansible-playbook \
   $HOME/.config/yadm/setup.yml

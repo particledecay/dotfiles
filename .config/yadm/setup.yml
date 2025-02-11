@@ -262,10 +262,6 @@
             path: "{{ ansible_env.HOME }}/projects"
             state: directory
 
-        - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/gnome.yml"
-          when:
-            - ansible_distribution in ["Linux", "Ubuntu"]
-
         - name: Copy MacOS fonts
           copy:
             src: "{{ ansible_env.HOME }}/.fonts/"
@@ -301,3 +297,8 @@
             - name: Update font cache
               command: fc-cache -f -v
               when: monaspace_install is changed
+
+        - include_tasks: "{{ ansible_env.HOME }}/.config/yadm/gnome.yml"
+          when:
+            - ansible_distribution in ["Linux", "Ubuntu"]
+
