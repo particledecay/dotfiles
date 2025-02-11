@@ -78,6 +78,7 @@ local overrides = {
     },
   },
   pylsp = {
+    cmd = { python_dir .. "pylsp" },
     plugins = {
       -- formatter options
       black = { enabled = true },
@@ -133,6 +134,11 @@ return {
       -- Setup each LSP
       for _, server in ipairs(servers) do
         local opts = overrides[server] or {}
+        if opts.cmd then
+          opts = vim.tbl_deep_extend("force", opts, {
+            cmd = opts.cmd,
+          })
+        end
         opts = vim.tbl_deep_extend("force", opts, {
           capabilities = capabilities,
           on_attach = function(client)

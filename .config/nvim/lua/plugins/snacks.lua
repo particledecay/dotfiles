@@ -49,8 +49,8 @@ return {
       words = { enabled = true },
     },
     keys = {
-      { "<leader>.",  function() Snacks.picker.smart() end,                                   desc = "Smart Find Files" },
-      { "<leader>/",  function() Snacks.picker.grep() end,                                    desc = "Grep" },
+      { "<C-p>",  function() Snacks.picker.smart() end,                                       desc = "Smart Find Files" },
+      { "<C-g>",  function() Snacks.picker.grep() end,                                        desc = "Grep" },
       { "<leader>e",  function() Snacks.explorer() end,                                       desc = "File Explorer" },
 
       -- find
