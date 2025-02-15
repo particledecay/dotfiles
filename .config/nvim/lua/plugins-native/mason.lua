@@ -11,7 +11,7 @@ local servers = {
   'biome',                           -- JavsScript, JSON, TypeScript
   'lua_ls',                          -- Lua
   'marksman',                        -- Markdown
-  'pylsp',                           -- Python
+  'pyright',                         -- Python
   'ruby_lsp',                        -- Ruby
   'terraformls',                     -- Terraform
   'tflint',                          -- Terraform
@@ -29,27 +29,33 @@ vim.g.python3_host_prog = python_dir .. "python"
 
 local overrides = {
   ansiblels = {
-    ansible = {
-      path = '/usr/bin/ansible',
-    },
-    ansibleLint = {
-      enabled = true,
-      path = '/usr/bin/ansible-lint',
-    },
-    python = {
-      interpreterPath = vim.g.python3_host_prog,
+    settings = {
+      ansible = {
+        path = '/usr/bin/ansible',
+      },
+      ansibleLint = {
+        enabled = true,
+        path = '/usr/bin/ansible-lint',
+      },
+      python = {
+        interpreterPath = vim.g.python3_host_prog,
+      },
     },
   },
   gopls = {
-    analyses = {
-      unusedparams = true,
+    settings = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      vulncheck = true,
     },
-    staticcheck = true,
-    vulncheck = true,
   },
   helm_ls = {
-    lint = {
-      with = 'helm',
+    settings = {
+      lint = {
+        with = 'helm',
+      },
     },
   },
   lua_ls = {
@@ -73,42 +79,46 @@ local overrides = {
     },
   },
   marksman = {
-    lint = {
-      with = 'markdownlint',
+    settings = {
+      lint = {
+        with = 'markdownlint',
+      },
     },
   },
-  pylsp = {
-    cmd = { python_dir .. "pylsp" },
-    plugins = {
-      -- formatter options
-      black = { enabled = true },
-      autopep8 = { enabled = false },
-      yapf = { enabled = false },
-      -- linter options
-      pylint = { enabled = true },
-      pyflakes = { enabled = false },
-      pycodestyle = { enabled = false },
-      -- type checker
-      pylsp_mypy = { enabled = true },
-      -- auto-completion options
-      jedi_completion = { fuzzy = true },
-      -- import sorting
-      pyls_isort = { enabled = true },
+  pyright = {
+    cmd = { python_dir .. "pyright-langserver", "--stdio" },
+    settings = {
+      python = {
+        analysis = {
+          diagnosticMode = "workspace",
+          typeCheckingMode = "basic",
+          autoImportCompletions = true,
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+        },
+        pythonPath = vim.g.python3_host_prog,
+      },
     },
   },
   terraformls = {
-    filetypes = { 'terraform', 'terraform-vars', 'tf', 'hcl' },
-    format = {
-      args = { 'fmt', '-' },
-      command = 'terraform',
-      stdin = true,
+    settings = {
+      filetypes = { 'terraform', 'terraform-vars', 'tf', 'hcl' },
+      format = {
+        args = { 'fmt', '-' },
+        command = 'terraform',
+        stdin = true,
+      },
     },
   },
 }
 
 return {
   -- https://github.com/williamboman/mason.nvim
-  { "williamboman/mason.nvim",       opts = {} },
+  {
+    "williamboman/mason.nvim",
+    dependencies = { "stevearc/conform.nvim" },
+    opts = {}
+  },
 
   -- https://github.com/williamboman/mason-lspconfig.nvim
   {
@@ -134,19 +144,20 @@ return {
       -- Setup each LSP
       for _, server in ipairs(servers) do
         local opts = overrides[server] or {}
-        if opts.cmd then
-          opts = vim.tbl_deep_extend("force", opts, {
-            cmd = opts.cmd,
-          })
-        end
-        opts = vim.tbl_deep_extend("force", opts, {
+        opts = vim.tbl_extend("force", opts, {
           capabilities = capabilities,
           on_attach = function(client)
             -- Ensure formatting is enabled
             if client.server_capabilities then
               client.server_capabilities.documentFormattingProvider = true
             end
-            lspformat.on_attach(client)
+            -- If Conform is handling this filetype, disable formatting
+            if _G.conform_filetypes[vim.bo.filetype] then
+              client.server_capabilities.documentFormattingProvider = false
+              client.server_capabilities.documentRangeFormattingProvider = false
+            else
+              lspformat.on_attach(client)
+            end
           end,
         })
         lspconfig[server].setup(opts)

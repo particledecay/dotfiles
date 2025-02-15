@@ -24,3 +24,11 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { noremap = true })
 
 -- LSP
 vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+vim.diagnostic.config({
+  underline = true,
+  signs = true,
+  update_in_insert = false,
+  virtual_text = {
+    source = "always",
+  },
+})
