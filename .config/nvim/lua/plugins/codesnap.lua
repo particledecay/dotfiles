@@ -10,7 +10,7 @@ return {
       save_path = os.getenv("HOME") .. "/Pictures/screenshots",
     },
     keys = {
-      { "<leader>cs", ":CodeSnapSave<CR>",      mode = "x", desc = "Capture Snap" },
+      { "<leader>cs", ":CodeSnap<CR>",          mode = "x", desc = "Capture Snap" },
       { "<leader>ch", ":CodeSnapHighlight<CR>", mode = "x", desc = "Capture Snap with Highlight" },
     },
   },
