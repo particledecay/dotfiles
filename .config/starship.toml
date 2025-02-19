@@ -2,6 +2,7 @@ format = """
 [](#c6a0f6)\
 $os\
 $username\
+$hostname\
 [](fg:#c6a0f6 bg:#f0c6c6)\
 $directory\
 [](fg:#f0c6c6 bg:#7dc4e4)\
@@ -42,6 +43,11 @@ style_user = "bg:#c6a0f6"
 style_root = "bg:#c6a0f6"
 format = '[$user ](fg:#363a4f bg:#c6a0f6)($style)'
 disabled = false
+
+[hostname]
+ssh_only = true
+style = "bg:#c6a0f6"
+format = '[@ $hostname ](fg:#363a4f bg:#c6a0f6)($style)'
 
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
