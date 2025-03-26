@@ -76,7 +76,7 @@ local config = {
   freetype_load_flags = "NO_HINTING",
   hide_tab_bar_if_only_one_tab = true,
   underline_position = 0,
-  window_background_opacity = 0.60,
+  window_background_opacity = 0.9,
 {% if yadm.os == "Darwin" %}
   set_environment_variables = {
     PATH = "/opt/homebrew/bin:" .. os.getenv("PATH")
