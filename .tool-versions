@@ -33,3 +33,4 @@ go-swagger 0.30.5
 scaffold 0.3.0
 lazygit 0.45.2
 yadm 3.3.0
+krew 0.4.5
