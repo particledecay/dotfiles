@@ -20,8 +20,7 @@ local config = {
   colors = {
     cursor_fg = "#cad3f5",
     cursor_bg = "#f4dbd6",
-    selection_fg = "#cad3f5",
-    selection_bg = "#f4dbd6",
+    selection_bg = "#5c5f77",
   },
 
   font = wezterm.font_with_fallback {
