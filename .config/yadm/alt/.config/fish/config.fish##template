@@ -33,9 +33,6 @@ if test -d $HOME/.poetry
     set -a custom_paths $HOME/.poetry/bin
 end
 
-# system-wide binaries
-set -a custom_paths /usr/local/bin
-
 # ghostscript (for gimp)
 if test -f /usr/bin/gs
     set -Ux GS_PROG /usr/bin/gs
@@ -71,12 +68,6 @@ if test -d $PROJECT_HOME/android/platform-tools
     set -a custom_paths $ANDROID_SDK_ROOT/cmdline-tools/bin
 end
 
-# homebrew
-if test -d /opt/homebrew
-    set -Ux HOMEBREW_PATH /opt/homebrew
-    set custom_paths $HOMEBREW_PATH/bin $custom_paths
-end
-
 # asdf
 set -Ux ASDF_ROOT "$HOME/.asdf"
 set -a custom_paths $ASDF_ROOT/bin $ASDF_ROOT/shims
@@ -91,6 +82,12 @@ set -a custom_paths $NODENV_ROOT/bin $NODENV_ROOT/shims
 
 # krew (kubectl plugin)
 set -a custom_paths $HOME/.krew/bin
+
+# homebrew
+if test -d /opt/homebrew
+    set -Ux HOMEBREW_PATH /opt/homebrew
+    set custom_paths $HOMEBREW_PATH/bin $custom_paths
+end
 
 {% if yadm.os == "Linux" %}
 # homebrew on linux
@@ -112,6 +109,9 @@ if test -d /opt/rocm/opencl/bin
     set -a custom_paths /opt/rocm/opencl/bin
 end
 {% endif %}
+
+# system-wide binaries
+set -a custom_paths /usr/local/bin
 
 # set PATH with all the custom paths
 for path in $custom_paths
