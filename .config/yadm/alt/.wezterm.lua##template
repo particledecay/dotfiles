@@ -62,12 +62,12 @@ local config = {
     },
   },
 {% if yadm.os == "Darwin" %}
-  font_size = 13.0,
+  font_size = 14.0,
 {% else %}
-  font_size = 11.0,
+  font_size = 12.0,
 {% endif %}
-  initial_rows = 60,
-  initial_cols = 190,
+  initial_rows = 58,
+  initial_cols = 170,
   line_height = 1.1,
   max_fps = 120,
   freetype_load_target = "HorizontalLcd",
