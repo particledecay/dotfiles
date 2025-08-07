@@ -64,7 +64,7 @@ local config = {
 {% if yadm.os == "Darwin" %}
   font_size = 14.0,
 {% else %}
-  font_size = 12.0,
+  font_size = 11.0,
 {% endif %}
   initial_rows = 58,
   initial_cols = 170,
