@@ -3,8 +3,8 @@
   connection: localhost
   gather_facts: yes
   vars:
-    python_version: 3.8.18
-    node_version: 18.7.0
+    python_version: 3.12.2
+    node_version: 25.2.1
 
   tasks:
     - name: PREREQUISITES

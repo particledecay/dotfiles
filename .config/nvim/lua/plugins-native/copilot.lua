@@ -45,7 +45,7 @@ return {
         xml = true,
         yaml = true,
       },
-      copilot_node_command = vim.fn.expand("$HOME") .. "/.nodenv/versions/18.7.0/bin/node",
+      copilot_node_command = vim.fn.expand("$HOME") .. "/.nodenv/versions/25.2.1/bin/node",
       -- copilot_node_command = "node",
       server_opts_overrides = {},
     },

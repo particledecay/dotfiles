@@ -23,7 +23,7 @@ local python_dir;
 if vim.env.VIRTUAL_ENV then
   python_dir = vim.env.VIRTUAL_ENV .. "/bin/"
 else
-  python_dir = "$HOME/.pyenv/versions/3.8.18/bin/"
+  python_dir = "$HOME/.pyenv/versions/3.12.2/bin/"
 end
 vim.g.python3_host_prog = python_dir .. "python"
 
@@ -123,7 +123,10 @@ return {
   -- https://github.com/williamboman/mason-lspconfig.nvim
   {
     "williamboman/mason-lspconfig.nvim",
-    opts = { ensure_installed = servers },
+    opts = {
+      ensure_installed = servers,
+      automatic_enable = false,
+    },
   },
 
   -- https://github.com/lukas-reineke/lsp-format.nvim
@@ -134,33 +137,37 @@ return {
     "neovim/nvim-lspconfig",
     opts = {},
     config = function()
-      local lspconfig = require("lspconfig")
       local lspformat = require("lsp-format")
 
       -- Capture default LSP capabilities
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
+      -- Shared on_attach
+      local function on_attach(client, bufnr)
+        -- Ensure formatting is enabled by default
+        if client.server_capabilities then
+          client.server_capabilities.documentFormattingProvider = true
+        end
+
+        -- If Conform is handling this filetype, disable LSP formatting
+        if _G.conform_filetypes and _G.conform_filetypes[vim.bo[bufnr].filetype] then
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        else
+          lspformat.on_attach(client, bufnr)
+        end
+      end
+
       -- Setup each LSP
       for _, server in ipairs(servers) do
-        local opts = overrides[server] or {}
-        opts = vim.tbl_extend("force", opts, {
+        local cfg = overrides[server] or {}
+        cfg = vim.tbl_deep_extend("force", {
           capabilities = capabilities,
-          on_attach = function(client)
-            -- Ensure formatting is enabled
-            if client.server_capabilities then
-              client.server_capabilities.documentFormattingProvider = true
-            end
-            -- If Conform is handling this filetype, disable formatting
-            if _G.conform_filetypes[vim.bo.filetype] then
-              client.server_capabilities.documentFormattingProvider = false
-              client.server_capabilities.documentRangeFormattingProvider = false
-            else
-              lspformat.on_attach(client)
-            end
-          end,
-        })
-        lspconfig[server].setup(opts)
+          on_attach = on_attach,
+        }, cfg)
+        vim.lsp.config(server, cfg)
+        vim.lsp.enable(server)
       end
     end,
   },
