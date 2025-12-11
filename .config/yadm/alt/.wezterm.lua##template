@@ -24,51 +24,52 @@ local config = {
   },
 
   font = wezterm.font_with_fallback {
-    { family = "Monaspace Argon", harfbuzz_features = monaspace_features, weight = 350 },
+    -- { family = "Monaspace Argon", harfbuzz_features = monaspace_features, weight = 350 },
+    { family = "MonoLisa" },
     "FuraCode Nerd Font Mono",
   },
-  font_rules = {
-    -- Italic font
-    {
-      intensity = "Normal",
-      italic = true,
-      font = wezterm.font {
-        family = "Monaspace Xenon Var",
-        weight = "Regular",
-        style = "Italic",
-        harfbuzz_features = monaspace_features,
-      },
-    },
-    -- Bold font
-    {
-      intensity = "Bold",
-      italic = false,
-      font = wezterm.font {
-        family = "Monaspace Radon Var",
-        weight = "Regular",
-        harfbuzz_features = monaspace_features,
-      },
-    },
-    -- Bold Italic font
-    {
-      intensity = "Bold",
-      italic = true,
-      font = wezterm.font {
-        family = "Monaspace Krypton Var",
-        weight = "Bold",
-        style = "Italic",
-        harfbuzz_features = monaspace_features,
-      },
-    },
-  },
+--   font_rules = {
+--     -- Italic font
+--     {
+--       intensity = "Normal",
+--       italic = true,
+--       font = wezterm.font {
+--         family = "Monaspace Xenon Var",
+--         weight = "Regular",
+--         style = "Italic",
+--         harfbuzz_features = monaspace_features,
+--       },
+--     },
+--     -- Bold font
+--     {
+--       intensity = "Bold",
+--       italic = false,
+--       font = wezterm.font {
+--         family = "Monaspace Radon Var",
+--         weight = "Regular",
+--         harfbuzz_features = monaspace_features,
+--       },
+--     },
+--     -- Bold Italic font
+--     {
+--       intensity = "Bold",
+--       italic = true,
+--       font = wezterm.font {
+--         family = "Monaspace Krypton Var",
+--         weight = "Bold",
+--         style = "Italic",
+--         harfbuzz_features = monaspace_features,
+--       },
+--     },
+--   },
 {% if yadm.os == "Darwin" %}
-  font_size = 14.0,
+  font_size = 14.5,
 {% else %}
   font_size = 11.0,
 {% endif %}
   initial_rows = 58,
   initial_cols = 170,
-  line_height = 1.1,
+  line_height = 1.0,
   max_fps = 120,
   freetype_load_target = "HorizontalLcd",
   freetype_render_target = "HorizontalLcd",
