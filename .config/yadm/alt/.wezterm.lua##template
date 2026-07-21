@@ -25,7 +25,7 @@ local config = {
 
   font = wezterm.font_with_fallback {
     -- { family = "Monaspace Argon", harfbuzz_features = monaspace_features, weight = 350 },
-    { family = "MonoLisa" },
+    { family = "PTMono Nerd Font", harfbuzz_features = { "liga=0" } },
     "FuraCode Nerd Font Mono",
   },
 --   font_rules = {
@@ -65,7 +65,7 @@ local config = {
 {% if yadm.os == "Darwin" %}
   font_size = 14.5,
 {% else %}
-  font_size = 11.0,
+  font_size = 11.5,
 {% endif %}
   initial_rows = 58,
   initial_cols = 170,
